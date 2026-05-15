@@ -1,0 +1,24 @@
+{
+    "items_count" : 3,
+    "active" : 0,
+   "items": [{
+        "url" : "/home_slider/SWACHHATA_HI_SEVA.jpeg"
+    },
+    {
+        "url": "/home_slider/SWACHHATA_HI_SEVA.jpeg",
+        "content": {
+            "className" : "",
+            "update_text" : "Announcement",
+            "title" : "SERVICE ABOVE SELF",
+            "action": {
+                "text" : "All Events",
+                "link" : "/",
+                "className" : ""
+            }
+        }
+    },
+    {
+        "url" : "/home_slider/SWACHHATA_HI_SEVA.jpeg"
+    }]
+
+}
