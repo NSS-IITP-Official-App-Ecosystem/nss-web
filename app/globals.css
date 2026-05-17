@@ -3,9 +3,20 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #AF7B51;
+  --primary: #f59e0b;
   --text: #4A5568;
   --border: #E2E8F0;
+  --brand-blue: #233A44;
+  --secondary-slate: #4A5568;
+  --neutral-foundation: #E2E8F0;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
+     /* The new NSS Colors */
+  --brand-blue: #00256d;
+  --secondary-slate: #4A5568;
+  --neutral-foundation: #E2E8F0;
 
 }
 
@@ -15,6 +26,22 @@
   --color-primary : var(--primary);
   --color-text : var(--text);
   --color-border: var(--border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+   --color-brand-blue: var(--brand-blue);
+  --color-secondary-slate: var(--secondary-slate);
+  --color-neutral-foundation: var(--neutral-foundation);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-brand-blue: var(--brand-blue);
+  --color-secondary-slate: var(--secondary-slate);
+  --color-neutral-foundation: var(--neutral-foundation);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
