@@ -1,0 +1,102 @@
+/* --- Main Navbar Container --- */
+.navbar {
+    background-color: #003366;
+    /* Your solid blue background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    position: relative;
+    /* Keeps the navbar stable */
+    z-index: 100;
+}
+
+/* Logo styling */
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Main horizontal links alignment */
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Navbar Links & Unit Button */
+.nav-links li {
+    position: relative;
+    /* CRUCIAL: Anchors the dropdown to just this item */
+}
+
+.nav-links a,
+.dropbtn {
+    color: white;
+    /* Text color on the blue navbar */
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.nav-links a:hover,
+.dropbtn:hover {
+    background-color: #0056b3;
+    /* Slightly lighter blue on hover */
+    border-radius: 4px;
+}
+
+
+/* --- Dropdown Specific Box (Only affects the Unit section) --- */
+.dropdown-content {
+    position: absolute;
+    /* Floating behavior - pulls it out of the navbar flow */
+    top: 100%;
+    /* Sits perfectly below the blue navbar */
+    left: 0;
+    /* Aligns with the left side of the Unit button */
+    background-color: white;
+    /* Clean white background for the dropdown menu */
+    min-width: 180px;
+    /* Fixed width for the dropdown menu box */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    /* Shadow so it looks elevated */
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    z-index: 999;
+    /* Puts it on top of the main home page content */
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Links inside the white dropdown box */
+.dropdown-content li {
+    width: 100%;
+}
+
+.dropdown-content a {
+    color: #333 !important;
+    /* Changes text to dark gray so it's readable on white */
+    padding: 10px 20px;
+    text-align: left;
+    display: block;
+}
+
+/* Hover effect inside the dropdown box */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    /* Light gray background on hover */
+    color: #003366 !important;
+    /* Turns text back to NSS blue on hover */
+    border-radius: 0;
+}

@@ -1,0 +1,79 @@
+/* Full Screen background setup */
+.rural-page-container {
+    background-image: url("https://i.ytimg.com/vi/9abccuyAkS0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBVSVjxJwVMjQd_1a44P3NjE2qJuA");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    padding-top: 40px;
+
+    background-color: rgba(0, 0, 0, 0.25);
+
+    background-blend-mode: overlay;
+}
+
+
+.top-page-title {
+    color: #fbc02d;
+
+    font-size: 42px;
+    font-weight: 800;
+    text-align: center;
+    margin: 0 0 20px 0;
+    letter-spacing: 3px;
+    text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+
+.content-wrapper {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-bottom: 60px;
+}
+
+
+.ellipse-badge {
+    width: 600px;
+
+    height: 350px;
+
+    border-radius: 50% / 50%;
+
+
+    /* Frosted glass transparency */
+    background-color: transparent;
+
+
+    /* Elegant soft white outline border and drop glow */
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+    font-family: Arial, Helvetica, sans-serif;
+    /* Centers the passage internal text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Custom layout formatting for the 5-6 sentence block */
+.ellipse-badge p {
+    color: #ffffff;
+    font-size: 17px;
+    line-height: 1.65;
+    font-weight: 500;
+    max-width: 85%;
+    /* Constrains text width to naturally break into 5-6 clean lines */
+    margin: 0;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.7);
+}

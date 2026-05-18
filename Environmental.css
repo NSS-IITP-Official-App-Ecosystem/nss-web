@@ -1,0 +1,66 @@
+.environmental-page-container {
+    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/008/700/978/small/people-hands-planting-small-tree-in-sunset-concept-save-earth-free-photo.jpg");
+    min-height: 100vh;
+    background-size: cover;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-top: 40px;
+}
+
+
+.environmental-title {
+    color: #003366;
+
+    font-size: 42px;
+    font-weight: 800;
+    text-align: center;
+    margin: 0 0 20px 0;
+    letter-spacing: 3px;
+}
+
+
+.environmental-content-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 60px;
+}
+
+
+.environmental-ellipse {
+    width: 600px;
+    height: 350px;
+    border-radius: 50% / 50%;
+
+
+
+    background-color: transparent;
+
+
+
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+
+.environmental-ellipse p {
+    color: #000000;
+
+    font-size: 20px;
+    line-height: 1.65;
+
+    font-weight: bolder;
+    max-width: 85%;
+    margin: 0;
+}

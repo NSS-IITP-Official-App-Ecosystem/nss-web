@@ -1,0 +1,23 @@
+/* Ensure the wrapper fills the whole screen so the color isn't cut off */
+.App {
+  min-height: 100vh;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  /* Adds a smooth color fade transition */
+}
+
+/* Home Page Background */
+.home-bg {
+  background-color: green;
+}
+
+/* Environmental Page Background */
+.environmental-bg {
+  background-color: yellow;
+}
+
+/* Fallback for Prayatna and other pages */
+.default-bg {
+  background-color: #ffffff;
+  /* White */
+}

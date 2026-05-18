@@ -1,0 +1,68 @@
+.prayatna-wing-container {
+    background-image: url("https://dkprodimages.gumlet.io/VoSCommunity_Body4.jpg?format=webp&w=376&dpr=2.6");
+    background-size: cover;
+
+
+
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-top: 40px;
+}
+
+/* Styled Top Title Line */
+.prayatna-title {
+    color: #fbc02d;
+    /* Premium Golden Tone uniform with your other pages */
+    font-size: 42px;
+    font-weight: 800;
+    text-align: center;
+    margin: 0 0 20px 0;
+    letter-spacing: 3px;
+    text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Centering framework for the middle element */
+.prayatna-content-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 60px;
+}
+
+/* Transparent Elliptical Circle Box */
+.prayatna-ellipse {
+    width: 600px;
+    height: 350px;
+    border-radius: 50% / 50%;
+
+
+
+    background-color: rgba(255, 255, 255, 0.08);
+
+
+
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+
+.prayatna-ellipse p {
+    color: #070000;
+    font-size: 18px;
+    line-height: 1.7;
+    font-weight: 500;
+    max-width: 85%;
+
+    margin: 0;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
+}
