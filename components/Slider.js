@@ -37,13 +37,13 @@ export default function Slider({data}){
                             transition={{'ease':'easeIn'}}
                             >
                               { item.content && 
-                               <div className="absolute w-fit backdrop-blur-xs bg-white/10 left-8 top-0 bottom-0 m-auto rounded-md h-fit p-4 md:p-8">
-                                <button>{item.content.update_text}</button>
+                               <motion.div initial = {{opacity : 0}} animate = {{opacity : 1}} transition={{delay: 0.3}} className="absolute w-fit backdrop-blur-xs bg-white/10 left-8 top-0 bottom-0 m-auto rounded-md h-fit p-4 md:p-8">
+                                <button className="text-white">{item.content.update_text}</button>
                                 <h3 className="text-2xl md:text-3xl lg:text-4xl text-white mt-2 md:mt-4">{item.content.title}</h3>
                                 {item.content.action && 
                                     <button className="bg-primary p-2 rounded-sm text-white mt-2 md:mt-4"><Link href={item.content.action.link}>{item.content.action.text}</Link></button>
                                 }
-                                </div>
+                                </motion.div>
                                 }
                             <Image style={{borderRadius: 'inherit', objectFit:'cover'}} className='block w-full h-screen' alt='' width={1600} height={900} src={item.url}/>
                             </motion.div>
