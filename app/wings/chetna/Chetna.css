@@ -1,0 +1,97 @@
+/* Full Screen background setup with a subtle dark tint overlay for readability */
+.chetna-wing-container {
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)),
+        url("https://content.jdmagicbox.com/v2/comp/mumbai/b3/022pxx22.xx22.180523143114.y4b3/catalogue/edu-enlightenment-society-ulwe-navi-mumbai-kindergartens-d6sjqfy1yj.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Accounts for your global 65px blue navbar height so there is no unnecessary scrolling */
+    min-height: calc(100vh - 65px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-top: 50px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Styled Top Title Line - Increased for dominance */
+.chetna-title {
+    color: #fbc02d;
+    /* Premium Golden Tone */
+    font-size: 54px;
+    /* Larger font size */
+    font-weight: 800;
+    text-align: center;
+    margin: 0 0 10px 0;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Centering framework for the middle content */
+.chetna-content-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+/* Frosted Glass Transparent Elliptical Circle Box */
+.chetna-ellipse {
+    width: 700px;
+    /* Widened slightly to accommodate larger text fluidly */
+    height: 400px;
+    /* Tallened slightly */
+    border-radius: 50%;
+
+    /* Slight translucent background fill ensures text pops perfectly off the image background */
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    /* Minor background blur for high professional quality */
+    -webkit-backdrop-filter: blur(4px);
+
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 45px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Text Formatting - Larger and bolder */
+.chetna-ellipse p {
+    color: #ffffff;
+    /* Premium White */
+    font-size: 20px;
+    /* Increased from 18px for clear visibility */
+    line-height: 1.8;
+    font-weight: 700;
+    max-width: 90%;
+    margin: 0;
+    text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* Responsive adjustments for mid-sized screens */
+@media (max-width: 768px) {
+    .chetna-title {
+        font-size: 38px;
+    }
+
+    .chetna-ellipse {
+        width: 90%;
+        height: auto;
+        border-radius: 16px;
+        /* Becomes a rounded box on tiny windows for text space */
+        padding: 30px 20px;
+    }
+
+    .chetna-ellipse p {
+        font-size: 16px;
+    }
+}
