@@ -33,9 +33,14 @@ export default function Unit1Page() {
           </motion.div>
           
           <motion.div variants={itemVariants}>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] via-[#FDE68A] to-[var(--color-primary)] mb-8 tracking-tighter">
-              NSS Unit 1
-            </h1>
+           <h1 
+  className="text-6xl sm:text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] via-[#FDE68A] to-[var(--color-primary)] mb-8 tracking-tighter"
+  style={{ WebkitTransform: 'translateZ(0)' }}
+>
+  NSS Unit 1
+</h1>
+
+
           </motion.div>
           
           <motion.div variants={itemVariants}>
