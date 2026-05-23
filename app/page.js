@@ -63,7 +63,7 @@ export default function Home() {
                     className="rotating-glow"
                     animate={{ rotate: 360 }}
                     transition={{
-                      repeat: Infinity ,
+                      repeat: Infinity,
                       duration: 3,     // Adjust this for spin speed
                       ease: "easeInOut",  // Linear ensures a smooth, continuous spin
                     }} />
@@ -81,32 +81,32 @@ export default function Home() {
 
       {/* recent events section */}
       <section id="home-recent-events mb-5 mt-5 bg-gray-50">
-          <h2 className="text-center">Recent Events</h2>
-          {events_data.items.map((item, i , items)=>{
-             return(
-                <div key={i} className={cn("flex", i%2 != 0 && "flex-row-reverse")}>
-                  <div className="flex-1 flex justify-around relative">
-                  </div>
-                  <div className="event-timeline relative flex items-center justify-center"> 
-                     <motion.div  initial={{opacity : 0.5, boxShadow: "0px 0px 0px 0px rgba(255, 255, 0, 0.8)"}} animate= {{opacity : 1, boxShadow: "0px 0px 0px 10px rgba(255, 255, 0, 0)"}} transition = {{repeat : Infinity, duration : 1, repeatType : "reverse"}} className=""></motion.div>
-                     </div>
-                  <div className="flex flex-1 justify-around">
-                    <motion.div layout>
-                      <EventsCard data={item}/>
-                    </motion.div>
-                    </div>
-                </div>
-              )
-          })}
+        <h2 className="text-center">Recent Events</h2>
+        {events_data.items.map((item, i, items) => {
+          return (
+            <div key={i} className={cn("flex", i % 2 != 0 && "flex-row-reverse")}>
+              <div className="flex-1 flex justify-around relative">
+              </div>
+              <div className="event-timeline relative flex items-center justify-center">
+                <motion.div initial={{ opacity: 0.5, boxShadow: "0px 0px 0px 0px rgba(255, 255, 0, 0.8)" }} animate={{ opacity: 1, boxShadow: "0px 0px 0px 10px rgba(255, 255, 0, 0)" }} transition={{ repeat: Infinity, duration: 1, repeatType: "reverse" }} className=""></motion.div>
+              </div>
+              <div className="flex flex-1 justify-around">
+                <motion.div layout>
+                  <EventsCard data={item} />
+                </motion.div>
+              </div>
+            </div>
+          )
+        })}
       </section>
 
       {/* testimonials */}
       <section className="home-testimonial mt-20 mb-10">
         <h2 className="text-center mb-10 mt-10">Testinomials</h2>
         <Testimonial className={"h-96"}>
-         {testimonial_data.items.map((item, i)=>{
-          return <TestimonialItem key={i} data={item} />
-         })}
+          {testimonial_data.items.map((item, i) => {
+            return <TestimonialItem key={i} data={item} />
+          })}
         </Testimonial>
       </section>
 
@@ -115,52 +115,53 @@ export default function Home() {
         <h2 className="text-center mb-10 mt-10 text-white">
           The Impact We Created
         </h2>
-        <ImpactsInNumbers/>
+        <ImpactsInNumbers />
       </section>
     </>
   );
 }
 
 
-function EventsCard({data}){
+function EventsCard({ data }) {
   return (
     <div className="event-cont flex justify-center ps-4 pe-4">
-      
-    <div className="event rounded-xl border border-gray-200">
-      <Image className="event-img rounded-bl rounded-tl" src={data.thumbnail} width={100} height={100} objectFit="cover"/>
-   
-      <h3 className="event-title text-2xl">{data.title}</h3>
-      <p className="event-details text-md text-gray-800">{data.details}</p>
-      <p className="event-date text-sm text-gray-600 bg-amber-100 w-full text-center">{data.date}</p>
-   
-    </div>
+
+      <div className="event rounded-xl border border-gray-200">
+        <Image className="event-img rounded-bl rounded-tl" src={data.thumbnail} width={100} height={100} objectFit="cover" />
+
+        <h3 className="event-title text-2xl">{data.title}</h3>
+        <p className="event-details text-md text-gray-800">{data.details}</p>
+        <p className="event-date text-sm text-gray-600 bg-amber-100 w-full text-center">{data.date}</p>
+
+      </div>
     </div>
   )
 }
 
 
-function ImpactsInNumbers(){
+function ImpactsInNumbers() {
   return (
     <>
-    <div className="flex flex-row flex-wrap gap-8 justify-center">
+      <div className="flex flex-row flex-wrap gap-8 justify-center">
         {
-          impacts_data.items.map((item, i , items)=>{
+          impacts_data.items.map((item, i, items) => {
             return (
               <div key={i} className="text-black impact-card rounded-xl border-border border shadow-xl max-w-75 p-4 bg-white flex flex-col gap-2">
-                  <div className="flex justify-center items-center text-5xl mb-4">
-                    <span className="text-green-800 p-4 bg-green-50 rounded-full"><DynamicIcon name={item.icon} /></span>
-                    </div>
-                  <h3 className="text-xl text-center">{item.title}</h3>
-                  <p className="text-text text-sm text-center">{item.desc}</p>
-                  <p className="mt-auto text-center text-primary text-ellipsis line-clamp-1 font-bold text-2xl uppercase"><strong>{item.count.replaceAll('_',',') + '+ ' + item.unit}</strong></p>
+                <div className="flex justify-center items-center text-5xl mb-4">
+                  <span className="text-green-800 p-4 bg-green-50 rounded-full"><DynamicIcon name={item.icon} /></span>
+                </div>
+                <h3 className="text-xl text-center">{item.title}</h3>
+                <p className="text-text text-sm text-center">{item.desc}</p>
+                <p className="mt-auto text-center text-primary text-ellipsis line-clamp-1 font-bold text-2xl uppercase"><strong>{item.count.replaceAll('_', ',') + '+ ' + item.unit}</strong></p>
               </div>
             )
           })
         }
-    </div>
+      </div>
     </>
   )
 }
+
 
 const DynamicIcon = ({ name, ...props }) => {
   const Icon = Icons[name];
