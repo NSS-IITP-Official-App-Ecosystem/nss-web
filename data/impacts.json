@@ -1,0 +1,32 @@
+{
+    "items" : [
+        {
+            "icon" : "PiShoppingBagFill",
+            "title" : "Nutritious Meals Packed",
+            "desc" : "Helped over 15,000 people by packing and distributing nutritious meals.",
+            "count" : "15_000",
+            "unit" : "meal"
+        },
+        {
+            "icon" : "PiStudentBold",
+            "title" : "Students Reached",
+            "desc" : "Cumulatively we reached out to over 50,000+ students since inception through teaching projects.",
+            "count" : "50_000",
+            "unit" : "students"
+        },
+        {
+            "icon" : "",
+            "title" : "Blood Donation Camps",
+            "desc" : "Conducted 4 blood donation camps with BloodConnect Foundation, collecting 10,000+ units in the past 10 years.",
+            "count" : "10_000",
+            "unit" : "units"
+        },
+        {
+            "icon" : "",
+            "title" : "Urgent Scribe Requests",
+            "desc" : "Provided 500+ Scribes for the visually impaired children in collaboration with NAB the past 5 years.",
+            "count" : "500",
+            "unit" : "units"
+        }
+    ]
+}
