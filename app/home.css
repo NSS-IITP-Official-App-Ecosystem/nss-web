@@ -1,0 +1,66 @@
+
+div:has(.rotating-glow):hover > .rotating-glow {
+  position: absolute;
+  /* Make it larger than the wrapper so it doesn't get cut off in the corners while spinning */
+  width: 250%; 
+  height: 250%;
+  background: conic-gradient(
+    from 0deg,
+  transparent 85%,
+  #b8860b 95%,
+  #ffd700 98%,
+  #fff8dc 100%
+  );
+  filter: blur(8px); /* This gives it the soft 'glowing' effect rather than a sharp line */
+}
+
+.event {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 2fr 0.5fr;
+  align-items: center;
+  align-content : center;
+  justify-content:  center;
+  justify-items: center;
+
+  max-width : 400px;
+  aspect-ratio : 10/5;
+  background-color : white;
+
+  .event-img {
+    grid-row : 1/4;
+    height : 100%;
+    width : 100%;
+    object-fit : cover;
+  }
+
+  .event-details{
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3; /* Limits the text to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds three dots at the break */
+
+    padding-inline-start: 1rem;
+
+  }
+  
+}
+
+.event-timeline{
+  border : 6px solid red;
+}
+
+.event-timeline > div{
+  /* content : ''; */
+  position : absolute;
+  border-radius: 20rem;
+  left : 50%;
+  right: 50%;
+  transform : translate(-50%, -50%);
+  width: 20px;
+  aspect-ratio: 1/1;
+  background: rgb(255, 255, 0);
+  /* box-shadow : 1px 1px 0px 0px gray, 2px 2px 0px 0px black; */
+}

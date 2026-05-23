@@ -1,0 +1,16 @@
+{
+    "items" : [
+        {
+            "img" : "/testimonial/person-1.jpg",
+            "name" : "Anirudh😎",
+            "position" : "Undergraduate at IITP",
+            "text" : "<strong>NSS IITP is like a family for me.</strong> It helped me to meet  other students from different programs and levels (UG/PG) to work on issues of social importance. I was involved in projects related to education, health, and environment. It gives a lot of satisfaction when NSS team was able to contribute in these sectors.  A holistic feeling where we enjoyed and was able to bring some change, living the tag line 'NOT ME BUT ME'."
+        },
+        {
+            "img" : "/testimonial/person-2.jpg",
+            "name" : "Anirudh😎",
+            "position" : "Undergraduate at IITP",
+            "text" : "NSS IITP is like a family for me. It helped me to meet  other students from different programs and levels (UG/PG) to work on issues of social importance. I was involved in projects related to education, health, and environment. It gives a lot of satisfaction when NSS team was able to contribute in these sectors.  A holistic feeling where we enjoyed and was able to bring some change, living the tag line 'NOT ME BUT ME'."
+        }
+    ]
+}
