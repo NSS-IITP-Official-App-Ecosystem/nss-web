@@ -11,9 +11,16 @@ import Image from 'next/image';
 import { cn } from '@/components/utils';
 import Testimonial, { TestimonialItem } from '@/components/testimonial';
 import testimonial_data from '@/data/testimonial.json'
+import collaborators_data from '@/data/collaborators.json'
 import * as Icons from 'react-icons/pi'
 import impacts_data from '@/data/impacts.json'
+import { useMotionValue, useTransform, animate } from "framer-motion";
+import { useEffect } from "react";
+import EmblaCarousel from '@/components/EmblaCarousel';
+import {Poppins} from 'next/font/google'
+import { FaArrowRight } from "react-icons/fa";
 
+const EMBLA_OPTIONS = { loop: true }
 
 export default function Home() {
   return (
@@ -117,10 +124,29 @@ export default function Home() {
         </h2>
         <ImpactsInNumbers />
       </section>
+
+      {/* collaborators */}
+      <section id="home-collaborators" className="w-full p-4 mt-8 mb-8">
+          <h2 className="text-center mb-10 mt-10 uppercase text-primary">Collaborate</h2>
+          <h4 className="text-center text-text">Our collaborators</h4>
+          <EmblaCarousel CarouselElement={CollaborateElement} options={EMBLA_OPTIONS} slides={[...collaborators_data.items , ...collaborators_data.items]} />
+          <div className="text-center">
+            <Link href={"/collaborate"}><button className="rounded text-white bg-brand-blue pb-2 pt-2 ps-4 pe-4 hover:shadow-2xl shadow-brand-blue cursor-pointer hover:scale-105 transition-all align-middle">Collaborate With Us <FaArrowRight className="ms-2 inline" /> </button></Link>
+          </div>
+      </section>
+
     </>
   );
 }
 
+function CollaborateElement(props){
+  const {data} = props;
+  return (
+    <div className="p-10 w-50 h-50 rounded-xl border border-border shadow-xl flex items-center justify-center aspect-square">
+      <Image className="block" src={data.logo} height={100} width={100}></Image>
+      </div>
+  )
+}
 
 function EventsCard({ data }) {
   return (

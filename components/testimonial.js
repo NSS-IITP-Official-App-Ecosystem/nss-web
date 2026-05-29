@@ -80,7 +80,7 @@ export default function Testimonial({children, variants, Defaultactive, classNam
 export function TestimonialItem({data, className}){
      return (
         <div className = {cn ("h-full w-full flex items-center justify-center",className)}>
-            <div className="h-90 max-w-200 flex rounded-xl gap-4 border border-gray-200 shadow-2xl">
+            <div className="h-90 max-w-200 flex flex-col md:flex-row rounded-xl gap-4 border border-gray-200 shadow-2xl">
                 <motion.div className="basis-[30%] rounded-bl-xl rounded-tl-xl">
                     <Image className="rounded-[inherit]" src={data.img} alt='' height={200} width={100} objectFit="cover" style={{height:'100%', width:'100%', objectFit:'cover'}}></Image>
                 </motion.div>
