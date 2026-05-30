@@ -62,7 +62,7 @@
 
 /* Localized Variables to avoid polluting globals */
 .team-page-container {
-    --primary: var(--primary, #f59e0b);          /* Vibrant NSS Crimson Red */
+    --primary: #f59e0b;          /* Vibrant NSS Crimson Red */
     --primary-hover: #d97706;    /* Deep Crimson */
     --navy: var(--brand-blue, #00256d);             /* NSS Navy Blue Accent */
     --navy-light: #1e3a8a;

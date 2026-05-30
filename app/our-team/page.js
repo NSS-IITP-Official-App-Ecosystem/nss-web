@@ -1007,7 +1007,7 @@ export default function OurTeam() {
             <div className="tree-branch-row">
               {/* General Secretary */}
               <div className="tree-branch-col">
-                <div className="tree-node node-accent" onClick={() => setSelectedMember(activeTeamMembers.find(m => m.category === 'secretary'))}>
+                <div className="tree-node" onClick={() => setSelectedMember(activeTeamMembers.find(m => m.category === 'secretary'))}>
                   <div className="node-avatar-wrapper">
                     <img src={activeTeamMembers.find(m => m.category === 'secretary')?.image} alt="Gensec" className="node-avatar" />
                   </div>
@@ -1017,7 +1017,7 @@ export default function OurTeam() {
               </div>
               {/* Core Student Leads Anchor */}
               <div className="tree-branch-col">
-                <div className="tree-node node-accent" onClick={() => {
+                <div className="tree-node" onClick={() => {
                   const el = document.getElementById('search-directory-anchor');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}>
@@ -1442,8 +1442,9 @@ function TeamCard({ member, index, onQuickView }) {
     <motion.div
       className={`team-card ${cardBorderClass}`}
       initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05 + 0.1, type: "spring", stiffness: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: (index % 4) * 0.05 + 0.1, type: "spring", stiffness: 100 }}
     >
       <div className="card-img-container">
         <img
