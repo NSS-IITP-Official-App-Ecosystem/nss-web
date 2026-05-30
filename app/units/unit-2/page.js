@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaBookOpen, FaPalette, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
+import { FaHandshake, FaLightbulb, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
 
-export default function Unit1Page() {
+export default function Unit2Page() {
   // Animation variants for smooth staggered loading
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -29,23 +29,18 @@ export default function Unit1Page() {
           className="relative max-w-5xl mx-auto z-10"
         >
           <motion.div variants={itemVariants} className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-            <span className="text-[var(--color-primary)] font-semibold tracking-wider text-sm uppercase">Welcome to the core</span>
+            <span className="text-[var(--color-primary)] font-semibold tracking-wider text-sm uppercase">Driving Social Change</span>
           </motion.div>
           
           <motion.div variants={itemVariants}>
-           <h1 
-  className="text-6xl sm:text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] via-[#FDE68A] to-[var(--color-primary)] mb-8 tracking-tighter"
-  style={{ WebkitTransform: 'translateZ(0)' }}
->
-  NSS Unit 1
-</h1>
-
-
+            <h1 className="text-6xl sm:text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] via-[#FDE68A] to-[var(--color-primary)] mb-8 tracking-tighter">
+              NSS Unit 2
+            </h1>
           </motion.div>
           
           <motion.div variants={itemVariants}>
             <p className="text-xl sm:text-2xl text-[var(--color-neutral-foundation)]/90 max-w-3xl mx-auto leading-relaxed font-light">
-              Empowering minds through education and innovation. Building strong foundational skills and creative problem-solving within the community.
+              Driving social change through dedicated service. Building strong foundations through rural outreach, awareness, and community empowerment.
             </p>
           </motion.div>
         </motion.div>
@@ -65,11 +60,11 @@ export default function Unit1Page() {
         <div className="max-w-4xl mx-auto text-center relative bg-white/60 backdrop-blur-xl border border-white/80 p-12 sm:p-16 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <FaQuoteLeft className="absolute top-8 left-8 text-6xl text-[var(--color-neutral-foundation)]/50" />
           <blockquote className="relative z-10 text-2xl sm:text-3xl font-medium text-[var(--color-secondary-slate)] leading-snug">
-            "Education is the most powerful weapon which you can use to change the world. Design is the silent ambassador of your brand."
+            "The best way to find yourself is to lose yourself in the service of others. Small acts, when multiplied by millions, can transform the world."
           </blockquote>
           <div className="mt-10 flex items-center justify-center gap-6">
             <div className="h-[2px] w-16 bg-gradient-to-r from-transparent to-[var(--color-primary)]"></div>
-            <p className="text-[var(--color-brand-blue)] font-bold uppercase tracking-[0.2em] text-sm">Unit 1 Philosophy</p>
+            <p className="text-[var(--color-brand-blue)] font-bold uppercase tracking-[0.2em] text-sm">Unit 2 Philosophy</p>
             <div className="h-[2px] w-16 bg-gradient-to-l from-transparent to-[var(--color-primary)]"></div>
           </div>
         </div>
@@ -92,58 +87,58 @@ export default function Unit1Page() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
           
-          {/* Teaching Wing Card */}
+          {/* Prayatana Wing Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
           >
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-150 group-hover:rotate-12">
-              <FaBookOpen className="text-9xl text-[var(--color-brand-blue)]" />
+              <FaHandshake className="text-9xl text-[var(--color-brand-blue)]" />
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-brand-blue)] to-[#1E303D] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaBookOpen className="text-3xl text-white" />
+                <FaHandshake className="text-3xl text-white" />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Teaching Wing
+                Prayatana Wing
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                Dedicated to providing quality education to the underprivileged. We conduct regular classes, mentorship programs, and academic workshops to nurture the next generation of thinkers.
+                Dedicated to rural development and community welfare. Prayatana works closely with local villages to improve health, sanitation, and create sustainable livelihoods.
               </p>
               
-              <Link href="/wings/teaching" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/prayatana" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More 
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>
             </div>
           </motion.div>
 
-          {/* Design Wing Card */}
+          {/* Chetna Wing Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
           >
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-150 group-hover:-rotate-12">
-              <FaPalette className="text-9xl text-[var(--color-primary)]" />
+              <FaLightbulb className="text-9xl text-[var(--color-primary)]" />
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[#8A5F3C] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaPalette className="text-3xl text-white" />
+                <FaLightbulb className="text-3xl text-white" />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Design Wing
+                Chetna Wing
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                The creative powerhouse of Unit 1. From visual communications to UI/UX, we design impactful media that amplifies the voice and mission of NSS initiatives.
+                Focused on social awareness and empowerment. Chetna conducts vital campaigns on mental health, women's empowerment, and civic responsibilities to awaken the masses.
               </p>
               
-              <Link href="/wings/design" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/chetna" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>
