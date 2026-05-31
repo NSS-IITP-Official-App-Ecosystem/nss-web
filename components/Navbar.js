@@ -22,13 +22,18 @@ export default function Navbar() {
             <Link href="/" className="text-secondary-slate hover:text-brand-blue font-medium transition-colors">
               Home
             </Link>
+            
+            <Link href="/our-team" className="text-secondary-slate hover:text-brand-blue font-medium transition-colors">
+              Our Team
+            </Link>
 
             {/* Units Dropdown */}
             <div className="relative"
               onMouseEnter={() => setIsUnitsOpen(true)}
               onMouseLeave={() => setIsUnitsOpen(false)}>
               <button
-                className="flex items-center gap-1 text-secondary-slate hover:text-brand-blue font-medium transition-colors h-16"
+                onClick={() => setIsUnitsOpen(!isUnitsOpen)}
+                className="flex items-center gap-1 text-secondary-slate hover:text-brand-blue font-medium transition-colors h-16 cursor-pointer"
                 aria-haspopup="true"
               >
                 Units <FaChevronDown className={`text-sm transition-transform duration-200 ${isUnitsOpen ? 'rotate-180' : ''}`} />
@@ -54,7 +59,8 @@ export default function Navbar() {
               onMouseEnter={() => setIsWingsOpen(true)}
               onMouseLeave={() => setIsWingsOpen(false)}>
               <button
-                className="flex items-center gap-1 text-secondary-slate hover:text-brand-blue font-medium transition-colors h-16"
+                onClick={() => setIsWingsOpen(!isWingsOpen)}
+                className="flex items-center gap-1 text-secondary-slate hover:text-brand-blue font-medium transition-colors h-16 cursor-pointer"
                 aria-haspopup="true"
               >
                 Wings <FaChevronDown className={`text-sm transition-transform duration-200 ${isWingsOpen ? 'rotate-180' : ''}`} />
