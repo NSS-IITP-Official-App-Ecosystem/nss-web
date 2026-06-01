@@ -22,10 +22,10 @@ function Banner() {
 }
 
 function Filters() {
-    const urlParams = new URLSearchParams(location.search);
-    let startDate = urlParams.get('start-date') || (Date.now() - 3.154e+10);
-    let endDate = urlParams.get('end-date') || Date.now();
-    const date = new Date();a
+    // const urlParams = new URLSearchParams(location.search);
+    // let startDate = urlParams.get('start-date') || (Date.now() - 3.154e+10);
+    // let endDate = urlParams.get('end-date') || Date.now();
+    // const date = new Date();
 
     
     
