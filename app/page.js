@@ -112,7 +112,7 @@ export default function Home() {
         <h2 className="text-center mb-10 mt-10">Testinomials</h2>
         <Testimonial className={"h-96"}>
           {testimonial_data.items.map((item, i) => {
-            return <TestimonialItem key={i} data={item} />
+            return <TestimonialItem className={"testimonial-item pr-8 pl-8 md:pr-16 md:pl-16"} key={i} data={item} />
           })}
         </Testimonial>
       </section>
