@@ -117,3 +117,10 @@ div:has(.rotating-glow):hover > .rotating-glow {
   font-weight: bold;
   backface-visibility: visible; /* Allows you to see the backs of cards */
 }
+
+
+.testimonial-item{
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 100%;
+  min-width: 0;
+}
