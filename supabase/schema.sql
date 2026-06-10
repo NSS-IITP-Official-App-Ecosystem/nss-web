@@ -4,38 +4,38 @@
 -- ========================================================
 
 -- Drop existing objects if they exist
+-- Triggers on auth.users (system table, must be dropped explicitly)
 drop trigger if exists on_auth_user_created on auth.users;
-drop trigger if exists audit_events_trigger on public.events;
-drop trigger if exists audit_team_members_trigger on public.team_members;
-drop trigger if exists audit_hours_logs_trigger on public.hours_logs;
-drop trigger if exists audit_testimonials_trigger on public.testimonials;
-drop trigger if exists audit_wings_trigger on public.wings;
-drop trigger if exists audit_units_trigger on public.units;
-drop trigger if exists audit_collaborators_trigger on public.collaborators;
-drop trigger if exists audit_collaborate_requests_trigger on public.collaborate_requests;
-drop function if exists public.process_audit_log();
-drop function if exists public.handle_new_user();
-drop function if exists public.is_admin(uuid);
-drop table if exists public.audit_logs;
-drop table if exists public.collaborate_requests;
-drop table if exists public.donations;
-drop table if exists public.testimonials;
-drop table if exists public.blood_donors;
-drop table if exists public.blood_requests;
-drop table if exists public.hours_logs;
-drop table if exists public.event_media;
-drop table if exists public.event_wings;
-drop table if exists public.events;
-drop table if exists public.team_members;
-drop table if exists public.units;
-drop table if exists public.wings;
-drop table if exists public.profiles;
 
-drop type if exists public.collaboration_status;
-drop type if exists public.blood_status;
-drop type if exists public.team_category;
-drop type if exists public.approval_status;
-drop type if exists public.user_role;
+-- Tables (dropping tables automatically drops any triggers/constraints on them)
+drop table if exists public.collaborators cascade;
+drop table if exists public.impacts cascade;
+drop table if exists public.audit_logs cascade;
+drop table if exists public.collaborate_requests cascade;
+drop table if exists public.donations cascade;
+drop table if exists public.testimonials cascade;
+drop table if exists public.blood_donors cascade;
+drop table if exists public.blood_requests cascade;
+drop table if exists public.hours_logs cascade;
+drop table if exists public.event_media cascade;
+drop table if exists public.event_wings cascade;
+drop table if exists public.events cascade;
+drop table if exists public.team_members cascade;
+drop table if exists public.units cascade;
+drop table if exists public.wings cascade;
+drop table if exists public.profiles cascade;
+
+-- Functions
+drop function if exists public.process_audit_log() cascade;
+drop function if exists public.handle_new_user() cascade;
+drop function if exists public.is_admin(uuid) cascade;
+
+-- Types
+drop type if exists public.collaboration_status cascade;
+drop type if exists public.blood_status cascade;
+drop type if exists public.team_category cascade;
+drop type if exists public.approval_status cascade;
+drop type if exists public.user_role cascade;
 
 -- Create Enumerated Types
 create type public.user_role as enum ('super_admin', 'pic', 'general_secretary', 'cell_secretary', 'volunteer', 'public');
