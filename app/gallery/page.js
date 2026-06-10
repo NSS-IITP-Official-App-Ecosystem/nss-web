@@ -1,9 +1,20 @@
-"use client"
+import {Filters} from './filter'
+import {EventCard} from './event-card'
+import events_data, { events } from '@/data/events/events.json'
+
 export default function GalleryPage() {
     return (
         <>
             <Banner></Banner>
             <Filters></Filters>
+
+            <section className="mt-10 mb-10">
+                <div className="flex flex-wrap gap-4 sm:gap-5 justify-center">
+                    {events_data.map((item, index, arr)=>{
+                        return <EventCard key={index} data={item}/>
+                    })}
+                </div>
+            </section>
         </>
     )
 }
@@ -16,35 +27,6 @@ function Banner() {
                 <h1 className="text-center uppercase text-transparent font-mono text-6xl bg-clip-text" style={{
                     background: 'linear-gradient(135deg, #ff007b, #6b11ff, #00d2ff)', WebkitBackgroundClip: 'text'
                 }}>Gallery</h1>
-            </div>
-        </section>
-    )
-}
-
-function Filters() {
-    // const urlParams = new URLSearchParams(location.search);
-    // let startDate = urlParams.get('start-date') || (Date.now() - 3.154e+10);
-    // let endDate = urlParams.get('end-date') || Date.now();
-    // const date = new Date();
-
-    
-    
-    return (
-        <section className="mb-10 mt-10">
-            <div className="">
-                <h4 className="text-center">Select Date Range: </h4>
-                <form className="flex justify-around flex-wrap gap-4">
-                    <div className="border border-border p-2">
-                        <label htmlFor="start-date">{'Start Date: '}</label>
-                        <input type="date" name="start-date" id="start-date"></input>
-                    </div>
-                    <div className="border border-border p-2">
-                        <label htmlFor="end-date">{'End Date: '}</label>
-                        <input type="date" name="end-date" id="end-date"></input>
-                    </div>
-
-                    <button type="submit">Apply</button>
-                </form>
             </div>
         </section>
     )
