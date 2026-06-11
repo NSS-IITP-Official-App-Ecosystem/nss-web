@@ -1,19 +1,53 @@
 "use client"
 import AnimatedCounter from "@/components/AnimatedCounter";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FaHeartbeat } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import { RiDropFill } from "react-icons/ri";
 import { MdOutlineWaterDrop } from "react-icons/md";
+import { GoAlertFill } from "react-icons/go";
+import { BiSolidDonateBlood } from "react-icons/bi";
+import {cn} from '@/components/utils'
+
+
 import Link from 'next/link'
-
 import { motion } from 'framer-motion'
+import { DynamicIcon } from "@/components/utils";
 
+const STATS_DATA = [
+    {
+        'icon' : GoAlertFill,
+        'title' : 'Total Request Raised',
+        'count' : 243,
+        'themeColor': '#ec003f'
+    },
+    {
+        'icon' : BiSolidDonateBlood,
+        'title' : 'Registered Volunteers',
+        'count' : 118,
+        'themeColor': '#ec003f'
+    },
+    {
+        'icon' : FaCheckCircle,
+        'title' : 'Successful Matches',
+        'count' : 198,
+        'themeColor': '#00a63e'
+    },
+    {
+        'icon' : FaHeartbeat,
+        'title' : 'Units Transfused (Liters)',
+        'count' : 512,
+        'themeColor': '#155dfc'
+    }
+]
 
 export default function RequestBloodPage() {
+
+    const [activeTab, setActiveTab] = useState("active-request"); // "active-request" | "blood-request" | "become-donor"
     return (
-        <>
-            <section>
-                <div className="bg-red-800 px-6 py-16 flex flex-col md:flex-row gap-24 md:gap-0">
+        <div className="bg-[#FAF9F6] text-slate-800 pb-16">
+            <section className="border-b border-border">
+                <div className="bg-red-800 px-6 pt-16 pb-24 flex flex-col md:flex-row gap-24 md:gap-0 " style={{clipPath: 'polygon(0% 0%, 100% 0%, 100% 95%, 0% 100%)'}}>
                     <div className="basis-1/2">
                         <p className="uppercase border border-red-500/30 px-3 py-2 w-fit m-auto rounded-full text-sm font-bold text-white flex flex-row gap-3 flex-nowrap items-center justify-center bg-red-500/20">
                             <motion.span animate={{
@@ -59,8 +93,36 @@ export default function RequestBloodPage() {
                         </motion.div>
                     </div>
                 </div>
+            </section>
+
+            <section className="-mt-10">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-5 px-3 sm:px-8">
+                    {STATS_DATA.map((item, index)=>{
+                        return (
+                            <div key={index} className="rounded-2xl inset-shadow-2xl p-10 bg-white shadow-2xs flex flex-col justify-center items-center">
+                                <div className="p-4 rounded w-fit aspect-square" style={{ background: `${item.themeColor}10`}}><item.icon className={`text-2xl`} style={{color : item.themeColor}}/></div>
+                                <h3 className="text-slate-800 mt-5 text-4xl">{item.count}</h3>
+                                <p className="text-center text-text font-semibold">{item.title}</p>
+                            </div>
+                        )
+                    })}
+                </div>
+
 
             </section>
-        </>
+            
+            
+            <section className="my-16">
+                    <div className="flex flex-nowrap overflow-x-auto bg-slate-100 text-text py-2 px-2 rounded-xl gap-4 w-fit m-auto shadow-sm">
+                        <div className={cn("text-lg font-sans text-text py-3 px-5 cursor-pointer rounded-xl", activeTab == 'active-request' && 'bg-white shadow-sm ')} onClick={()=>setActiveTab('active-request')}>Active Requests</div>
+                        <div className={cn("text-lg font-sans text-text py-3 px-5 cursor-pointer rounded-xl", activeTab == 'blood-request' && 'bg-white shadow-sm ')} onClick={()=>setActiveTab('blood-request')}>Request Blood</div>
+                        <div className={cn("text-lg font-sans text-text py-3 px-5 cursor-pointer rounded-xl", activeTab == 'become-donor' && 'bg-white shadow-sm ')} onClick={()=>setActiveTab('become-donor')}>Become Donor</div>
+                    </div>
+            </section>
+
+            <section id="active-request">
+                    
+            </section>
+        </div>
     )
 }
