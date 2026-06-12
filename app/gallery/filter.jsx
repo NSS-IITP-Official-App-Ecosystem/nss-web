@@ -1,27 +1,120 @@
 'use client'
-import {useSearchParams} from 'next/navigation'
-export function Filters() {
+
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useState, useEffect } from 'react'
+
+export function Filters({ wings = [] }) {
+    const router = useRouter();
+    const pathname = usePathname();
     const searchParams = useSearchParams();
-    let startDate = new Date(searchParams.get('start-date') || (Date.now() - 3.154e+10));
-    let endDate = new Date(searchParams.get('end-date') || Date.now());
 
-    
-    
+    const [startDate, setStartDate] = useState(searchParams.get('start-date') || '');
+    const [endDate, setEndDate] = useState(searchParams.get('end-date') || '');
+    const [selectedWing, setSelectedWing] = useState(searchParams.get('wing') || 'All');
+
+    // Sync input states if URL parameters change externally
+    useEffect(() => {
+        setStartDate(searchParams.get('start-date') || '');
+        setEndDate(searchParams.get('end-date') || '');
+        setSelectedWing(searchParams.get('wing') || 'All');
+    }, [searchParams]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const params = new URLSearchParams(searchParams.toString());
+        
+        if (startDate) params.set('start-date', startDate);
+        else params.delete('start-date');
+        
+        if (endDate) params.set('end-date', endDate);
+        else params.delete('end-date');
+        
+        if (selectedWing && selectedWing !== 'All') params.set('wing', selectedWing);
+        else params.delete('wing');
+
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    };
+
+    const handleClear = () => {
+        setStartDate('');
+        setEndDate('');
+        setSelectedWing('All');
+        router.push(pathname, { scroll: false });
+    };
+
     return (
-        <section className="mb-10 mt-10">
-            <div className="">
-                <h4 className="text-center">Select Date Range: </h4>
-                <form className="flex justify-around flex-wrap gap-4">
-                    <div className="border border-border p-2">
-                        <label htmlFor="start-date">{'Start Date: '}</label>
-                        <input type="date" defaultValue={`${startDate.getFullYear()}-${String(startDate.getMonth()).padStart(2,'0')}-${String(startDate.getDate()).padStart(2, '0')}`} name="start-date" id="start-date"/>
-                    </div>
-                    <div className="border border-border p-2">
-                        <label htmlFor="end-date">{'End Date: '}</label>
-                        <input type="date" defaultValue={`${endDate.getFullYear()}-${String(endDate.getMonth()).padStart(2,'0')}-${String(endDate.getDate()).padStart(2, '0')}`} name="end-date" id="end-date"/>
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+            <div className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-xl relative">
+                <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-5 items-end justify-between">
+                    
+                    {/* Start Date */}
+                    <div className="w-full md:flex-1 flex flex-col gap-1.5">
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-400" htmlFor="start-date">
+                            Start Date
+                        </label>
+                        <input
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            name="start-date"
+                            id="start-date"
+                            className="w-full border border-slate-200 outline-brand-blue py-3 px-4 bg-slate-50/50 rounded-2xl text-slate-800 font-medium transition-all focus:bg-white focus:border-brand-blue/50"
+                        />
                     </div>
 
-                    <button type="submit">Apply</button>
+                    {/* End Date */}
+                    <div className="w-full md:flex-1 flex flex-col gap-1.5">
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-400" htmlFor="end-date">
+                            End Date
+                        </label>
+                        <input
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            name="end-date"
+                            id="end-date"
+                            className="w-full border border-slate-200 outline-brand-blue py-3 px-4 bg-slate-50/50 rounded-2xl text-slate-800 font-medium transition-all focus:bg-white focus:border-brand-blue/50"
+                        />
+                    </div>
+
+                    {/* Wing Filter */}
+                    <div className="w-full md:flex-1 flex flex-col gap-1.5">
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-400" htmlFor="wing-select">
+                            Wing / Category
+                        </label>
+                        <select
+                            id="wing-select"
+                            value={selectedWing}
+                            onChange={(e) => setSelectedWing(e.target.value)}
+                            className="w-full border border-slate-200 outline-brand-blue py-3 px-4 bg-slate-50/50 rounded-2xl text-slate-800 font-medium transition-all focus:bg-white focus:border-brand-blue/50 cursor-pointer"
+                        >
+                            <option value="All">All Wings</option>
+                            {wings.map((w) => (
+                                <option key={w.id} value={w.name}>
+                                    {w.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="w-full md:w-auto flex gap-3 justify-end">
+                        <button
+                            type="button"
+                            onClick={handleClear}
+                            className="flex-1 md:flex-none border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold py-3 px-6 rounded-2xl transition-all cursor-pointer text-sm"
+                        >
+                            Reset
+                        </button>
+                        <button
+                            type="submit"
+                            className="flex-1 md:flex-none text-white bg-brand-blue hover:bg-brand-blue/90 font-bold py-3 px-8 rounded-2xl shadow-md transition-all active:scale-98 cursor-pointer text-sm"
+                        >
+                            Apply Filters
+                        </button>
+                    </div>
+
                 </form>
             </div>
         </section>

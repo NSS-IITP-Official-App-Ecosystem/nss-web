@@ -52,7 +52,7 @@ create table public.profiles (
     roll_number text unique, -- Nullable for external advisors/collaborators
     email text unique not null,
     phone_number text,
-    role public.user_role default 'volunteer'::public.user_role not null,
+    role public.user_role default 'public'::public.user_role not null,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
@@ -452,13 +452,24 @@ create policy "Allow admins to manage collaborate requests" on public.collaborat
 -- Automatically create a profile when a new user signs up
 create or replace function public.handle_new_user()
 returns trigger as $$
+declare
+  default_role public.user_role;
+  default_name text;
 begin
+  if new.email like '%@iitp.ac.in' then
+    default_role := 'volunteer'::public.user_role;
+    default_name := 'Student Volunteer';
+  else
+    default_role := 'public'::public.user_role;
+    default_name := 'User';
+  end if;
+
   insert into public.profiles (id, full_name, email, role)
   values (
     new.id,
-    coalesce(new.raw_user_meta_data->>'full_name', 'Student Volunteer'),
+    coalesce(new.raw_user_meta_data->>'full_name', default_name),
     new.email,
-    'volunteer'::public.user_role
+    default_role
   )
   on conflict (id) do nothing;
   return new;
