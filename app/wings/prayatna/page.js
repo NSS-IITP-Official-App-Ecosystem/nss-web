@@ -57,84 +57,114 @@ export default function PrayatnaWing() {
     const [selected, setSelected] = useState(null);
 
     return (
-        <div className="min-h-screen text-white font-sans pb-16 bg-gradient-to-tr from-[#050515] via-[#0a0a24] to-[#02020a]" >
+        <div className="min-h-screen text-slate-800 font-sans pb-24 bg-slate-50">
 
-            {/* Header */}
-            <header className="max-w-4xl mx-auto text-center pt-12 px-4 pb-6">
-                <span className="text-[#ff9933] text-xs font-semibold uppercase tracking-widest block mb-3">
-                    National Service Scheme
-                </span>
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-1 text-white">
-                    Prayatna <span className="text-[#ff9933]">Wing</span>
-                </h1>
-                <div className="w-14 h-0.5 bg-[#ff9933] mx-auto mt-3 mb-5" />
-                <div className="text-left max-w-2xl mx-auto p-5 border-l-4 border-[#138808] bg-white/5 rounded-r-xl">
-                    <p className="text-base italic text-gray-300 leading-relaxed">
-                        "Persistent efforts shield humanity. The Prayatna Wing centers its mission around active mobilization—transforming personal surplus into community resource shields and orchestrating critical blood donation lifelines."
+            {/* Official Premium Top Border Bar */}
+            <div className="w-full h-1.5 bg-gradient-to-r from-[#ff9933] via-slate-200 to-[#138808]" />
+
+            {/* Premium Deep Navy Hero with Asymmetrical Angled Cut */}
+            <div 
+                className="bg-gradient-to-br from-[#0a1128] via-[#101f42] to-[#070c1e] text-white pt-24 pb-40 px-4 text-center relative"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0% 100%)' }}
+            >
+                <div className="max-w-4xl mx-auto">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-xs mb-4">
+                        <span className="text-[#ff9933] text-[10px] font-bold uppercase tracking-widest">
+                            Welcome to the Core
+                        </span>
+                    </div>
+                    
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-4 text-white">
+                        Prayatna <span className="text-amber-400 font-light">Wing</span>
+                    </h1>
+                    
+                    <p className="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base md:text-lg font-normal leading-relaxed opacity-90">
+                        Transforming personal surplus into vital community resource shields and orchestrating urgent healthcare lifelines.
                     </p>
                 </div>
-            </header>
+            </div>
 
-            {/* Stats Bar */}
-            <div className="max-w-4xl mx-auto px-4 mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+            {/* Overlapping Glassmorphism Quote Container */}
+            <div className="max-w-3xl mx-auto px-4 -mt-24 relative z-10">
+                <div className="bg-white/80 backdrop-blur-xl border border-white shadow-xl rounded-3xl p-6 md:p-8 text-center relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ff9933] via-slate-400 to-[#138808]" />
+                    <p className="text-base md:text-xl italic text-slate-800 leading-relaxed font-semibold">
+                        "Persistent efforts shield humanity. The Prayatna Wing centers its mission around active mobilization—transforming personal surplus into community resource shields and orchestrating critical blood donation lifelines."
+                    </p>
+                    <div className="absolute left-4 top-2 opacity-5 text-slate-900 font-serif text-8xl pointer-events-none select-none">“</div>
+                </div>
+            </div>
+
+            {/* Metric Statistics Section */}
+            <div className="max-w-4xl mx-auto px-4 mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
                 {stats.map((s) => (
-                    <div key={s.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-[#ff9933]">{s.num}</div>
-                        <div className="text-xs text-gray-400 uppercase tracking-wide mt-1">{s.label}</div>
+                    <div key={s.label} className="bg-white border border-slate-200/60 shadow-xs rounded-2xl p-5 text-center transition-all duration-300 hover:border-slate-300 hover:shadow-md">
+                        <div className="text-3xl font-black text-slate-900">{s.num}</div>
+                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1.5">{s.label}</div>
                     </div>
                 ))}
             </div>
 
-            {/* Purpose Section */}
-            <div className="max-w-4xl mx-auto px-4 mt-6">
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                    <h2 className="text-base font-semibold text-[#ff9933] uppercase tracking-wide mb-3">
+            {/* Narrative Context Section */}
+            <div className="max-w-4xl mx-auto px-4 mt-10">
+                <div className="bg-white border border-slate-200/70 shadow-xs rounded-2xl p-6 md:p-8">
+                    <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <span className="w-1 h-3.5 bg-slate-900 rounded-full inline-block" />
                         Our Purpose &amp; Impact
                     </h2>
-                    <p className="text-sm text-gray-300 leading-relaxed">
+                    <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal">
                         The Prayatna Wing of NSS IIT Patna serves as our principal relief, collection, and healthcare logistics center. Our volunteers direct comprehensive collection campaigns to systematically gather, quality-inspect, and arrange essential supplies for resource-strained families. Simultaneously, the wing takes charge of crucial health preservation actions, organizing vital campus blood donation camps to help meet regional emergency medical requirements.
                     </p>
                 </div>
             </div>
 
-            {/* Cards Grid */}
-            <div className="max-w-5xl mx-auto px-4 mt-8">
-                <h2 className="text-sm font-semibold text-white uppercase tracking-widest border-b border-white/10 pb-3 mb-5">
-                    Field Initiatives &amp; Ground Reality
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Main Interactive Grid Elements */}
+            <div className="max-w-5xl mx-auto px-4 mt-16">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-4 mb-8">
+                    <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                        Field Initiatives &amp; Ground Reality
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {initiatives.map((item) => (
                         <div
                             key={item.title}
                             onClick={() => setSelected(item)}
-                            className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden cursor-pointer group transition-transform duration-200 hover:-translate-y-1 hover:border-[#ff9933]/50 flex flex-col"
+                            className="bg-white border border-slate-200 shadow-2xs rounded-2xl overflow-hidden cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 flex flex-col"
                         >
-                            <div className="h-44 overflow-hidden bg-black">
+                            <div className="h-48 overflow-hidden bg-slate-100 relative">
                                 <img
                                     src={item.img}
                                     alt={item.title}
-                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
                                 />
                             </div>
-                            <div className="p-4 flex flex-col flex-1">
-                                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#138808] mb-1">
+                            
+                            <div className="p-6 flex flex-col flex-1">
+                                <div className="inline-block self-start px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 border border-slate-200 rounded-sm mb-3">
                                     {item.tag}
-                                </span>
-                                <h3 className="text-sm font-semibold text-white leading-snug">{item.title}</h3>
+                                </div>
+                                
+                                <h3 className="text-base font-bold text-slate-900 leading-snug group-hover:text-indigo-950 transition-colors duration-200">
+                                    {item.title}
+                                </h3>
 
-                                {/* Contextual Quote */}
-                                <p className="text-[11px] italic text-[#ff9933] font-medium mt-1 mb-2 leading-snug">
+                                <p className="text-xs italic text-slate-400 font-medium my-3 border-l-2 border-slate-200 pl-2 line-clamp-2 leading-snug">
                                     {item.quote}
                                 </p>
 
-                                <p className="text-xs text-gray-400 leading-relaxed line-clamp-3 flex-1">
+                                <p className="text-xs text-slate-500 leading-relaxed line-clamp-3 flex-1 mb-4">
                                     {item.desc}
                                 </p>
-                                <div className="mt-3 text-[10px] text-[#ff9933]/60 flex items-center gap-1">
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+                                
+                                <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-900 flex items-center justify-between transition-colors">
+                                    <span className="flex items-center gap-1.5">
+                                        View details
+                                    </span>
+                                    <svg className="w-3.5 h-3.5 transform translate-x-0 group-hover:translate-x-1 transition-transform text-slate-400 group-hover:text-slate-900" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                     </svg>
-                                    Click to expand
                                 </div>
                             </div>
                         </div>
@@ -142,40 +172,43 @@ export default function PrayatnaWing() {
                 </div>
             </div>
 
-            {/* Modal */}
+            {/* Native Application Styled Pop-up Modal */}
             {selected && (
                 <div
-                    className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+                    className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4 backdrop-blur-xs transition-opacity"
                     onClick={() => setSelected(null)}
                 >
                     <div
-                        className="bg-[#12103a] border border-white/15 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto relative"
+                        className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto relative shadow-2xl transition-all scale-100 transform"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <img
-                            src={selected.img}
-                            alt={selected.title}
-                            className="w-full max-h-80 object-cover rounded-t-2xl"
-                        />
+                        <div className="max-h-80 overflow-hidden relative bg-slate-900">
+                            <img
+                                src={selected.img}
+                                alt={selected.title}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                        
                         <button
                             onClick={() => setSelected(null)}
-                            className="absolute top-3 right-3 bg-black/60 border border-white/20 rounded-full w-8 h-8 flex items-center justify-center text-white hover:bg-red-700/70 transition-colors"
+                            className="absolute top-4 right-4 bg-white border border-slate-200 rounded-full w-9 h-9 flex items-center justify-center text-slate-700 shadow-md hover:bg-slate-900 hover:text-white transition-all font-semibold z-10"
                             aria-label="Close"
                         >
                             ✕
                         </button>
-                        <div className="p-6">
-                            <span className="text-[10px] font-semibold uppercase tracking-widest text-[#138808]">
+                        
+                        <div className="p-6 md:p-8">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-600 bg-slate-100 px-2 py-0.5 rounded-sm border border-slate-200">
                                 {selected.tag}
                             </span>
-                            <h3 className="text-xl font-bold text-white mt-1">{selected.title}</h3>
+                            <h3 className="text-2xl font-black text-slate-900 mt-4 mb-3">{selected.title}</h3>
 
-                            {/* Modal Quote View */}
-                            <p className="text-xs italic text-[#ff9933] font-medium my-2">
+                            <p className="text-sm italic text-slate-700 font-semibold my-4 bg-slate-50 p-4 rounded-xl border-l-4 border-slate-900 leading-relaxed">
                                 {selected.quote}
                             </p>
 
-                            <p className="text-sm text-gray-300 leading-relaxed">{selected.desc}</p>
+                            <p className="text-sm md:text-base text-slate-600 leading-relaxed mt-4 font-normal">{selected.desc}</p>
                         </div>
                     </div>
                 </div>
