@@ -4,8 +4,8 @@
     "title": "Blood Donation Camp 2026",
     "details": "Annual blood donation camp organized by NSS IIT Patna in collaboration with local hospitals. We successfully collected over 200 units of blood to help patients in need.",
     "images": [
-      "/images/events/blood-donation-1.jpg",
-      "/images/events/blood-donation-2.jpg"
+      "/home_slider/SWACHHATA_HI_SEVA.jpeg",
+      "/home_slider/nss_home.jpg"
     ],
     "resources": [
       "https://example.com/blood-donation-guidelines.pdf"
@@ -23,7 +23,7 @@
     "title": "Village Cleanliness Drive",
     "details": "A massive cleanliness drive was organized in the nearby Amhara village under the Swachh Bharat Abhiyan. Over 50 volunteers participated in raising awareness and cleaning the surroundings.",
     "images": [
-      "/images/events/cleanliness-drive.jpg"
+      "/home_slider/nss_home.jpg"
     ],
     "resources": [],
     "date": "2026-05-02T08:00:00Z",
@@ -54,7 +54,7 @@
     "title": "World Environment Day - Tree Plantation",
     "details": "Planted 500 saplings across the campus and neighboring areas to promote a greener environment. The event saw participation from students and faculty alike.",
     "images": [
-      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1000"
+      "/home_slider/nss_home.jpg"
     ],
     "resources": [],
     "date": "2026-06-05T07:00:00Z",
