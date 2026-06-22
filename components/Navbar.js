@@ -23,6 +23,10 @@ export default function Navbar() {
               Home
             </Link>
             
+            <Link href="/events" className="text-secondary-slate hover:text-brand-blue font-medium transition-colors">
+              Events
+            </Link>
+            
             <Link href="/our-team" className="text-secondary-slate hover:text-brand-blue font-medium transition-colors">
               Our Team
             </Link>
