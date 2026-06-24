@@ -1,7 +1,10 @@
 'use client'
 
+import { param, s } from 'framer-motion/client';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import NSS_SESSION from '@/data/nss_session.json'
+
 
 export function Filters({ wings = [] }) {
     const router = useRouter();
@@ -10,12 +13,14 @@ export function Filters({ wings = [] }) {
 
     const [startDate, setStartDate] = useState(searchParams.get('start-date') || '');
     const [endDate, setEndDate] = useState(searchParams.get('end-date') || '');
+    const [session, setSession] = useState(searchParams.get("session") || NSS_SESSION[0]["session"]);
     const [selectedWing, setSelectedWing] = useState(searchParams.get('wing') || 'All');
 
     // Sync input states if URL parameters change externally
     useEffect(() => {
         setStartDate(searchParams.get('start-date') || '');
         setEndDate(searchParams.get('end-date') || '');
+        setSession(searchParams.get("session") || NSS_SESSION[0]["session"]);
         setSelectedWing(searchParams.get('wing') || 'All');
     }, [searchParams]);
 
@@ -33,12 +38,16 @@ export function Filters({ wings = [] }) {
         if (selectedWing && selectedWing !== 'All') params.set('wing', selectedWing);
         else params.delete('wing');
 
+        if(session && NSS_SESSION.find(s=>s.session == session)) params.set("session", session);
+        else params.delete("session");
+
         router.push(`${pathname}?${params.toString()}`, { scroll: false });
     };
 
     const handleClear = () => {
         setStartDate('');
         setEndDate('');
+        setSession(NSS_SESSION[0]["session"]);
         setSelectedWing('All');
         router.push(pathname, { scroll: false });
     };
@@ -49,7 +58,7 @@ export function Filters({ wings = [] }) {
                 <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-5 items-end justify-between">
                     
                     {/* Start Date */}
-                    <div className="w-full md:flex-1 flex flex-col gap-1.5">
+                    {/* <div className="w-full md:flex-1 flex flex-col gap-1.5">
                         <label className="text-xs font-bold uppercase tracking-wider text-slate-400" htmlFor="start-date">
                             Start Date
                         </label>
@@ -61,10 +70,10 @@ export function Filters({ wings = [] }) {
                             id="start-date"
                             className="w-full border border-slate-200 outline-brand-blue py-3 px-4 bg-slate-50/50 rounded-2xl text-slate-800 font-medium transition-all focus:bg-white focus:border-brand-blue/50"
                         />
-                    </div>
+                    </div> */}
 
                     {/* End Date */}
-                    <div className="w-full md:flex-1 flex flex-col gap-1.5">
+                    {/* <div className="w-full md:flex-1 flex flex-col gap-1.5">
                         <label className="text-xs font-bold uppercase tracking-wider text-slate-400" htmlFor="end-date">
                             End Date
                         </label>
@@ -76,6 +85,24 @@ export function Filters({ wings = [] }) {
                             id="end-date"
                             className="w-full border border-slate-200 outline-brand-blue py-3 px-4 bg-slate-50/50 rounded-2xl text-slate-800 font-medium transition-all focus:bg-white focus:border-brand-blue/50"
                         />
+                    </div> */}
+
+                    {/* sessionwise date filter */}
+                    <div className="w-full md:flex-1 flex flex-col gap-1.5">
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-400" htmlFor="end-date">
+                            Session
+                        </label>
+                        <select
+                            value={session}
+                            onChange={(e) => setSession(e.target.value)}
+                            name="session"
+                            id="session"
+                            className="w-full border border-slate-200 outline-brand-blue py-3 px-4 bg-slate-50/50 rounded-2xl text-slate-800 font-medium transition-all focus:bg-white focus:border-brand-blue/50"
+                        >
+                        {NSS_SESSION.map((session, index)=>{
+                            return <option key={index} value={session.session} className="uppercase">{session.session}</option>
+                        })}
+                        </select>
                     </div>
 
                     {/* Wing Filter */}
