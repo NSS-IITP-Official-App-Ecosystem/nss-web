@@ -1,12 +1,17 @@
 'use client'
-import {useState} from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
-import {Children} from 'react'
+import { Children } from 'react'
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
-import {cn} from '@/components/utils'
+import { cn } from '@/components/utils'
 import Image from 'next/image';
 import { FaQuoteLeft } from "react-icons/fa";
+import useEmblaCarousel from 'embla-carousel-react'
+import { usePrevNextButtons, PrevButton, NextButton } from '@/components/EmblaNextPrev'
+import { DotButton, useDotButton } from '@/components/EmblaDotButtons'
+import '@/assets/css/embla.css'
+import { GoDot } from "react-icons/go";
 
 const sliderVariants = {
     incoming: (forwarded) => ({
@@ -31,68 +36,117 @@ const sliderVariants = {
     })
 };
 
-export default function Testimonial({children, variants, Defaultactive, className}){
+// export default function Testimonial({children, variants, Defaultactive, className}){
 
-    const [active, setActive] = useState(Defaultactive ||  0);
-    const [forwarded, setForwarded] = useState(true);
+//     const [active, setActive] = useState(Defaultactive ||  0);
+//     const [forwarded, setForwarded] = useState(true);
 
-    const doNext = () =>{
-        setActive((active + 1) % Children.count(children));
-        setForwarded(true);
-    }
+//     const doNext = () =>{
+//         setActive((active + 1) % Children.count(children));
+//         setForwarded(true);
+//     }
 
-    const doPrev = () => {
-        if(active == 0) setActive(Children.count(children) - 1)
-        else setActive(active  - 1);
-        setForwarded(false);
-    }
+//     const doPrev = () => {
+//         if(active == 0) setActive(Children.count(children) - 1)
+//         else setActive(active  - 1);
+//         setForwarded(false);
+//     }
+
+//     return (
+//         <div className="">
+//             <div className={cn("relative overflow-hidden w-full", className)}>
+//                 <AnimatePresence>
+//                {Children.map(children, (child, i)=>{
+//                     if(i != active) return;
+//                     return (
+//                         <motion.div
+//                             key={i}
+//                             custom={forwarded}
+//                             variants={variants || sliderVariants}
+//                             initial="incoming"
+//                             animate="active"
+//                             exit="exiting"
+//                             className='absolute top-0 left-0 w-full h-full overflow-hidden' 
+//                             style={{ borderRadius: 'inherit' }}
+//                         >
+//                             {child}
+//                         </motion.div>
+//                     )
+//                })}  
+//                 </AnimatePresence>
+//                 <motion.button whileHover={{background: 'var(--primary)'}} onClick={doPrev} className="absolute left-5 top-0 bottom-0 m-auto h-fit text-white text-xl font-bold  p-3 cursor-pointer bg-text rounded-full z-50"><IoIosArrowBack/></motion.button>
+//                 <motion.button whileHover={{background: 'var(--primary)'}} onClick={doNext} className="absolute right-5 top-0 bottom-0 m-auto h-fit text-white text-xl  font-bold p-3 cursor-pointer bg-text  rounded-full z-50"><MdNavigateNext/></motion.button>    
+
+//             </div>
+//         </div>
+//     )
+// }
+
+export default function Testimonial({ children }) {
+    const [emblaRef, emblaApi] = useEmblaCarousel({
+        loop: true
+    });
+    const {
+        prevBtnDisabled,
+        nextBtnDisabled,
+        onPrevButtonClick,
+        onNextButtonClick
+    } = usePrevNextButtons(emblaApi);
+
+    const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
 
     return (
-        <div className="">
-            <div className={cn("relative overflow-hidden w-full", className)}>
-                <AnimatePresence>
-               {Children.map(children, (child, i)=>{
-                    if(i != active) return;
-                    return (
-                        <motion.div
-                            key={i}
-                            custom={forwarded}
-                            variants={variants || sliderVariants}
-                            initial="incoming"
-                            animate="active"
-                            exit="exiting"
-                            className='absolute top-0 left-0 w-full h-full overflow-hidden' 
-                            style={{ borderRadius: 'inherit' }}
-                        >
-                            {child}
-                        </motion.div>
-                    )
-               })}  
-                </AnimatePresence>
-                <motion.button whileHover={{background: 'var(--primary)'}} onClick={doPrev} className="absolute left-5 top-0 bottom-0 m-auto h-fit text-white text-xl font-bold  p-3 cursor-pointer bg-text rounded-full z-50"><IoIosArrowBack/></motion.button>
-                <motion.button whileHover={{background: 'var(--primary)'}} onClick={doNext} className="absolute right-5 top-0 bottom-0 m-auto h-fit text-white text-xl  font-bold p-3 cursor-pointer bg-text  rounded-full z-50"><MdNavigateNext/></motion.button>    
-                    
+        <div className="testimonial-item-cont relative">
+            <div className="embla__viewport" ref={emblaRef}>
+                <div className="embla__container">
+                    {Children.map(children, (child, index) => {
+                        return child;
+                    })}
+                </div>
+            </div>
+        <div className="hidden md:block">
+            <div className="embla__buttons">
+                <PrevButton className={"absolute top-0 bottom-0 m-auto left-0"}
+                    onClick={() => onPrevButtonClick()}
+                    disabled={prevBtnDisabled}
+                />
+                <NextButton className={"absolute top-0 bottom-0 m-auto right-0"}
+                    onClick={() => onNextButtonClick()}
+                    disabled={nextBtnDisabled}
+                />
+            </div>
+            {/* <div className="embla_dotbuttons">
+                {
+                    scrollSnaps.map((_, index) => {
+                        return (
+                            <DotButton onClick={() => onDotButtonClick(index)}>
+                                <GoDot className={cn(index == selectedIndex && 'text-primary')}></GoDot>
+                            </DotButton>
+                        )
+                    })
+                }
+            </div> */}
             </div>
         </div>
     )
 }
 
-export function TestimonialItem({data, className}){
-     return (
-        <div className = {cn ("h-full w-full flex items-center justify-center",className)}>
-            <div className="h-90 max-w-200 flex flex-col md:flex-row rounded-xl gap-4 border border-gray-200 shadow-2xl">
-                <motion.div className="basis-[30%] rounded-bl-xl rounded-tl-xl">
-                    <Image className="rounded-[inherit]" src={data.img} alt='' height={200} width={100} objectFit="cover" style={{height:'100%', width:'100%', objectFit:'cover'}}></Image>
+export function TestimonialItem({ data, className }) {
+    return (
+        <div className={cn("h-full w-full flex items-center justify-center", className)}>
+            <div className="md:h-90 max-w-200 flex flex-col md:flex-row rounded-xl gap-4 border border-gray-200 shadow-2xl">
+                <motion.div className="h-75 md:h-auto md:basis-[30%] rounded-tl-xl rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl md:rounded-tl-xl">
+                    <Image className="rounded-[inherit]" src={data.img} alt='' height={200} width={100} objectFit="cover" style={{ height: '100%', width: '100%', objectFit: 'cover' }}></Image>
                 </motion.div>
-                <motion.div className="basis-[70%] flex flex-col gap-4 pe-2 pbs-2">
-                <FaQuoteLeft className="text-6xl"/>
-                    <p className="text-text" dangerouslySetInnerHTML={{__html : data.text}}></p>
+                <motion.div className="md:basis-[70%] ps-2 flex flex-col gap-4 pe-2 pbs-2 pbe-2">
+                    <FaQuoteLeft className="hidden md:block text-6xl" />
+                    <p className="text-text" dangerouslySetInnerHTML={{ __html: data.text }}></p>
                     <div>
-                    <h3>{data.name}</h3>
-                    <h4>{data.position}</h4>
-                    </div> 
+                        <h3>{data.name}</h3>
+                        <h4>{data.position}</h4>
+                    </div>
                 </motion.div>
             </div>
         </div>
-     )
+    )
 }

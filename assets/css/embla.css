@@ -21,9 +21,10 @@
 
 .embla__slide {
   transform: translate3d(0, 0, 0);
-  flex: 0 0 var(--slide-size);
+  flex: 0 0 calc(var(--spacing) * 50 * 1.5);
   min-width: 0;
   padding-left: var(--slide-spacing);
+  /* margin-inline:2rem; */
 }
 
 .embla__slide__number {
@@ -64,7 +65,7 @@
   cursor: pointer;
   border: 0;
   padding: 0;
-  margin: 0;
+  /* margin: 0; */
   border: 0.2rem solid var(--detail-medium-contrast);
   width: 3.6rem;
   height: 3.6rem;
