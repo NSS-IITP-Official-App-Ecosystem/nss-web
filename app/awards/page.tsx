@@ -33,7 +33,7 @@ export default function AwardsPage() {
            { name: "Piyush Kumar", role: "Sub-Coordinator", wing: "Prayatana", img: "/awards/Screenshot 2026-06-27 at 3.01.12 PM.png" },
             { name: "Rijju Mondal", role: "Sub-Coordinator", wing: "Environmental", img: "/awards/Screenshot 2026-06-27 at 3.02.24 PM.png" },
              { name: "Rahul Kumar", role: "Sub-Coordinator", wing: "Rural", img: "/awards/Screenshot 2026-06-27 at 3.11.37 PM.png" },
-
+             { name: "Shankhadeep Das", role: "Sub-Coordinator", wing: "DNC", img: "/awards/WhatsApp Image 2026-06-27 at 15.36.46 copy.jpeg" },
   ];
 
   // 3. First-Year Winners (Grouped by Wing)
