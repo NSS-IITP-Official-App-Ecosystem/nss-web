@@ -140,7 +140,7 @@ export default function HomeClient({
                                                 variants={{
                                                     show: { transition: { staggerChildren: 0.12 } }
                                                 }}
-                                                className="max-w-xl backdrop-blur-xl bg-slate-950/45 border border-white/10 rounded-[2.5rem] p-8 sm:p-12 text-left shadow-2xl space-y-4"
+                                                className="max-w-xl border rounded-[2.5rem] p-8 sm:p-12 text-left shadow-2xl space-y-4"
                                             >
                                                 {item.content.update_text && (
                                                     <motion.span 

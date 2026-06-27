@@ -1,9 +1,9 @@
 'use client'
 
-import { param, s } from 'framer-motion/client';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import NSS_SESSION from '@/data/nss_session.json'
+import { FaSpinner } from 'react-icons/fa';
 
 
 export function Filters({ wings = [] }) {
@@ -15,6 +15,7 @@ export function Filters({ wings = [] }) {
     const [endDate, setEndDate] = useState(searchParams.get('end-date') || '');
     const [session, setSession] = useState(searchParams.get("session") || NSS_SESSION[0]["session"]);
     const [selectedWing, setSelectedWing] = useState(searchParams.get('wing') || 'All');
+    const [isPending, startTransition] = useTransition();
 
     // Sync input states if URL parameters change externally
     useEffect(() => {
@@ -41,7 +42,7 @@ export function Filters({ wings = [] }) {
         if(session && NSS_SESSION.find(s=>s.session == session)) params.set("session", session);
         else params.delete("session");
 
-        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+        startTransition(()=>router.push(`${pathname}?${params.toString()}`, { scroll: false }));
     };
 
     const handleClear = () => {
@@ -135,10 +136,11 @@ export function Filters({ wings = [] }) {
                             Reset
                         </button>
                         <button
+                            disabled={isPending}
                             type="submit"
-                            className="flex-1 md:flex-none text-white bg-brand-blue hover:bg-brand-blue/90 font-bold py-3 px-8 rounded-2xl shadow-md transition-all active:scale-98 cursor-pointer text-sm"
+                            className="flex-1 flex flex-row justify-center flex-nowrap items-center md:flex-none text-white bg-brand-blue hover:bg-brand-blue/90 font-bold py-3 px-8 rounded-2xl shadow-md transition-all active:scale-98 cursor-pointer text-sm"
                         >
-                            Apply Filters
+                           {isPending &&  <FaSpinner className="animate-spin me-3"/>} <span>Apply Filters</span>
                         </button>
                     </div>
 
