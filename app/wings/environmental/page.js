@@ -1,48 +1,42 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-const initiatives = [
+const categories = [
     {
-        tag: "On-Campus",
-        title: "IIT Patna Green Campus Drives",
-        quote: "“Every sapling planted today becomes tomorrow’s shade, oxygen, and hope.”",
-        desc: "Student volunteers organize massive plantation drives across the IIT Patna campus, establishing native tree clusters and green belts to support local biodiversity and reduce our institutional carbon footprint.",
-        img: "https://i.pinimg.com/736x/ca/13/b7/ca13b79bc384b2d689a0524bf17bf39e.jpg"
+        title: "Plantation & Afforestation Drives",
+        description: "Massive plantation movements establishing native tree clusters, urban green belts, and biodiversity zones both inside the campus and across rural sectors.",
+        images: [
+            { img: "/Environmental/tree plantation/IMG_1237 (1) copy.JPG" },
+            { img: "/Environmental/tree plantation/IMG_1257 copy.JPG" },
+            { img: "/Environmental/tree plantation/IMG_1215.JPG" },
+            { img: "/Environmental/tree plantation/IMG_1244 copy.JPG" },
+            { img: "/Environmental/tree plantation/IMG_1281 copy.JPG" },
+            { img: "/Environmental/tree plantation/IMG_1240 copy.JPG" },
+        ]
     },
     {
-        tag: "Off-Campus Outreach",
-        title: "Rural Afforestation Movements",
-        quote: "“Communities grow stronger when people and nature rise together.”",
-        desc: "Extending ecological efforts beyond the boundaries of our college. Volunteers travel to neighboring Bihta blocks to distribute saplings and plant trees alongside rural communities.",
-        img: "https://i.pinimg.com/736x/a0/38/5f/a0385f184bdbd647ae3a6e5d287b3c0a.jpg"
+        title: "Waste Management & Clean-up Drives",
+        description: "Anti-plastic campaigns, rigorous campus sanitization sweeps, and ground-level clean-up operations to eliminate micro-plastic trash pockets.",
+        images: [
+            { img: "/Environmental/cleaniness/IMG-20260328-WA0055 copy.jpg" },
+            { img: "/Environmental/cleaniness/IMG-20260328-WA0058 copy.jpg" },
+            { img: "/Environmental/cleaniness/IMG-20260328-WA0079 (1).jpg" },
+            { img: "/Environmental/cleaniness/IMG-20260328-WA0067 copy.jpg" },
+            { img: "/Environmental/cleaniness/IMG-20260328-WA0092.jpg" },
+            { img: "/Environmental/cleaniness/IMG-20260328-WA0065.jpg" },
+        ]
     },
     {
-        tag: "Waste Management",
-        title: "Zero-Plastic & Cleanliness Campaigns",
-        quote: "“A cleaner earth begins with the courage to pick up what others leave behind.”",
-        desc: "Conducting dynamic clean-up drives and setting up waste segregation units both inside the institute and in nearby public areas to promote an eco-friendly, zero-waste lifestyle.",
-        img: "https://i.pinimg.com/1200x/bd/43/70/bd4370cf891aa213d538038a568dbfbe.jpg"
-    },
-    {
-        tag: "Conservation",
-        title: "Water Audit & Resource Mapping",
-        quote: "“Save water today, so life continues to flourish tomorrow.”",
-        desc: "Technical groups map water utilization on campus and design low-cost rainwater harvesting and distribution systems tailored for drought-prone local agricultural patches.",
-        img: "https://i.pinimg.com/736x/94/dc/27/94dc271f870e9329b2ccd32ca5e84bd8.jpg"
-    },
-    {
-        tag: "Energy Awareness",
-        title: "Renewable Energy Workshops",
-        quote: "“The future shines brightest when powered by clean energy.”",
-        desc: "Educating nearby school children and residents on the benefits of solar energy installations, smart power usage, and switching to sustainable fuel alternatives.",
-        img: "https://i.pinimg.com/736x/09/33/58/0933588a471ac4a899c9acdfdf007618.jpg"
-    },
-    {
-        tag: "Eco-Advocacy",
-        title: "Climate Action Street Plays",
-        quote: "“When voices unite for the planet, awareness becomes action.”",
-        desc: "Utilizing open-air street theater (Nukkad Natak) within campus hubs and local town squares to spread awareness about global warming, deforestation, and individual eco-duties.",
-        img: "https://i.pinimg.com/1200x/58/82/f5/5882f5ca83568fec13a7d4ca7bcf6232.jpg"
+        title: "Climate Change Awareness and Quiz",
+        description: "Spreading smart power usage awareness through community solar educational circles and high-energy open-air street performance theater.",
+        images: [
+            { img: "/Environmental/climate awareness/IMG20251019174404 (2) copy.jpg" },
+            { img: "/Environmental/climate awareness/IMG20251016194351 (2) copy.jpg" },
+            { img: "/Environmental/climate awareness/IMG20251019173630.jpg" },
+            { img: "/Environmental/climate awareness/IMG20251019172330 (2).jpg" },
+            { img: "/Environmental/climate awareness/IMG20251016194455.jpg" },
+            { img: "/Environmental/climate awareness/IMG20251013202918 copy.jpg" },
+        ]
     }
 ];
 
@@ -53,163 +47,381 @@ const stats = [
     { num: "On & Off", label: "Campus Impact" },
 ];
 
+// Flatten all images with their category index for modal navigation
+const allImages = categories.flatMap((cat, ci) =>
+    cat.images.map((img, ii) => ({ ...img, catIndex: ci, imgIndex: ii }))
+);
+
 export default function EnvironmentalWing() {
-    const [selected, setSelected] = useState(null);
+    const [modalIdx, setModalIdx] = useState(null); // index into allImages
+
+    const openModal = useCallback((globalIdx) => setModalIdx(globalIdx), []);
+    const closeModal = useCallback(() => setModalIdx(null), []);
+
+    const navModal = useCallback((dir) => {
+        setModalIdx(prev =>
+            prev === null ? null : (prev + dir + allImages.length) % allImages.length
+        );
+    }, []);
+
+    useEffect(() => {
+        const handler = (e) => {
+            if (modalIdx === null) return;
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') navModal(-1);
+            if (e.key === 'ArrowRight') navModal(1);
+        };
+        window.addEventListener('keydown', handler);
+        return () => window.removeEventListener('keydown', handler);
+    }, [modalIdx, closeModal, navModal]);
+
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        document.body.style.overflow = modalIdx !== null ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [modalIdx]);
+
+    // Compute the global index for a given category + image index
+    let runningIdx = 0;
+    const catStartIdx = categories.map(cat => {
+        const start = runningIdx;
+        runningIdx += cat.images.length;
+        return start;
+    });
 
     return (
-        <div className="min-h-screen text-slate-800 font-sans pb-24 bg-slate-50">
+        <div style={{ minHeight: '100vh', background: '#f8f9f6', color: '#1a1f1a', fontFamily: "'Inter', sans-serif" }}>
 
-            {/* Official Premium Top Border Bar */}
-            <div className="w-full h-1.5 bg-gradient-to-r from-[#ff9933] via-slate-200 to-[#138808]" />
+            {/* India tricolor top bar */}
+            <div style={{ height: 4, background: 'linear-gradient(90deg, #FF9933 33.33%, #ffffff 33.33% 66.66%, #138808 66.66%)' }} />
 
-            {/* Premium Deep Navy Hero with Asymmetrical Angled Cut */}
-            <div 
-                className="bg-gradient-to-br from-[#0a1128] via-[#101f42] to-[#070c1e] text-white pt-24 pb-40 px-4 text-center relative"
-                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0% 100%)' }}
-            >
-                <div className="max-w-4xl mx-auto">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-xs mb-4">
-                        <span className="text-[#ff9933] text-[10px] font-bold uppercase tracking-widest">
-                            Welcome to the Core
-                        </span>
-                    </div>
-                    
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-4 text-white">
-                        Environmental <span className="text-amber-400 font-light">Wing</span>
-                    </h1>
-                    
-                    <p className="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base md:text-lg font-normal leading-relaxed opacity-90">
-                        Driving active grassroots sustainability, ecological transformations, and clean energy modeling within the institution and beyond.
-                    </p>
-                </div>
-            </div>
+            {/* ── Hero ── */}
+            <div style={{
+                background: '#0b1a10',
+                color: '#fff',
+                padding: '5rem 1.5rem 7.5rem',
+                textAlign: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+                clipPath: 'polygon(0 0, 100% 0, 100% 90%, 0 100%)',
+            }}>
+                {/* Soft green radial glow */}
+                <div style={{
+                    position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
+                    width: 700, height: 320,
+                    background: 'radial-gradient(ellipse at center, rgba(16,185,129,0.14) 0%, transparent 70%)',
+                    pointerEvents: 'none',
+                }} />
 
-            {/* Overlapping Glassmorphism Quote Container */}
-            <div className="max-w-3xl mx-auto px-4 -mt-24 relative z-10">
-                <div className="bg-white/80 backdrop-blur-xl border border-white shadow-xl rounded-3xl p-6 md:p-8 text-center relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ff9933] via-slate-400 to-[#138808]" />
-                    <p className="text-base md:text-xl italic text-slate-800 leading-relaxed font-semibold">
-                        "Nature does not hurry, yet everything is accomplished. Protecting our environment is not an extra-curricular option; it is our fundamental prerequisite for survival."
-                    </p>
-                    <div className="absolute left-4 top-2 opacity-5 text-slate-900 font-serif text-8xl pointer-events-none select-none">“</div>
-                </div>
-            </div>
-
-            {/* Metric Statistics Section */}
-            <div className="max-w-4xl mx-auto px-4 mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-                {stats.map((s) => (
-                    <div key={s.label} className="bg-white border border-slate-200/60 shadow-xs rounded-2xl p-5 text-center transition-all duration-300 hover:border-slate-300 hover:shadow-md">
-                        <div className="text-3xl font-black text-slate-900">{s.num}</div>
-                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1.5">{s.label}</div>
-                    </div>
-                ))}
-            </div>
-
-            {/* Narrative Context Section */}
-            <div className="max-w-4xl mx-auto px-4 mt-10">
-                <div className="bg-white border border-slate-200/70 shadow-xs rounded-2xl p-6 md:p-8">
-                    <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-3 flex items-center gap-2">
-                        <span className="w-1 h-3.5 bg-slate-900 rounded-full inline-block" />
-                        Our Purpose &amp; Impact
-                    </h2>
-                    <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal">
-                        The Environmental Wing of NSS IIT Patna works relentlessly to bring sustainability to the grass-roots level. Through organized drives spanning across the campus premises and surrounding adopted villages, our volunteers drive active tree-planting campaigns, combat micro-plastic contamination, and implement resource-conservation models to turn modern green concepts into practical field realities.
-                    </p>
-                </div>
-            </div>
-
-            {/* Main Interactive Grid Elements */}
-            <div className="max-w-5xl mx-auto px-4 mt-16">
-                <div className="flex items-center justify-between border-b border-slate-200 pb-4 mb-8">
-                    <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest">
-                        Field Initiatives &amp; Ground Reality
-                    </h2>
+                {/* Pill badge */}
+                <div style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    padding: '5px 16px', borderRadius: 99,
+                    background: 'rgba(255,255,255,0.07)',
+                    border: '1px solid rgba(255,255,255,0.14)',
+                    fontSize: 11, fontWeight: 600, letterSpacing: '0.11em',
+                    textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)',
+                    marginBottom: '1.75rem',
+                }}>
+                    <span style={{
+                        width: 7, height: 7, borderRadius: '50%', background: '#34d399',
+                        animation: 'envPulse 2s infinite',
+                    }} />
+                    Official Wing Portal
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {initiatives.map((item) => (
-                        <div
-                            key={item.title}
-                            onClick={() => setSelected(item)}
-                            className="bg-white border border-slate-200 shadow-2xs rounded-2xl overflow-hidden cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 flex flex-col"
-                        >
-                            <div className="h-48 overflow-hidden bg-slate-100 relative">
-                                <img
-                                    src={item.img}
-                                    alt={item.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
-                                />
-                            </div>
-                            
-                            <div className="p-6 flex flex-col flex-1">
-                                <div className="inline-block self-start px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 border border-slate-200 rounded-sm mb-3">
-                                    {item.tag}
-                                </div>
-                                
-                                <h3 className="text-base font-bold text-slate-900 leading-snug group-hover:text-indigo-950 transition-colors duration-200">
-                                    {item.title}
-                                </h3>
+                <style>{`
+                    @keyframes envPulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+                    @media (max-width: 768px) {
+                        .env-hero-title { font-size: 2.6rem !important; }
+                        .env-stat-strip { grid-template-columns: repeat(2,1fr) !important; }
+                        .env-img-grid { grid-template-columns: repeat(2,1fr) !important; }
+                        .env-modal-nav-prev { left: -10px !important; }
+                        .env-modal-nav-next { right: -10px !important; }
+                    }
+                    @media (max-width: 480px) {
+                        .env-img-grid { grid-template-columns: 1fr !important; }
+                    }
+                `}</style>
 
-                                <p className="text-xs italic text-slate-400 font-medium my-3 border-l-2 border-slate-200 pl-2 line-clamp-2 leading-snug">
-                                    {item.quote}
-                                </p>
+                <h1 className="env-hero-title" style={{
+                    fontSize: 'clamp(2.6rem, 6.5vw, 5rem)',
+                    fontWeight: 900, letterSpacing: '-0.03em',
+                    lineHeight: 1.04, marginBottom: '1.1rem',
+                    position: 'relative', zIndex: 1,
+                }}>
+                    Environmental{' '}
+                    <span style={{
+                        fontWeight: 300, fontStyle: 'italic',
+                        background: 'linear-gradient(90deg, #6ee7b7, #a7f3d0, #6ee7b7)',
+                        WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                    }}>
+                        Wing
+                    </span>
+                </h1>
 
-                                <p className="text-xs text-slate-500 leading-relaxed line-clamp-3 flex-1 mb-4">
-                                    {item.desc}
-                                </p>
-                                
-                                <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-900 flex items-center justify-between transition-colors">
-                                    <span className="flex items-center gap-1.5">
-                                        View details
-                                    </span>
-                                    <svg className="w-3.5 h-3.5 transform translate-x-0 group-hover:translate-x-1 transition-transform text-slate-400 group-hover:text-slate-900" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                    </svg>
-                                </div>
-                            </div>
+                <p style={{
+                    color: 'rgba(255,255,255,0.58)', fontSize: 'clamp(0.88rem, 2vw, 1.05rem)',
+                    maxWidth: 520, margin: '0 auto', lineHeight: 1.8,
+                    position: 'relative', zIndex: 1,
+                }}>
+                    Driving active grassroots sustainability, ecological transformations,
+                    and clean energy modeling within the institution and beyond.
+                </p>
+            </div>
+
+            {/* ── Stat strip — overlaps hero ── */}
+            <div style={{ padding: '0 1.5rem' }}>
+                <div className="env-stat-strip" style={{
+                    display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
+                    maxWidth: 780, margin: '-2.8rem auto 0',
+                    background: '#fff',
+                    border: '1px solid #e4e8e2',
+                    borderRadius: 14,
+                    overflow: 'hidden',
+                    boxShadow: '0 8px 28px rgba(0,0,0,0.08)',
+                    position: 'relative', zIndex: 10,
+                }}>
+                    {stats.map((s, i) => (
+                        <div key={i} style={{
+                            padding: '1.4rem 1rem', textAlign: 'center',
+                            borderRight: i < stats.length - 1 ? '1px solid #e4e8e2' : 'none',
+                        }}>
+                            <div style={{ fontSize: '1.7rem', fontWeight: 900, color: '#0b1a10', letterSpacing: '-0.02em' }}>{s.num}</div>
+                            <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#8a9988', marginTop: 5 }}>{s.label}</div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Native Application Styled Pop-up Modal */}
-            {selected && (
+            {/* ── About card ── */}
+            <div style={{ maxWidth: 800, margin: '4rem auto 0', padding: '0 1.5rem' }}>
+                <div style={{
+                    background: '#fff',
+                    border: '1px solid #e4e8e2',
+                    borderLeft: '4px solid #059669',
+                    borderRadius: 12,
+                    padding: '1.5rem 1.75rem',
+                }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#059669', marginBottom: '0.6rem' }}>
+                        Our Purpose & Impact
+                    </div>
+                    <p style={{ fontSize: '0.9rem', color: '#4a5549', lineHeight: 1.8 }}>
+                        The Environmental Wing of NSS IIT Patna works relentlessly to bring sustainability to the grassroots level.
+                        Through organized drives spanning across the campus premises and surrounding adopted villages, our volunteers
+                        drive active tree-planting campaigns, combat micro-plastic contamination, and implement resource-conservation
+                        models to turn modern green concepts into practical field realities.
+                    </p>
+                </div>
+            </div>
+
+            {/* ── Quote ── */}
+            <div style={{ maxWidth: 720, margin: '2rem auto 0', padding: '0 1.5rem' }}>
+                <div style={{
+                    background: '#fff',
+                    border: '1px solid #e4e8e2',
+                    borderRadius: 12,
+                    padding: '1.75rem 2.25rem',
+                    textAlign: 'center',
+                    position: 'relative',
+                    overflow: 'hidden',
+                }}>
+                    <span style={{
+                        position: 'absolute', top: '0.8rem', left: '1.2rem',
+                        fontSize: '5.5rem', lineHeight: 1, color: '#e8f0e7',
+                        fontFamily: 'Georgia, serif', pointerEvents: 'none', userSelect: 'none',
+                    }}>"</span>
+                    <p style={{ fontSize: '0.97rem', fontStyle: 'italic', color: '#4a5549', lineHeight: 1.8, position: 'relative', zIndex: 1 }}>
+                        "Nature does not hurry, yet everything is accomplished. Protecting our environment is not
+                        an extra-curricular option — it is our fundamental prerequisite for survival."
+                    </p>
+                </div>
+            </div>
+
+            {/* ── Photo galleries ── */}
+            <div style={{ maxWidth: 1200, margin: '4.5rem auto 0', padding: '0 1.5rem 5rem' }}>
+                {categories.map((cat, ci) => (
+                    <div key={ci}>
+                        {ci > 0 && (
+                            <hr style={{ border: 'none', borderTop: '1px solid #e4e8e2', margin: '3.5rem 0' }} />
+                        )}
+
+                        {/* Section header */}
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '0.4rem', flexWrap: 'wrap' }}>
+                                <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0b1a10', letterSpacing: '-0.01em' }}>
+                                    {cat.title}
+                                </h2>
+                                <span style={{
+                                    fontSize: 10, fontWeight: 700, textTransform: 'uppercase',
+                                    letterSpacing: '0.08em', padding: '3px 11px', borderRadius: 99,
+                                    background: 'rgba(5,150,105,0.10)', color: '#047857',
+                                }}>
+                                    {cat.images.length} snaps
+                                </span>
+                            </div>
+                            <p style={{ fontSize: '0.8rem', color: '#8a9988', lineHeight: 1.65, maxWidth: 560 }}>
+                                {cat.description}
+                            </p>
+                        </div>
+
+                        {/* Image grid — Restored to 3 columns grid layout */}
+                        <div className="env-img-grid" style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gap: 16,
+                        }}>
+                            {cat.images.map((item, ii) => {
+                                const globalIdx = catStartIdx[ci] + ii;
+                                return (
+                                    <div
+                                        key={ii}
+                                        onClick={() => openModal(globalIdx)}
+                                        style={{
+                                            borderRadius: 10,
+                                            overflow: 'hidden',
+                                            background: '#d1d9cf',
+                                            aspectRatio: '4/3',
+                                            position: 'relative',
+                                            cursor: 'pointer',
+                                            border: '1px solid #e4e8e2',
+                                        }}
+                                        onMouseEnter={e => {
+                                            e.currentTarget.querySelector('.env-overlay').style.opacity = '1';
+                                            e.currentTarget.querySelector('img').style.transform = 'scale(1.03)';
+                                        }}
+                                        onMouseLeave={e => {
+                                            e.currentTarget.querySelector('.env-overlay').style.opacity = '0';
+                                            e.currentTarget.querySelector('img').style.transform = 'scale(1)';
+                                        }}
+                                    >
+                                        <img
+                                            src={item.img}
+                                            alt={`${cat.title} photo ${ii + 1}`}
+                                            loading="lazy"
+                                            style={{
+                                                width: '100%', height: '100%',
+                                                objectFit: 'cover', display: 'block',
+                                                transition: 'transform 0.5s ease',
+                                            }}
+                                        />
+                                        {/* Hover overlay */}
+                                        <div className="env-overlay" style={{
+                                            position: 'absolute', inset: 0,
+                                            background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%)',
+                                            opacity: 0, transition: 'opacity 0.3s',
+                                            display: 'flex', alignItems: 'flex-end', padding: '14px 16px',
+                                        }}>
+                                            <span style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.92)', letterSpacing: '0.04em' }}>
+                                                Photo {ii + 1} / {cat.images.length}
+                                            </span>
+                                            {/* Expand icon */}
+                                            <div style={{
+                                                marginLeft: 'auto',
+                                                width: 32, height: 32, borderRadius: '50%',
+                                                background: 'rgba(255,255,255,0.15)',
+                                                border: '1px solid rgba(255,255,255,0.25)',
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            }}>
+                                                <svg width="14" height="14" fill="none" stroke="#fff" strokeWidth={2.5} viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* ── Modal ── */}
+            {modalIdx !== null && (
                 <div
-                    className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4 backdrop-blur-xs transition-opacity"
-                    onClick={() => setSelected(null)}
+                    onClick={closeModal}
+                    style={{
+                        position: 'fixed', inset: 0,
+                        background: 'rgba(5, 20, 10, 0.92)',
+                        zIndex: 999,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        padding: '2rem 3.5rem',
+                        backdropFilter: 'blur(8px)',
+                    }}
                 >
                     <div
-                        className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto relative shadow-2xl transition-all scale-100 transform"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={e => e.stopPropagation()}
+                        style={{ position: 'relative', maxWidth: 1140, width: '100%' }}
                     >
-                        <div className="max-h-80 overflow-hidden relative bg-slate-900">
+                        {/* Close button */}
+                        <button
+                            onClick={closeModal}
+                            style={{
+                                position: 'absolute', top: '-3rem', right: 0,
+                                background: 'rgba(255,255,255,0.08)',
+                                border: '1px solid rgba(255,255,255,0.18)',
+                                color: 'rgba(255,255,255,0.82)',
+                                fontSize: 11, fontWeight: 600, textTransform: 'uppercase',
+                                letterSpacing: '0.1em', padding: '6px 16px', borderRadius: 99,
+                                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
+                            }}
+                        >
+                            Close ✕
+                        </button>
+
+                        {/* Prev */}
+                        <button
+                            className="env-modal-nav-prev"
+                            onClick={() => navModal(-1)}
+                            style={{
+                                position: 'absolute', top: '50%', left: -56,
+                                transform: 'translateY(-50%)',
+                                width: 44, height: 44, borderRadius: '50%',
+                                background: 'rgba(255,255,255,0.1)',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                color: '#fff', fontSize: 24, cursor: 'pointer',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                paddingBottom: 4
+                            }}
+                        >‹</button>
+
+                        {/* Image Container */}
+                        <div style={{
+                            background: 'rgba(255,255,255,0.02)',
+                            borderRadius: 12,
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            overflow: 'hidden',
+                            maxHeight: '85vh',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            boxShadow: '0 30px 60px rgba(0,0,0,0.8)',
+                        }}>
                             <img
-                                src={selected.img}
-                                alt={selected.title}
-                                className="w-full h-full object-cover"
+                                src={allImages[modalIdx]?.img}
+                                alt="Expanded view"
+                                style={{ width: '100%', maxHeight: '85vh', objectFit: 'contain', display: 'block' }}
                             />
                         </div>
-                        
-                        <button
-                            onClick={() => setSelected(null)}
-                            className="absolute top-4 right-4 bg-white border border-slate-200 rounded-full w-9 h-9 flex items-center justify-center text-slate-700 shadow-md hover:bg-slate-900 hover:text-white transition-all font-semibold z-10"
-                            aria-label="Close"
-                        >
-                            ✕
-                        </button>
-                        
-                        <div className="p-6 md:p-8">
-                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-600 bg-slate-100 px-2 py-0.5 rounded-sm border border-slate-200">
-                                {selected.tag}
-                            </span>
-                            <h3 className="text-2xl font-black text-slate-900 mt-4 mb-3">{selected.title}</h3>
 
-                            <p className="text-sm italic text-slate-700 font-semibold my-4 bg-slate-50 p-4 rounded-xl border-l-4 border-slate-900 leading-relaxed">
-                                {selected.quote}
-                            </p>
-
-                            <p className="text-sm md:text-base text-slate-600 leading-relaxed mt-4 font-normal">{selected.desc}</p>
+                        {/* Counter */}
+                        <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: 13, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em' }}>
+                            {modalIdx + 1} / {allImages.length}
                         </div>
+
+                        {/* Next */}
+                        <button
+                            className="env-modal-nav-next"
+                            onClick={() => navModal(1)}
+                            style={{
+                                position: 'absolute', top: '50%', right: -56,
+                                transform: 'translateY(-50%)',
+                                width: 44, height: 44, borderRadius: '50%',
+                                background: 'rgba(255,255,255,0.1)',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                color: '#fff', fontSize: 24, cursor: 'pointer',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                paddingBottom: 4
+                            }}
+                        >›</button>
                     </div>
                 </div>
             )}

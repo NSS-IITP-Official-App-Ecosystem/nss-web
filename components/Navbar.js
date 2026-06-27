@@ -6,7 +6,7 @@ import { FaChevronDown } from 'react-icons/fa';
 
 export default function Navbar() {
   const [isUnitsOpen, setIsUnitsOpen] = useState(false);
-  const [isWingsOpen, setIsWingsOpen] = useState(false); // State for Wings dropdown
+  const [isWingsOpen, setIsWingsOpen] = useState(false);
 
   return (
     <nav className="bg-white shadow-sm border-b border-border sticky top-0 z-50">
@@ -62,11 +62,8 @@ export default function Navbar() {
 
               {isWingsOpen && (
                 <div className="absolute top-16 right-0 w-56 bg-white border border-neutral-foundation rounded-md shadow-lg py-1 z-50">
-                  <Link href="/wings/prayatna" className="block px-4 py-2 text-sm text-secondary-slate hover:bg-neutral-foundation hover:text-brand-blue transition-colors">
-                    Prayatna
-                  </Link>
                   <Link href="/wings/chetna" className="block px-4 py-2 text-sm text-secondary-slate hover:bg-neutral-foundation hover:text-brand-blue transition-colors">
-                    Chetna
+                    Prerna
                   </Link>
                   <Link href="/wings/rural" className="block px-4 py-2 text-sm text-secondary-slate hover:bg-neutral-foundation hover:text-brand-blue transition-colors">
                     Rural Development
@@ -83,6 +80,11 @@ export default function Navbar() {
                 </div>
               )}
             </div>
+
+            {/* Awards and Achievements Link */}
+            <Link href="/awards" className="text-secondary-slate hover:text-brand-blue font-medium transition-colors whitespace-nowrap">
+              Awards & Achievements
+            </Link>
 
           </div>
         </div>
