@@ -19,20 +19,20 @@ export default function AwardsPage() {
   const officials = [
     { name: "Tanishq Raj", role: "Sub-Coordinator", wing: "Teaching Wing", img: "/awards/IMG_2032.JPG" },
     { name: "Parnava Maitra", role : "Sub-Coordinator" , wing: "DNC", img: "/awards/IMG_2029.JPG" },
-    { name: "Arya Patil", role: "Sub-Coordinator", wing: "chetna", img: "/awards/Screenshot 2026-06-27 at 2.29.36 PM.png" },
-    { name: "Priyanshu Purohit", role: "Sub-Coordinator", wing: "chetna", img: "/awards/Screenshot 2026-06-27 at 2.29.27 PM.png" },
-      { name: "Shreya Yadav", role: "Sub-Coordinator", wing: "environmental", img: "/awards/Screenshot 2026-06-27 at 2.33.03 PM.png" },
-      { name: "Himanshi", role: "Sub-Coordinator", wing: "dnc", img: "/awards/Screenshot 2026-06-27 at 2.33.14 PM.png" },
-      { name: "Anish Kumar", role: "Sub-Coordinator", wing: "Teaching wing", img: "/awards/Screenshot 2026-06-27 at 2.32.38 PM.png" },
-      {name:"Dikshit Verma",role:"Sub-Coordinator",wing:"Chetna",img:"/awards/Screenshot 2026-06-27 at 2.39.53 PM.png"},
-       {name:"Shaurya Singh",role:"Sub-Coordinator",wing:"Chetna",img:"/awards/Screenshot 2026-06-27 at 2.41.39 PM.png"},
-     { name: "Jawahar reddy", role: "Sub-Coordinator", wing: "Prayatana", img: "/awards/Screenshot 2026-06-27 at 3.10.32 PM.png " },
-       {name:"Anshika Garg",role:"Sub-Coordinator",wing:"Teaching Wing",img:"/awards/Screenshot 2026-06-27 at 2.43.33 PM.png"},
-         {name:"Ayantika Halder",role:"Sub-Coordinator",wing:"Rural",img:"/awards/Screenshot 2026-06-27 at 2.45.35 PM.png"},
-          { name: "kshitij Singh", role: "Sub-Coordinator", wing: "Rural", img: "/awards/Screenshot 2026-06-27 at 2.59.04 PM.png" },
-           { name: "Piyush Kumar", role: "Sub-Coordinator", wing: "Prayatana", img: "/awards/Screenshot 2026-06-27 at 3.01.12 PM.png" },
-            { name: "Rijju Mondal", role: "Sub-Coordinator", wing: "Environmental", img: "/awards/Screenshot 2026-06-27 at 3.02.24 PM.png" },
-             { name: "Rahul Kumar", role: "Sub-Coordinator", wing: "Rural", img: "/awards/Screenshot 2026-06-27 at 3.11.37 PM.png" },
+    { name: "Arya Patil", role: "Sub-Coordinator", wing: "chetna", img: "/awards/Screenshot 2026-06-27 at 2.29.36 PM.png" },
+    { name: "Priyanshu Purohit", role: "Sub-Coordinator", wing: "chetna", img: "/awards/Screenshot 2026-06-27 at 2.29.27 PM.png" },
+      { name: "Shreya Yadav", role: "Sub-Coordinator", wing: "environmental", img: "/awards/Screenshot 2026-06-27 at 2.33.03 PM.png" },
+      { name: "Himanshi", role: "Sub-Coordinator", wing: "dnc", img: "/awards/Screenshot 2026-06-27 at 2.33.14 PM.png" },
+      { name: "Anish Kumar", role: "Sub-Coordinator", wing: "Teaching wing", img: "/awards/Screenshot 2026-06-27 at 2.32.38 PM.png" },
+      {name:"Dikshit Verma",role:"Sub-Coordinator",wing:"Chetna",img:"/awards/Screenshot 2026-06-27 at 2.39.53 PM.png"},
+       {name:"Shaurya Singh",role:"Sub-Coordinator",wing:"Chetna",img:"/awards/Screenshot 2026-06-27 at 2.41.39 PM.png"},
+     { name: "Jawahar reddy", role: "Sub-Coordinator", wing: "Prayatana", img: "/awards/Screenshot 2026-06-27 at 3.10.32 PM.png " },
+       {name:"Anshika Garg",role:"Sub-Coordinator",wing:"Teaching Wing",img:"/awards/Screenshot 2026-06-27 at 2.43.33 PM.png"},
+         {name:"Ayantika Halder",role:"Sub-Coordinator",wing:"Rural",img:"/awards/Screenshot 2026-06-27 at 2.45.35 PM.png"},
+          { name: "kshitij Singh", role: "Sub-Coordinator", wing: "Rural", img: "/awards/Screenshot 2026-06-27 at 2.59.04 PM.png" },
+           { name: "Piyush Kumar", role: "Sub-Coordinator", wing: "Prayatana", img: "/awards/Screenshot 2026-06-27 at 3.01.12 PM.png" },
+            { name: "Rijju Mondal", role: "Sub-Coordinator", wing: "Environmental", img: "/awards/Screenshot 2026-06-27 at 3.02.24 PM.png" },
+             { name: "Rahul Kumar", role: "Sub-Coordinator", wing: "Rural", img: "/awards/Screenshot 2026-06-27 at 3.11.37 PM.png" },
              { name: "Shankhadeep Das", role: "Sub-Coordinator", wing: "DNC", img: "/awards/WhatsApp Image 2026-06-27 at 15.36.46 copy.jpeg" },
   ];
 
@@ -41,49 +41,49 @@ export default function AwardsPage() {
     {
       wing: "Environmental Wing",
       winners: [
-        { name: "Kashvi Mehta", roll: "2501PH32", img: "/awards/Screenshot 2026-06-27 at 1.50.34 PM.png" },
-        { name: "Mayank Biswas", roll: "2501CB60", img: "/awards/Screenshot 2026-06-27 at 2.01.29 PM.png" },
-        { name: "Rupansh Dawer", roll: "2501CE10", img: "/awards/Screenshot 2026-06-27 at 1.52.12 PM.png" },
+        { name: "Kashvi Mehta", roll: "2501PH32", img: "/awards/Screenshot 2026-06-27 at 1.50.34 PM.png" },
+        { name: "Mayank Biswas", roll: "2501CB60", img: "/awards/Screenshot 2026-06-27 at 2.01.29 PM.png" },
+        { name: "Rupansh Dawer", roll: "2501CE10", img: "/awards/Screenshot 2026-06-27 at 1.52.12 PM.png" },
       ]
     },
     {
       wing: "Nukkad Natak",
       winners: [
-        { name: "Harshil Jain", roll: "2501EC07", img: "/awards/Screenshot 2026-06-27 at 1.53.48 PM.png" },
-        { name: "Tarush Mohan", roll: "2503ME01", img: "/awards/Screenshot 2026-06-27 at 1.54.44 PM.png" },
-        { name: "Ujesha Bhavsar", roll: "2502GT06", img: "/awards/Screenshot 2026-06-27 at 1.55.37 PM.png" },
+        { name: "Harshil Jain", roll: "2501EC07", img: "/awards/Screenshot 2026-06-27 at 1.53.48 PM.png" },
+        { name: "Tarush Mohan", roll: "2503ME01", img: "/awards/Screenshot 2026-06-27 at 1.54.44 PM.png" },
+        { name: "Ujesha Bhavsar", roll: "2502GT06", img: "/awards/Screenshot 2026-06-27 at 1.55.37 PM.png" },
       ]
     },
     {
       wing: "TTW (Teaching Wing)",
       winners: [
-        { name: "Taniya Kumari Gupta", roll: "", img: "/awards/Screenshot 2026-06-27 at 1.56.48 PM.png" },
-        { name: "Ishika Aggarwal", roll: "", img: "/awards/Screenshot 2026-06-27 at 1.58.06 PM.png" },
-        { name: "Mahendra Seervi", roll: "", img: "/awards/Screenshot 2026-06-27 at 2.03.49 PM.png" },
+        { name: "Taniya Kumari Gupta", roll: "", img: "/awards/Screenshot 2026-06-27 at 1.56.48 PM.png" },
+        { name: "Ishika Aggarwal", roll: "", img: "/awards/Screenshot 2026-06-27 at 1.58.06 PM.png" },
+        { name: "Mahendra Seervi", roll: "", img: "/awards/Screenshot 2026-06-27 at 2.03.49 PM.png" },
       ]
     },
     {
       wing: "Rural Development",
       winners: [
-        { name: "Riddhima Bharti", roll: "2501EE37", img: "/awards/Screenshot 2026-06-27 at 1.59.09 PM.png" },
+        { name: "Riddhima Bharti", roll: "2501EE37", img: "/awards/Screenshot 2026-06-27 at 1.59.09 PM.png" },
         { name: "Rachapally Pradeep", roll: "2501ME83", img: "/Awards/winners/placeholder.jpg" },
-        { name: "Krish Prakash", roll: "2501CE54", img: "/awards/Screenshot 2026-06-27 at 2.08.44 PM.png" },
+        { name: "Krish Prakash", roll: "2501CE54", img: "/awards/Screenshot 2026-06-27 at 2.08.44 PM.png" },
       ]
     },
     {
       wing: "Chetna Wing",
       winners: [
-        { name: "Akshara Karri", roll: "2501PH13", img: "/awards/Screenshot 2026-06-27 at 2.05.19 PM.png" },
-        { name: "Priyanshi Patel", roll: "2501CB02", img: "/awards/Screenshot 2026-06-27 at 2.06.08 PM.png" },
+        { name: "Akshara Karri", roll: "2501PH13", img: "/awards/Screenshot 2026-06-27 at 2.05.19 PM.png" },
+        { name: "Priyanshi Patel", roll: "2501CB02", img: "/awards/Screenshot 2026-06-27 at 2.06.08 PM.png" },
       
       ]
     },
     {
       wing: "Prayatna Wing",
       winners: [
-        { name: "Dhruvi Sharma", roll: "2501CE09", hours: "171", img: "/awards/Screenshot 2026-06-27 at 2.07.09 PM.png" },
-        { name: "Kesanapalli Sanjana", roll: "2501CT22", hours: "171", img: "/awards/Screenshot 2026-06-27 at 2.02.44 PM.png" },
-        { name: "Harshit Kumar", roll: "2501CE31", hours: "161", img: "/awards/Screenshot 2026-06-27 at 2.10.00 PM.png" },
+        { name: "Dhruvi Sharma", roll: "2501CE09", hours: "171", img: "/awards/Screenshot 2026-06-27 at 2.07.09 PM.png" },
+        { name: "Kesanapalli Sanjana", roll: "2501CT22", hours: "171", img: "/awards/Screenshot 2026-06-27 at 2.02.44 PM.png" },
+        { name: "Harshit Kumar", roll: "2501CE31", hours: "161", img: "/awards/Screenshot 2026-06-27 at 2.10.00 PM.png" },
       ]
     }
   ];
@@ -103,8 +103,8 @@ export default function AwardsPage() {
   // 4. Prize Distribution Glimpses
   const awardPhotos = [
     { img: "/awards/IMG20260419154802 copy.jpg", caption: "1st Prize distribution by Core Committee Members" },
-    { img: "/awards/Screenshot 2026-06-27 at 1.33.35 PM.png", caption: "Leadership team receiving Certificates of Appreciation" },
-    { img: "/awards/Screenshot 2026-06-27 at 2.27.15 PM.png", caption: "Group picture of Star Performers with Wing Coordinators" },
+    { img: "/awards/Screenshot 2026-06-27 at 1.33.35 PM.png", caption: "Leadership team receiving Certificates of Appreciation" },
+    { img: "/awards/Screenshot 2026-06-27 at 2.27.15 PM.png", caption: "Group picture of Star Performers with Wing Coordinators" },
     { img: "/awards/IMG20260419155000 copy.jpg", caption: "Honoring outstanding rural development fieldwork" },
     
     { img: "/awards/IMG_2037 copy.JPG", caption: "Freshman maximum hours validation ceremony" },
@@ -203,7 +203,7 @@ export default function AwardsPage() {
                   alt={photo.caption}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => { e.target.style.display = 'none'; }}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-end p-4">
                   <p className="text-white text-[10px] font-medium tracking-wide mb-1 opacity-70">
@@ -243,7 +243,7 @@ export default function AwardsPage() {
                       src={official.img} 
                       alt={official.name}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
-                      onError={(e) => { e.target.style.display = 'none'; }} 
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }} 
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white text-xs font-semibold">
                       View Profile Photo
@@ -304,7 +304,7 @@ export default function AwardsPage() {
                             src={winner.img} 
                             alt={winner.name} 
                             className="w-full h-full object-cover relative z-10 transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => { e.target.style.display = 'none'; }}
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
                           />
                           <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end p-3 text-white text-xs font-medium">
                             Click to expand
@@ -361,7 +361,7 @@ export default function AwardsPage() {
                   alt={photo.caption}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => { e.target.style.display = 'none'; }}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-end p-4">
                   <p className="text-white text-[10px] font-medium tracking-wide mb-1 opacity-70">
@@ -423,7 +423,7 @@ export default function AwardsPage() {
                 src={currentActiveImg.src}
                 alt="Enlarged view frame showcase"
                 className="max-h-[70vh] w-full object-contain relative z-10"
-                onError={(e) => { e.target.style.display = 'none'; }}
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
               />
             </div>
 
@@ -437,4 +437,4 @@ export default function AwardsPage() {
 
     </div>
   );
-} 
+}
