@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "title": "Blood Donation Camp 2026",
+    "details": "Annual blood donation camp organized by NSS IIT Patna in collaboration with local hospitals. We successfully collected over 200 units of blood to help patients in need.",
+    "images": [
+      "/home_slider/SWACHHATA_HI_SEVA.jpeg",
+      "/home_slider/nss_home.jpg"
+    ],
+    "resources": [
+      "https://example.com/blood-donation-guidelines.pdf"
+    ],
+    "date": "2026-04-15T09:00:00Z",
+    "created_at": "2026-03-01T10:00:00Z",
+    "updated_at": "2026-04-16T12:00:00Z",
+    "wings": [
+      "Health",
+      "PR"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Village Cleanliness Drive",
+    "details": "A massive cleanliness drive was organized in the nearby Amhara village under the Swachh Bharat Abhiyan. Over 50 volunteers participated in raising awareness and cleaning the surroundings.",
+    "images": [
+      "/home_slider/nss_home.jpg"
+    ],
+    "resources": [],
+    "date": "2026-05-02T08:00:00Z",
+    "created_at": "2026-04-20T14:30:00Z",
+    "updated_at": "2026-05-03T09:15:00Z",
+    "wings": [
+      "Environment",
+      "Rural Development"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Education Outreach Program",
+    "details": "Weekly education outreach program for the underprivileged children near the campus. Volunteers taught basic science and mathematics concepts through interactive activities.",
+    "images": [],
+    "resources": [
+      "https://example.com/study-materials.zip"
+    ],
+    "date": "2026-05-18T16:00:00Z",
+    "created_at": "2026-05-10T11:00:00Z",
+    "updated_at": "2026-05-19T10:00:00Z",
+    "wings": [
+      "Education"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "World Environment Day - Tree Plantation",
+    "details": "Planted 500 saplings across the campus and neighboring areas to promote a greener environment. The event saw participation from students and faculty alike.",
+    "images": [
+      "/home_slider/nss_home.jpg"
+    ],
+    "resources": [],
+    "date": "2026-06-05T07:00:00Z",
+    "created_at": "2026-05-25T08:00:00Z",
+    "updated_at": "2026-05-25T08:00:00Z",
+    "wings": [
+      "Environment"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Yoga and Mental Health Workshop",
+    "details": "A session focusing on mental well-being, stress relief, and physical fitness through yoga, guided by professional instructors.",
+    "images": [
+      "/home_slider/nss_home.jpg"
+    ],
+    "resources": [
+      "https://example.com/yoga-benefits.pdf"
+    ],
+    "date": "2026-06-12T08:30:00Z",
+    "created_at": "2026-06-12T08:30:00Z",
+    "updated_at": "2026-06-12T08:30:00Z",
+    "wings": [
+      "Chetna Wing"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Computer Literacy Workshop",
+    "details": "NSS volunteers conducted a basic computer skills and internet safety workshop for children of local government schools.",
+    "images": [
+      "/home_slider/nss_home.jpg"
+    ],
+    "resources": [],
+    "date": "2026-06-15T10:00:00Z",
+    "created_at": "2026-06-15T10:00:00Z",
+    "updated_at": "2026-06-15T10:00:00Z",
+    "wings": [
+      "Technical Skills"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Winter Clothes Distribution Drive",
+    "details": "NSS IIT Patna organized a donation drive collecting and distributing warm clothes to underprivileged families in nearby areas.",
+    "images": [
+      "/home_slider/SWACHHATA_HI_SEVA.jpeg"
+    ],
+    "resources": [],
+    "date": "2025-12-20T11:00:00Z",
+    "created_at": "2025-12-20T11:00:00Z",
+    "updated_at": "2025-12-20T11:00:00Z",
+    "wings": [
+      "Prayatna Wing"
+    ]
+  }
+]
