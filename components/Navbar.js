@@ -31,6 +31,10 @@ export default function Navbar() {
               Our Team
             </Link>
 
+            <Link href="/faq" className="text-secondary-slate hover:text-brand-blue font-medium transition-colors">
+              Contact Us
+            </Link>
+
             {/* Units Dropdown */}
             <div className="relative"
               onMouseEnter={() => setIsUnitsOpen(true)}
