@@ -16,7 +16,8 @@ import {
   Compass,
   LayoutGrid,
   Award,
-  ArrowRight
+  ArrowRight,
+  Mail
 } from 'lucide-react';
 import { cn } from './utils';
 
@@ -40,6 +41,11 @@ const HIGH_LINKS = [
     "text": "Wings",
     "link": "#",
     "icon": Compass
+  },
+  {
+    "text": "Contact Us",
+    "link": "/faq",
+    "icon": Mail
   }
 ];
 
@@ -166,6 +172,7 @@ export default function Navbar() {
               );
             })}
           </div>
+
         </div>
       </div>
     </nav>
