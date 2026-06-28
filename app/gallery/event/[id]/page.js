@@ -141,7 +141,7 @@ export default async function EventPage({ params }) {
                 {event.images && event.images.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
                         {event.images.map((src, i) => (
-                            <ImageCard key={i} src={src} title={event.title} />
+                            <ImageCard key={i} src={src} title={event.title} index={i} />
                         ))}
                     </div>
                 ) : (

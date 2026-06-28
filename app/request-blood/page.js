@@ -354,7 +354,7 @@ export default function RequestBloodPage() {
             return (
               <div key={index} className="rounded-2xl inset-shadow-2xl p-10 bg-white shadow-2xs flex flex-col justify-center items-center">
                 <div className="p-4 rounded w-fit aspect-square" style={{ background: `${item.themeColor}10` }}><item.icon className={`text-2xl`} style={{ color: item.themeColor }} /></div>
-                <h3 className="text-slate-800 mt-5 text-4xl">{item.count}</h3>
+                <h3 className="text-slate-800 mt-5 text-4xl"><AnimatedCounter value={item.count}/></h3>
                 <p className="text-center text-text font-semibold">{item.title}</p>
               </div>
             )

@@ -8,6 +8,8 @@
 drop trigger if exists on_auth_user_created on auth.users;
 
 -- Tables (dropping tables automatically drops any triggers/constraints on them)
+drop table if exists public.thanks cascade;
+drop table if exists public.suggestions cascade;
 drop table if exists public.collaborators cascade;
 drop table if exists public.impacts cascade;
 drop table if exists public.audit_logs cascade;
@@ -255,7 +257,8 @@ create policy "Allow admins to manage event_media" on public.event_media
     for all using (public.is_admin(auth.uid()));
 
 
--- 6. Check-Hours & Logs Table
+-- 6. Check-Hours & Logs Table 
+-- we are skiping for now 
 create table public.hours_logs (
     id uuid default gen_random_uuid() primary key,
     volunteer_id uuid references public.profiles(id) on delete cascade not null,
@@ -342,6 +345,7 @@ create policy "Allow admins to manage all donors" on public.blood_donors
 
 
 -- 8. Testimonials Table
+-- there should be status (pending, approved, archived)
 create table public.testimonials (
     id uuid default gen_random_uuid() primary key,
     name text not null,
@@ -366,6 +370,7 @@ create policy "Allow admins to manage all testimonials" on public.testimonials
 
 
 -- 9. Donations Ledger
+-- Currently not useful, can be removed later
 create table public.donations (
     id uuid default gen_random_uuid() primary key,
     donor_name text not null,
@@ -434,6 +439,10 @@ create table public.collaborate_requests (
     status public.collaboration_status default 'pending'::public.collaboration_status not null,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
+
+-- two tables required more
+-- for contact us submission
+-- for thank form in think-thank page
 
 -- Enable RLS for collaborate_requests
 alter table public.collaborate_requests enable row level security;
@@ -583,3 +592,61 @@ insert into public.event_media (event_id, media_url, caption, is_thumbnail) valu
 ('e0000000-0000-0000-0000-000000000001', '/home_slider/nss_home.jpg', 'Blood Drive Photo', true),
 ('e0000000-0000-0000-0000-000000000002', '/home_slider/nss_home.jpg', 'Group picture of cleanliness drive', true),
 ('e0000000-0000-0000-0000-000000000004', '/home_slider/nss_home.jpg', 'Sapling plantation photo', true);
+
+
+-- ==========================================
+-- 13. Thanks Table (for public appreciation of volunteers)
+-- ==========================================
+create table public.thanks (
+    id uuid default gen_random_uuid() primary key,
+    sender_name text not null default 'Anonymous',
+    sender_relationship text not null default 'Other', -- 'Student', 'Volunteer', 'Faculty Member', 'Beneficiary', 'Other'
+    recipient_name text not null, -- Who is being thanked
+    message text not null,
+    is_approved boolean default false not null,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS for thanks
+alter table public.thanks enable row level security;
+
+create policy "Allow public read access on approved thanks" on public.thanks
+    for select using (is_approved = true);
+
+create policy "Allow anyone to submit thanks" on public.thanks
+    for insert with check (true);
+
+create policy "Allow admins to manage thanks" on public.thanks
+    for all using (public.is_admin(auth.uid()));
+
+
+-- ==========================================
+-- 14. Suggestions Table (for feedback and ideas)
+-- ==========================================
+create table public.suggestions (
+    id uuid default gen_random_uuid() primary key,
+    sender_name text default 'Anonymous',
+    sender_email text,
+    category text not null, -- e.g. 'Teaching', 'Environment', 'Chetna', 'Portal', 'General'
+    message text not null,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS for suggestions
+alter table public.suggestions enable row level security;
+
+create policy "Allow anyone to submit suggestions" on public.suggestions
+    for insert with check (true);
+
+create policy "Allow admins to manage suggestions" on public.suggestions
+    for all using (public.is_admin(auth.uid()));
+
+
+-- Audit Triggers for thanks and suggestions
+create trigger audit_thanks_trigger
+  after insert or update or delete on public.thanks
+  for each row execute procedure public.process_audit_log();
+
+create trigger audit_suggestions_trigger
+  after insert or update or delete on public.suggestions
+  for each row execute procedure public.process_audit_log();
