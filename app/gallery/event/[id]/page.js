@@ -65,25 +65,19 @@ export default async function EventPage({ params }) {
         <div className="bg-[#FAF9F6] min-h-screen text-slate-800 pb-20">
             {/* Header / Back navigation */}
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-                <Link 
-                    href="/gallery"
-                    className="inline-flex items-center gap-2 text-slate-500 hover:text-brand-blue transition-colors font-bold text-sm cursor-pointer"
-                >
-                    <FaArrowLeft />
-                    <span>Back to Gallery</span>
-                </Link>
+
             </div>
 
             {/* Event Details Section */}
             <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
                 <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm flex flex-col items-start gap-4">
-                    
+
                     {/* Tags */}
                     {event.wings && event.wings.length > 0 && (
                         <div className="flex flex-wrap gap-2">
                             {event.wings.map((wing, i) => (
-                                <span 
-                                    key={i} 
+                                <span
+                                    key={i}
                                     className={`px-3 py-1 border rounded-full text-xs font-extrabold flex items-center gap-1.5 ${getWingBadgeStyle(wing)}`}
                                 >
                                     <FaTag className="text-[10px]" />
@@ -137,7 +131,7 @@ export default async function EventPage({ params }) {
                     <h3 className="text-2xl font-bold text-slate-800">Event Photos</h3>
                     <p className="text-slate-400 text-sm mt-1">Click on any image to view in full size.</p>
                 </div>
-                
+
                 {event.images && event.images.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
                         {event.images.map((src, i) => (
