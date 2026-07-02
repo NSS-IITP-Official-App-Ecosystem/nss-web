@@ -1,0 +1,31 @@
+{
+    "items_count": 3,
+    "active": 0,
+    "items": [
+        {
+            "url": "/home_slider/nss_home.jpg"
+        },
+        {
+            "url": "/home_slider/SWACHHATA_HI_SEVA.jpeg",
+            "content": {
+                "update_text": "Swachh Bharat Abhiyan",
+                "title": "Drive Environmental & Social Sustainability",
+                "action": {
+                    "text": "Explore Wings",
+                    "link": "/wings/environmental"
+                }
+            }
+        },
+        {
+            "url": "/home_slider/blooddonation2019.jpeg",
+            "content": {
+                "update_text": "Chetna Health Cell",
+                "title": "Connecting Hearts, Saving Lives",
+                "action": {
+                    "text": "Register as Donor",
+                    "link": "/request-blood"
+                }
+            }
+        }
+    ]
+}
