@@ -94,6 +94,9 @@ export default async function GalleryPage({ searchParams }) {
     const filteredEvents = dbEvents.filter(event => {
         const eventDate = new Date(event.date);
         
+        // Strictly show past events only
+        if (eventDate > new Date()) return false;
+        
         // Date filters
         // if (startDateParam) {
         //     const startDate = new Date(startDateParam);

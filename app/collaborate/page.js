@@ -2,6 +2,8 @@ import { createClient } from '@/utils/supabase/server';
 import CollaborateHero from './CollaborateHero';
 import CollaborateClient from './CollaborateClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
     title: "Collaborate | NSS IIT Patna",
     description: "Partner with NSS IIT Patna cell to sponsor community development projects, co-host awareness camps, or support educational wings.",
@@ -9,6 +11,7 @@ export const metadata = {
 
 export default async function CollaboratePage() {
     let collaborators = [];
+    let gensecProfiles = [];
 
     // Fetch partners from database
     try {
@@ -21,8 +24,17 @@ export default async function CollaboratePage() {
         if (!error && data) {
             collaborators = data;
         }
+
+        const { data: teamMembers, error: teamError } = await supabase
+            .from('team_members')
+            .select('name, email, image_url, role')
+            .ilike('role', '%General Secretary%');
+
+        if (!teamError && teamMembers) {
+            gensecProfiles = teamMembers;
+        }
     } catch (err) {
-        console.error("Failed to fetch collaborators, falling back to static list:", err);
+        console.error("Failed to fetch database data:", err);
     }
 
     // Resilient fallback seed data
@@ -41,7 +53,10 @@ export default async function CollaboratePage() {
             <CollaborateHero />
 
             {/* Split Pillars Grid, Forms, and Trust Network */}
-            <CollaborateClient collaborators={collaborators} />
+            <CollaborateClient 
+                collaborators={collaborators} 
+                gensecProfiles={gensecProfiles} 
+            />
         </div>
     );
 }

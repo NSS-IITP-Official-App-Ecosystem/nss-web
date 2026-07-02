@@ -436,6 +436,14 @@ export default function HomeClient({
                             );
                         })}
                     </div>
+
+                    <div className="text-center mt-12">
+                        <Link href="/gallery">
+                            <button className="bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg transition-all active:scale-98 cursor-pointer text-sm font-sans flex items-center gap-2 mx-auto group">
+                                View Event Gallery <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </section>
 
