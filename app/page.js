@@ -1,6 +1,8 @@
 import { createClient } from '@/utils/supabase/server';
 import HomeClient from './HomeClient';
 
+export const dynamic = 'force-dynamic';
+
 // Static JSON Fallbacks for offline resilience
 import slider_data from '@/data/slider_data.json';
 import units_data from '@/data/units.json';
@@ -130,6 +132,7 @@ export default async function HomePage() {
                     )
                 )
             `)
+            .lte('event_date', new Date().toISOString())
             .order('event_date', { ascending: false })
             .limit(4);
 

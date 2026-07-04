@@ -17,7 +17,10 @@ import {
   LayoutGrid,
   Award,
   ArrowRight,
-  Mail
+  Heart,
+  Calendar,
+  Image as ImageIcon,
+  Handshake
 } from 'lucide-react';
 import { cn } from './utils';
 
@@ -33,42 +36,23 @@ const HIGH_LINKS = [
     "icon": Users
   },
   {
-    "text": "Think-Thank",
-    "link": "/think-thank",
-    "icon": Lightbulb
+    "text": "Blood Buddy",
+    "link": "/request-blood",
+    "icon": Heart
   },
   {
-    "text": "Wings",
-    "link": "#",
-    "icon": Compass
+    "text": "Events",
+    "link": "/events",
+    "icon": Calendar
   },
   {
-    "text": "Contact Us",
-    "link": "/faq",
-    "icon": Mail
+    "text": "Gallery",
+    "link": "/gallery",
+    "icon": ImageIcon
   }
 ];
 
 const LINKS = [
-  {
-    "text": "Departments",
-    "link": "#",
-    "icon": LayoutGrid,
-    "sub-items": [
-      {
-        "text": "Department 1",
-        "link": "/departments/1"
-      },
-      {
-        "text": "Department 2",
-        "link": "/departments/2"
-      },
-      {
-        "text": "Department 3",
-        "link": "/departments/3"
-      }
-    ]
-  },
   {
     "text": "Our Wings",
     "link": "#",
@@ -101,15 +85,14 @@ const LINKS = [
     ]
   },
   {
-    "text": "Think-Thank",
-    "link": "/think-thank",
-    "icon": Lightbulb
-  },
-  {
     "text": "Our Units",
-    "link": "/units",
+    "link": "#",
     "icon": Award,
     "sub-items": [
+      {
+        "text": "Overview",
+        "link": "/units"
+      },
       {
         "text": "Unit 1",
         "link": "/units/unit-1"
@@ -121,6 +104,49 @@ const LINKS = [
       {
         "text": "Unit 3",
         "link": "/units/unit-3"
+      }
+    ]
+  },
+  {
+    "text": "Blood Buddy",
+    "link": "/request-blood",
+    "icon": Heart
+  },
+  {
+    "text": "NSS Activities",
+    "link": "#",
+    "icon": LayoutGrid,
+    "sub-items": [
+      {
+        "text": "Events",
+        "link": "/events"
+      },
+      {
+        "text": "Gallery",
+        "link": "/gallery"
+      }
+    ]
+  },
+  {
+    "text": "Get Involved",
+    "link": "#",
+    "icon": Handshake,
+    "sub-items": [
+      {
+        "text": "Collaborate with Us",
+        "link": "/collaborate"
+      },
+      {
+        "text": "Think-Thank",
+        "link": "/think-thank"
+      },
+      {
+        "text": "Rules & Policies",
+        "link": "/rules-and-policies"
+      },
+      {
+        "text": "Our Team",
+        "link": "/our-team"
       }
     ]
   }

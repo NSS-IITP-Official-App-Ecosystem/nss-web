@@ -3,6 +3,8 @@ import { createClient } from '@/utils/supabase/client'
 import { useState } from 'react'
 import { cn } from './utils';
 import { FaEye, FaEyeSlash, FaSpinner, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { Turnstile } from '@marsidev/react-turnstile'
+import { handleSignUp, handleSignIn } from '@/app/action'
 
 export function SignUpForm() {
     const [formData, setFormData] = useState({
@@ -11,6 +13,8 @@ export function SignUpForm() {
         'signup-password': '',
         'signup-password-confirm': ''
     });
+
+    const [token, setToken] = useState(null);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -44,55 +48,44 @@ export function SignUpForm() {
         e.preventDefault();
         if (!checkValidity()) return;
 
+        if (!token) {
+            setError('Please verify you are a human.');
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setSuccess(null);
 
         try {
+            const fullname = formData['signup-fullname'].trim();
             const email = formData['signup-email'].trim();
-            
-            // Check if email already exists in profiles table
-            const { data: existingProfile, error: checkError } = await supabase
-                .from('profiles')
-                .select('id')
-                .eq('email', email)
-                .maybeSingle();
+            const password = formData['signup-password'];
 
-            if (checkError) {
-                console.error('Error checking duplicate email:', checkError);
-            }
-
-            if (existingProfile) {
-                setError('This email is already registered. Please sign in instead.');
-                setLoading(false);
-                return;
-            }
-
-            const { error: signUpError, data } = await supabase.auth.signUp({
+            const result = await handleSignUp({
+                fullname,
                 email,
-                password: formData['signup-password'],
-                options: {
-                    data: {
-                        full_name: formData['signup-fullname'].trim(),
-                    }
-                }
+                password,
+                token
             });
 
-            if (signUpError) {
-                throw signUpError;
-            }
+            if (result.error) {
+                setError(result.error);
+            } else {
+                setSuccess(result.success);
+                
+                if (result.session) {
+                    await supabase.auth.setSession(result.session);
+                    window.location.reload();
+                }
 
-            // Check if email confirmation is required or if signed in automatically
-            if (data?.user && data?.session === null) {
-                setSuccess('Registration successful! Please check your email inbox to verify your account.');
                 setFormData({
                     'signup-fullname': '',
                     'signup-email': '',
                     'signup-password': '',
                     'signup-password-confirm': ''
                 });
-            } else {
-                setSuccess('Account created and signed in successfully!');
+                setToken(null);
             }
         } catch (err) {
             setError(err.message || 'An error occurred during registration. Please try again.');
@@ -206,6 +199,16 @@ export function SignUpForm() {
                     )}
                 </div>
 
+                {/* Turnstile Widget */}
+                <div className="flex justify-center my-2">
+                    <Turnstile
+                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                        onSuccess={(t) => setToken(t)}
+                        onExpire={() => setToken(null)}
+                        onError={() => setToken(null)}
+                    />
+                </div>
+
                 <div className="flex flex-row justify-between items-center mt-2">
                     <button
                         disabled={!isValid || loading}
@@ -229,6 +232,8 @@ export function SignInForm() {
         'signin-email': '',
         'signin-password': ''
     });
+
+    const [token, setToken] = useState(null);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -255,21 +260,41 @@ export function SignInForm() {
         e.preventDefault();
         if (!checkValidity()) return;
 
+        if (!token) {
+            setError('Please verify you are a human.');
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setSuccess(null);
 
         try {
-            const { error: signInError } = await supabase.auth.signInWithPassword({
-                email: formData['signin-email'].trim(),
-                password: formData['signin-password']
+            const email = formData['signin-email'].trim();
+            const password = formData['signin-password'];
+
+            const result = await handleSignIn({
+                email,
+                password,
+                token
             });
 
-            if (signInError) {
-                throw signInError;
-            }
+            if (result.error) {
+                setError(result.error);
+            } else {
+                setSuccess(result.success);
+                
+                if (result.session) {
+                    await supabase.auth.setSession(result.session);
+                    window.location.reload();
+                }
 
-            setSuccess('Successfully signed in!');
+                setFormData({
+                    'signin-email': '',
+                    'signin-password': ''
+                });
+                setToken(null);
+            }
         } catch (err) {
             setError(err.message || 'Invalid email or password.');
         } finally {
@@ -338,6 +363,16 @@ export function SignInForm() {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
+                </div>
+
+                {/* Turnstile Widget */}
+                <div className="flex justify-center my-2">
+                    <Turnstile
+                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                        onSuccess={(t) => setToken(t)}
+                        onExpire={() => setToken(null)}
+                        onError={() => setToken(null)}
+                    />
                 </div>
 
                 <div className="flex flex-row justify-between items-center mt-2">
