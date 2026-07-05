@@ -20,7 +20,9 @@ import {
   Heart,
   Calendar,
   Image as ImageIcon,
-  Handshake
+  Handshake,
+  Mail,
+  Sheet
 } from 'lucide-react';
 import { cn } from './utils';
 
@@ -34,11 +36,6 @@ const HIGH_LINKS = [
     "text": "Our Team",
     "link": "/our-team",
     "icon": Users
-  },
-  {
-    "text": "Blood Buddy",
-    "link": "/request-blood",
-    "icon": Heart
   },
   {
     "text": "Events",
@@ -59,12 +56,8 @@ const LINKS = [
     "icon": Compass,
     "sub-items": [
       {
-        "text": "Prayatna",
-        "link": "/wings/prayatna"
-      },
-      {
-        "text": "Chetna",
-        "link": "/wings/chetna"
+        "text": "Prerna",
+        "link": "/wings/prerna"
       },
       {
         "text": "Rural Development",
@@ -89,10 +82,6 @@ const LINKS = [
     "link": "#",
     "icon": Award,
     "sub-items": [
-      {
-        "text": "Overview",
-        "link": "/units"
-      },
       {
         "text": "Unit 1",
         "link": "/units/unit-1"
@@ -149,6 +138,21 @@ const LINKS = [
         "link": "/our-team"
       }
     ]
+  },
+  {
+    "text": "Awards And Achievements",
+    "link": "/awards",
+    "icon": Award,
+  },
+  {
+    "text": "Contact Us",
+    "link": "/faq",
+    "icon": Mail,
+  },
+  {
+    "text": "Rules and Policies",
+    "link": "/rules-and-policies",
+    "icon": Sheet,
   }
 ];
 
