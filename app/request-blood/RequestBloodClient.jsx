@@ -308,6 +308,35 @@ export default function RequestBloodClient({ initialActiveRequests, isIITPStuden
 
       </section>
 
+           {/* Contact GenSec Section */}
+      {gensecProfiles && gensecProfiles.length > 0 && (
+        <section className="max-w-4xl mx-auto px-4 mt-16 text-center">
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xs max-w-2xl mx-auto">
+            <h3 className="text-2xl font-black text-slate-800 mt-2 mb-1">Contact NSS General Secretaries</h3>
+            <p className="text-slate-500 text-sm mb-6">If you have any urgent queries or need assistance coordinating blood donations, feel free to reach out to our team.</p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+              {gensecProfiles.map((profile, i) => (
+                <div key={i} className="flex items-center gap-4 bg-slate-50/50 p-4 border border-slate-100 rounded-2xl w-full max-w-sm text-left">
+                  <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-100 flex-shrink-0 flex items-center justify-center text-slate-400">
+                    {profile.image_url ? (
+                      <img src={profile.image_url} alt={profile.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-lg font-bold">{profile.name ? profile.name.charAt(0) : "N"}</span>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h5 className="font-bold text-slate-800 text-sm truncate">{profile.name}</h5>
+                    <p className="text-xs text-rose-600 font-semibold">{profile.role || "General Secretary"}</p>
+                    <p className="text-xs text-slate-500 mt-1 font-light">{profile.email}</p>
+                    {profile.phone_number && <p className="text-xs text-slate-500 font-light">{profile.phone_number}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="my-16">
         <div className="flex flex-nowrap overflow-x-auto bg-slate-100 text-text py-2 px-2 rounded-xl gap-4 w-fit m-auto shadow-sm">
@@ -730,36 +759,7 @@ export default function RequestBloodClient({ initialActiveRequests, isIITPStuden
         </div>
       </section>
 
-      {/* Contact GenSec Section */}
-      {gensecProfiles && gensecProfiles.length > 0 && (
-        <section className="max-w-4xl mx-auto px-4 mt-16 text-center">
-          <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xs max-w-2xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-400 font-mono">Still Need Help?</span>
-            <h3 className="text-2xl font-black text-slate-800 mt-2 mb-1">Contact NSS General Secretaries</h3>
-            <p className="text-slate-500 text-sm mb-6">If you have any urgent queries or need assistance coordinating blood donations, feel free to reach out to our team.</p>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
-              {gensecProfiles.map((profile, i) => (
-                <div key={i} className="flex items-center gap-4 bg-slate-50/50 p-4 border border-slate-100 rounded-2xl w-full max-w-sm text-left">
-                  <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-100 flex-shrink-0 flex items-center justify-center text-slate-400">
-                    {profile.image_url ? (
-                      <img src={profile.image_url} alt={profile.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-lg font-bold">{profile.name ? profile.name.charAt(0) : "N"}</span>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h5 className="font-bold text-slate-800 text-sm truncate">{profile.name}</h5>
-                    <p className="text-xs text-rose-600 font-semibold">{profile.role || "General Secretary"}</p>
-                    <p className="text-xs text-slate-500 mt-1 font-light">{profile.email}</p>
-                    {profile.phone_number && <p className="text-xs text-slate-500 font-light">{profile.phone_number}</p>}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+     
 
       {/* Donation Modal */}
       <AnimatePresence>

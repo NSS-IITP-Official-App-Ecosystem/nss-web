@@ -23,7 +23,8 @@ export default async function RequestBloodPage() {
   const { data: teamMembers, error: teamError } = await supabase
     .from("team_members")
     .select("name, email, image_url, role")
-    .ilike("role", "%General Secretary%");
+    .ilike("role", "%General Secretary%")
+    .eq('academic_year', '2026-27');
 
   if (!teamError && teamMembers) {
     gensecProfiles = teamMembers;
