@@ -3,11 +3,17 @@ import { EventCard } from './event-card'
 import events_data from '@/data/events/events.json'
 import { Suspense } from 'react'
 import { createClient } from '@/utils/supabase/server'
+import NSS_SESSION from '@/data/nss_session.json'
+import GalleryHero from './GalleryHero'
 
 export default async function GalleryPage({ searchParams }) {
     const resolvedParams = await searchParams;
     const startDateParam = resolvedParams['start-date'];
     const endDateParam = resolvedParams['end-date'];
+
+    // overriding with session option date range
+    const session = resolvedParams['session'];
+
     const wingParam = resolvedParams['wing'];
 
     let dbEvents = [];
@@ -88,17 +94,31 @@ export default async function GalleryPage({ searchParams }) {
     const filteredEvents = dbEvents.filter(event => {
         const eventDate = new Date(event.date);
         
-        // Date filters
-        if (startDateParam) {
-            const startDate = new Date(startDateParam);
-            if (eventDate < startDate) return false;
-        }
-        if (endDateParam) {
-            const endDate = new Date(endDateParam);
-            endDate.setHours(23, 59, 59, 999);
-            if (eventDate > endDate) return false;
-        }
+        // Strictly show past events only
+        if (eventDate > new Date()) return false;
         
+        // Date filters
+        // if (startDateParam) {
+        //     const startDate = new Date(startDateParam);
+        //     if (eventDate < startDate) return false;
+        // }
+        // if (endDateParam) {
+        //     const endDate = new Date(endDateParam);
+        //     endDate.setHours(23, 59, 59, 999);
+        //     if (eventDate > endDate) return false;
+        // }
+        
+        //session filter
+        const currentSessionName = session || NSS_SESSION[0]['session'];
+        const getSession = NSS_SESSION.find((s)=>s.session == currentSessionName) || NSS_SESSION[0];
+        
+        const startDate = new Date(getSession.start_date);
+        if(eventDate < startDate) return false; // if before start date of session return false
+        
+        const endDate = new Date(getSession.end_date);
+        endDate.setHours(23, 59, 59, 999);
+        if(eventDate > endDate) return false; // if after end date of session return false
+
         // Wing filter
         if (wingParam && wingParam !== 'All') {
             const hasWing = event.wings?.some(w => 
@@ -114,7 +134,7 @@ export default async function GalleryPage({ searchParams }) {
 
     return (
         <div className="bg-[#FAF9F6] min-h-screen text-slate-800 pb-20">
-            <Banner />
+            <GalleryHero />
             <Suspense fallback={<div className="text-center my-10 text-slate-500 font-semibold">Loading filters...</div>}>
                 <Filters wings={wings} />
             </Suspense>
@@ -134,28 +154,6 @@ export default async function GalleryPage({ searchParams }) {
                 )}
             </section>
         </div>
-    )
-}
-
-function Banner() {
-    return (
-        <section className="py-20 flex justify-center items-center relative overflow-hidden" style={{ background: "linear-gradient(135deg, var(--brand-blue), #020f26)" }}>
-            {/* Subtle glow using theme primary/amber instead of red */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,158,11,0.12),_transparent)] pointer-events-none" />
-            <div className="flex items-center flex-col px-4 z-10 text-center max-w-3xl">
-                <div className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10">
-                    <span className="text-amber-400 font-semibold tracking-wider text-xs uppercase font-mono">
-                        Highlights of Our Social Service Events
-                    </span>
-                </div>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-none mb-6 uppercase font-sans">
-                    Event <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-100 bg-clip-text text-transparent">Gallery</span>
-                </h1>
-                <p className="text-slate-300 text-base md:text-lg max-w-xl mx-auto leading-relaxed font-light">
-                    Discover the impact, records, and media galleries of past events organized by NSS volunteers at IIT Patna.
-                </p>
-            </div>
-        </section>
     )
 }
 

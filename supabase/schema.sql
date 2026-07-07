@@ -8,6 +8,8 @@
 drop trigger if exists on_auth_user_created on auth.users;
 
 -- Tables (dropping tables automatically drops any triggers/constraints on them)
+drop table if exists public.thanks cascade;
+drop table if exists public.suggestions cascade;
 drop table if exists public.collaborators cascade;
 drop table if exists public.impacts cascade;
 drop table if exists public.audit_logs cascade;
@@ -255,7 +257,8 @@ create policy "Allow admins to manage event_media" on public.event_media
     for all using (public.is_admin(auth.uid()));
 
 
--- 6. Check-Hours & Logs Table
+-- 6. Check-Hours & Logs Table 
+-- we are skiping for now 
 create table public.hours_logs (
     id uuid default gen_random_uuid() primary key,
     volunteer_id uuid references public.profiles(id) on delete cascade not null,
@@ -342,6 +345,7 @@ create policy "Allow admins to manage all donors" on public.blood_donors
 
 
 -- 8. Testimonials Table
+-- there should be status (pending, approved, archived)
 create table public.testimonials (
     id uuid default gen_random_uuid() primary key,
     name text not null,
@@ -366,6 +370,7 @@ create policy "Allow admins to manage all testimonials" on public.testimonials
 
 
 -- 9. Donations Ledger
+-- Currently not useful, can be removed later
 create table public.donations (
     id uuid default gen_random_uuid() primary key,
     donor_name text not null,
@@ -434,6 +439,10 @@ create table public.collaborate_requests (
     status public.collaboration_status default 'pending'::public.collaboration_status not null,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
+
+-- two tables required more
+-- for contact us submission
+-- for thank form in think-thank page
 
 -- Enable RLS for collaborate_requests
 alter table public.collaborate_requests enable row level security;
@@ -582,4 +591,126 @@ insert into public.event_media (event_id, media_url, caption, is_thumbnail) valu
 ('e0000000-0000-0000-0000-000000000001', '/home_slider/SWACHHATA_HI_SEVA.jpeg', 'Swachhata Banner', false),
 ('e0000000-0000-0000-0000-000000000001', '/home_slider/nss_home.jpg', 'Blood Drive Photo', true),
 ('e0000000-0000-0000-0000-000000000002', '/home_slider/nss_home.jpg', 'Group picture of cleanliness drive', true),
-('e0000000-0000-0000-0000-000000000004', '/home_slider/nss_home.jpg', 'Sapling plantation photo', true);
+('e0000000-0000-0000-0000-000000000004', '/home_slider/nss_home.jpg', 'Sapling plantation photo', true);-- ==========================================
+-- 13. Thanks Table (for public appreciation of volunteers)
+-- ==========================================
+create table public.thanks (
+    id uuid default gen_random_uuid() primary key,
+    sender_name text not null default 'Anonymous',
+    sender_relationship text not null default 'Other', -- 'Student', 'Volunteer', 'Faculty Member', 'Beneficiary', 'Other'
+    recipient_name text not null, -- Who is being thanked
+    message text not null,
+    is_approved boolean default false not null,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS for thanks
+alter table public.thanks enable row level security;
+
+create policy "Allow public read access on approved thanks" on public.thanks
+    for select using (is_approved = true);
+
+create policy "Allow anyone to submit thanks" on public.thanks
+    for insert with check (true);
+
+create policy "Allow admins to manage thanks" on public.thanks
+    for all using (public.is_admin(auth.uid()));
+
+
+-- ==========================================
+-- 14. Suggestions Table (for feedback and ideas)
+-- ==========================================
+create table public.suggestions (
+    id uuid default gen_random_uuid() primary key,
+    sender_name text default 'Anonymous',
+    sender_email text,
+    category text not null, -- e.g. 'Teaching', 'Environment', 'Chetna', 'Portal', 'General'
+    message text not null,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS for suggestions
+alter table public.suggestions enable row level security;
+
+create policy "Allow anyone to submit suggestions" on public.suggestions
+    for insert with check (true);
+
+create policy "Allow admins to manage suggestions" on public.suggestions
+    for all using (public.is_admin(auth.uid()));
+
+
+-- Audit Triggers for thanks and suggestions
+create trigger audit_thanks_trigger
+  after insert or update or delete on public.thanks
+  for each row execute procedure public.process_audit_log();
+
+create trigger audit_suggestions_trigger
+  after insert or update or delete on public.suggestions
+  for each row execute procedure public.process_audit_log();
+
+-- Seed Team Members & Leadership Tree (2025-26 & 2024-25)
+INSERT INTO public.team_members (academic_year, name, role, category, image_url, email, bio, linkedin_url, github_url, sort_order) VALUES
+('2025-26', 'Prof. T. N. Singh', 'Director, IIT Patna', 'admin', '/assets/team1/iit-patna-director.jpg', 'director@iitp.ac.in', 'Patron & Director of IIT Patna. Provides administrative guidance, strategic vision, and structural oversight for all social service activities under the NSS banner.', 'https://linkedin.com', 'https://github.com', 1),
+('2025-26', 'Dr. Pramod Tiwari', 'Associate Dean, Student Affairs', 'admin', '/assets/team1/adean_student_affairs.jpeg', 'adean_student_affairs@iitp.ac.in', 'Associate Dean of Student Affairs at IIT Patna. Oversees student activity clubs, manages volunteer allocations, and facilitates administrative support and approvals.', 'https://linkedin.com', 'https://github.com', 2),
+('2025-26', 'Dr. Somanath Pradhan', 'Professor in Charge, NSS', 'admin', '/assets/team1/spradhan.jpg', 'pic_nss@iitp.ac.in', 'NSS Professor in Charge. Steers academic integrations, faculty advisory boards, central community service campaigns, and local village developmental camps.', 'https://linkedin.com', 'https://github.com', 3),
+('2025-26', 'Mr. Deepak Chaurasia', 'Security Officer & NSS Advisor', 'admin', '/assets/team1/deepakch.jpeg', 'security@iitp.ac.in', 'Security Officer & NSS Advisor. Supervises student outreach safety protocols, transit logistics, campus emergency services, and operational compliance.', 'https://linkedin.com', 'https://github.com', 4),
+('2025-26', 'Kiran Ravi', 'Core Committee Advisor', 'admin', '/assets/team1/karan_Ravi.jpg', 'kiran.ravi@iitp.ac.in', 'Core Committee Advisor. Advises on local school tutoring campaigns, literacy syllabi, women empowerment initiatives, and children healthcare camps.', 'https://linkedin.com', 'https://github.com', 5),
+('2025-26', 'Subham', 'Core Committee Advisor', 'admin', '/assets/team1/subham_kumar.jpg', 'subham@iitp.ac.in', 'Core Committee Advisor. Advises on ecological plantation setups, rural agricultural support systems, healthcare drives, and medical campaigns.', 'https://linkedin.com', 'https://github.com', 6),
+('2024-25', 'Prof. T. N. Singh', 'Director, IIT Patna', 'admin', '/assets/team1/iit-patna-director.jpg', 'director@iitp.ac.in', 'Patron & Director of IIT Patna. Provides administrative guidance, strategic vision, and structural oversight for all social service activities under the NSS banner.', 'https://linkedin.com', 'https://github.com', 1),
+('2024-25', 'Dr. Pramod Tiwari', 'Associate Dean, Student Affairs', 'admin', '/assets/team1/adean_student_affairs.jpeg', 'adean_student_affairs@iitp.ac.in', 'Associate Dean of Student Affairs at IIT Patna. Oversees student activity clubs, manages volunteer allocations, and facilitates administrative support and approvals.', 'https://linkedin.com', 'https://github.com', 2),
+('2024-25', 'Dr. Shailesh K. Pandey', 'Professor in Charge, NSS', 'admin', '/assets/team1/pic_nss.jpeg', 'pic_former@iitp.ac.in', 'NSS Professor in Charge for 2024-25. Directed faculty committees, local project allocations, and coordinated village medical outreach programs.', 'https://linkedin.com', 'https://github.com', 3),
+('2024-25', 'Mr. Deepak Chaurasia', 'Security Officer & NSS Advisor', 'admin', '/assets/team1/deepakch.jpeg', 'security@iitp.ac.in', 'Security Officer & NSS Advisor. Supervises student outreach safety protocols, transit logistics, campus emergency services, and operational compliance.', 'https://linkedin.com', 'https://github.com', 4),
+('2024-25', 'Kiran Ravi', 'Core Committee Advisor', 'admin', '/assets/team1/karan_Ravi.jpg', 'kiran.ravi@iitp.ac.in', 'Core Committee Advisor. Advises on local school tutoring campaigns, literacy syllabi, women empowerment initiatives, and children healthcare camps.', 'https://linkedin.com', 'https://github.com', 5),
+('2024-25', 'Subham', 'Core Committee Advisor', 'admin', '/assets/team1/subham_kumar.jpg', 'subham@iitp.ac.in', 'Core Committee Advisor. Advises on ecological plantation setups, rural agricultural support systems, healthcare drives, and medical campaigns.', 'https://linkedin.com', 'https://github.com', 6),
+('2025-26', 'Ade Balakrishna', 'General Secretary', 'secretary', '/assets/team1/Ade_Balakrishna.jpg', 'ade.balakrishna@iitp.ac.in', 'General Secretary of NSS IIT Patna. Leads overall student volunteer operations, guides cell secretaries, manages structural outreach budgets, and directs campus-wide social events.', 'https://linkedin.com', 'https://github.com', 10),
+('2025-26', 'Rabi Kumar Shaw', 'Secretary - Teaching & Tech Skills', 'core', '/assets/team1/Rabi_kumar.jpg', 'rabi.kumar@iitp.ac.in', 'Directs tutoring schedules, rural high school computer classes, and spoken English workshops. Standardizes syllabus content and guides student mentors.', 'https://linkedin.com', 'https://github.com', 11),
+('2025-26', 'PR Veronica', 'Secretary - Environmental & Chetna', 'core', '/assets/team1/podili_Ruby_Veronica.jpg', 'pr.veronica@iitp.ac.in', 'Coordinates clean-up campaigns, rural plantation drives, and local health-hygiene education programs. Directs voluntary action plans and manages ecological schedules.', 'https://linkedin.com', 'https://github.com', 12),
+('2025-26', 'Sudhanshu Shekhar', 'Secretary - Rural Development', 'core', '/assets/team1/sudhanshu_kumar.jpg', 'sudhanshu.kumar@iitp.ac.in', 'Drives rural outreach, agricultural expansion programs, and self-help group setups. Directs collaboration with local panchayat committees.', 'https://linkedin.com', 'https://github.com', 13),
+('2025-26', 'Rishav Shivare', 'Secretary - Nukkad Awareness', 'core', '/assets/team1/Rishabh_shivhare.jpg', 'rishav.shivare@iitp.ac.in', 'Directs scriptwriting and schedules street plays (Nukkad Natak) about vital social issues. Manages event schedules and outreach locations.', 'https://linkedin.com', 'https://github.com', 14),
+('2025-26', 'Ayushman Singh', 'Secretary - Logistics Team', 'core', '/assets/team1/ayushman_singh.jpg', 'ayushman.singh@iitp.ac.in', 'Directs transportation logistics, inventory allocation, and support systems during large camps. Coordinates supply distributions across villages.', 'https://linkedin.com', 'https://github.com', 15),
+('2025-26', 'Abhishek Kumar Gupta', 'Post-Graduate Student Representative', 'pg', '/assets/team1/abhishek_kumar_gupta.jpeg', 'abhishek.kumar@iitp.ac.in', 'Post-Graduate Student Representative for the NSS Core Team. Helps align PG research scholars and post-grad volunteers with social welfare initiatives.', 'https://linkedin.com', 'https://github.com', 16),
+('2025-26', 'Aditya Mishra', 'Post-Graduate Student Representative', 'pg', '/assets/team1/aditya_mishra.jpeg', 'aditya.mishra@iitp.ac.in', 'Post-Graduate Student Representative for the NSS Core Team. Facilitates volunteer operations and post-grad student engagement.', 'https://linkedin.com', 'https://github.com', 17),
+('2025-26', 'Muskan Srivastava', 'Post-Graduate Student Representative', 'pg', '/assets/team1/muskan_srivastava.jpeg', 'muskan.srivastava@iitp.ac.in', 'Post-Graduate Student Representative for the NSS Core Team. Directs outreach programs and academic coordination for PG volunteers.', 'https://linkedin.com', 'https://github.com', 18),
+('2025-26', 'Aditya Onam', 'Team Lead - Teaching & Technical', 'mentor', '/assets/team1/Aditya_Onam.jpg', 'aditya.onam@iitp.ac.in', 'NSS Teaching & Tech Lead. Designs computer literacy curriculums and manages tutoring sessions.', 'https://linkedin.com', 'https://github.com', 19),
+('2025-26', 'Eshan Bhaskar', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/Eshan_Bhaskar.png', 'eshan.bhaskar@iitp.ac.in', 'NSS Teaching & Tech Mentor. Teaches coding and basics of computer science to local school kids.', 'https://linkedin.com', 'https://github.com', 20),
+('2025-26', 'Lalit Sen', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/LALIT_2301ME67.jpg', 'lalit.sen@iitp.ac.in', 'NSS Teaching & Tech Mentor. Specialized in engineering mathematics and science tutoring.', 'https://linkedin.com', 'https://github.com', 21),
+('2025-26', 'Aniket Sinha', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/Aniket_Sinha.jpg', 'aniket.sinha@iitp.ac.in', 'NSS Teaching & Tech Mentor. Coordinates tech skill workshops and local school tutoring.', 'https://linkedin.com', 'https://github.com', 22),
+('2025-26', 'Vivek Kumar', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/Vivek_Kumar.jpg', 'vivek.kumar@iitp.ac.in', 'NSS Teaching & Tech Mentor. Focuses on junior high school computer labs and basic math literacy.', 'https://linkedin.com', 'https://github.com', 23),
+('2025-26', 'Tanish R. Chordia', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/Tanish_Chordia.PNG', 'tanish.chordia@iitp.ac.in', 'NSS Teaching & Tech Mentor. Designs interactive educational models and guides student volunteers.', 'https://linkedin.com', 'https://github.com', 24),
+('2025-26', 'Anil Kumawat', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/Anil_Kumawat.jpg', 'anil.kumawat@iitp.ac.in', 'NSS Teaching & Tech Mentor. Organizes science experiments and mathematics workshops in rural centers.', 'https://linkedin.com', 'https://github.com', 25),
+('2025-26', 'Ankit Kumar Kero', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/Ankit_Kumar_Kero.jpg', 'ankit.kero@iitp.ac.in', 'NSS Teaching & Tech Mentor. Inspires kids with basic mechanical science and tech tutorials.', 'https://linkedin.com', 'https://github.com', 26),
+('2025-26', 'Ankesh Kumar', 'Mentor - Teaching & Technical', 'mentor', '/assets/team1/Ankesh_Kumar.jpg', 'ankesh.kumar@iitp.ac.in', 'NSS Teaching & Tech Mentor. Coordinates student attendance logs and standardizes syllabus content.', 'https://linkedin.com', 'https://github.com', 27),
+('2025-26', 'Aditi Kashyap', 'Mentor - Environmental Wing', 'mentor', '/assets/team1/Aditi_Kashyap.jpg', 'aditi.kashyap@iitp.ac.in', 'NSS Environmental Wing Mentor. Coordinates tree plantation drives and waste management awareness campaigns.', 'https://linkedin.com', 'https://github.com', 28),
+('2025-26', 'Bhanu Sri', 'Mentor - Environmental Wing', 'mentor', '/assets/team1/Bhanu_Sri.jpg', 'bhanu.sri@iitp.ac.in', 'NSS Environmental Wing Mentor. Directs campus cleanliness drives and plastic-free campaigns.', 'https://linkedin.com', 'https://github.com', 29),
+('2025-26', 'Dinker Anand', 'Mentor - Environmental Wing', 'mentor', '/assets/team1/dinkar_anand.jpeg', 'dinker.anand@iitp.ac.in', 'NSS Environmental Wing Mentor. Focuses on ecological biodiversity protection and organic farming advocacy.', 'https://linkedin.com', 'https://github.com', 30),
+('2025-26', 'Mahipal', 'Mentor - Prayatna Wing', 'mentor', '/assets/team1/Mahipal_2301MC15.jpeg', 'mahipal@iitp.ac.in', 'NSS Prayatna Wing Mentor. Drives local children safety campaigns and anti-child-labor street drives.', 'https://linkedin.com', 'https://github.com', 31),
+('2025-26', 'Sai Vardhan', 'Mentor - Prayatna Wing', 'mentor', '/assets/team1/Sai vardhan- 2301cs44.jpg', 'sai.vardhan@iitp.ac.in', 'NSS Prayatna Wing Mentor. Organizes collection drives for underprivileged families and runs local aid campaigns.', 'https://linkedin.com', 'https://github.com', 32),
+('2025-26', 'Yoshita Chowdary', 'Mentor - Prayatna Wing', 'mentor', '/assets/team1/Yoshita_Chowdary.jpg', 'yoshita.brown@iitp.ac.in', 'NSS Prayatna Wing Mentor. Focuses on primary school children education support and book distribution drives.', 'https://linkedin.com', 'https://github.com', 33),
+('2025-26', 'Gali Uday Aditya', 'Mentor - Prayatna Wing', 'mentor', '/assets/team1/UdayAditya_2301cs71_PrayatnaWing.jpg', 'gali.uday@iitp.ac.in', 'NSS Prayatna Wing Mentor. Coordinates winter clothing collection camps and student volunteer rosters.', 'https://linkedin.com', 'https://github.com', 34),
+('2025-26', 'Ravindra Bhati', 'Mentor - Rural Development Wing', 'mentor', '/assets/team1/Ravindra_Bhati.jpg', 'ravindra.bhati@iitp.ac.in', 'NSS Rural Development Wing Mentor. Coordinates village water sanitation programs and agricultural safety seminars.', 'https://linkedin.com', 'https://github.com', 35),
+('2025-26', 'Bhoodev', 'Mentor - Rural Development Wing', 'mentor', '/assets/team1/Bhoodev.jpg', 'bhoodev@iitp.ac.in', 'NSS Rural Development Wing Mentor. Directs rural survey projects, solar power installations, and local council coordination.', 'https://linkedin.com', 'https://github.com', 36),
+('2025-26', 'Riya Singh', 'Mentor - Rural Development Wing', 'mentor', '/assets/team1/Riya Singh (2301PH25).jpg', 'riya.singh@iitp.ac.in', 'NSS Rural Development Wing Mentor. Leads self-help group workshops and financial literacy drives for women in local villages.', 'https://linkedin.com', 'https://github.com', 37),
+('2025-26', 'Neha Reddy Sabbidi', 'Mentor - Chetna Wing', 'mentor', '/assets/team1/Neha Reddy Sabbidi (2301AI42).jpg', 'neha.reddy@iitp.ac.in', 'NSS Chetna Wing Mentor. Coordinates health check-up camps, blood donation rosters, and women hygiene awareness programs.', 'https://linkedin.com', 'https://github.com', 38),
+('2025-26', 'Rohit Roy', 'Mentor - Chetna Wing', 'mentor', '/assets/team1/Rohit_Roy.jpg', 'rohit.roy@iitp.ac.in', 'NSS Chetna Wing Mentor. Organizes local yoga camps, mental health seminars, and blood donation campaigns.', 'https://linkedin.com', 'https://github.com', 39),
+('2025-26', 'Krishnaveni', 'Mentor - Chetna Wing', 'mentor', '/assets/team1/Krishnaveni.jpg', 'krishnaveni@iitp.ac.in', 'NSS Chetna Wing Mentor. Coordinates medical camp logistics, first-aid training, and local healthcare counseling.', 'https://linkedin.com', 'https://github.com', 40),
+('2025-26', 'Meghana Pujari', 'Mentor - Logistics Wing', 'mentor', '/assets/team1/meghana_pujari.jpg', 'meghana.pujari@iitp.ac.in', 'NSS Logistics Wing Mentor. Organizes transport logistics, food distribution rosters, and campsite operations.', 'https://linkedin.com', 'https://github.com', 41),
+('2025-26', 'Sameeksha Nagulwad', 'Mentor - Logistics Wing', 'mentor', '/assets/team1/Sameeksha Nagulwad (2301EC23)_.jpg', 'sameeksha.nagulwad@iitp.ac.in', 'NSS Logistics Wing Mentor. Specialized in equipment inventory management and volunteer tracking databases.', 'https://linkedin.com', 'https://github.com', 42),
+('2025-26', 'Abhitesh Shukla', 'Mentor - Logistics Wing', 'mentor', '/assets/team1/Abhitesh_Shukla.jpg', 'abhitesh.shukla@iitp.ac.in', 'NSS Logistics Wing Mentor. Drives procurement of medical kits, camp supplies, and schedules transportation vehicles.', 'https://linkedin.com', 'https://github.com', 43),
+('2025-26', 'Nisha', 'Mentor - Nukkad Wing', 'mentor', '/assets/team1/Nisha.jpg', 'nisha@iitp.ac.in', 'NSS Nukkad Wing Mentor. Specialized in screenplay scripting, dramatic direction, and street play scheduling.', 'https://linkedin.com', 'https://github.com', 44),
+('2025-26', 'Udit Sharma', 'Mentor - Nukkad Wing', 'mentor', '/assets/team1/Udit_Sharma.jpg', 'udit.sharma@iitp.ac.in', 'NSS Nukkad Wing Mentor. Acts as senior character lead, directs street plays about clean water, and coordinates performance logistics.', 'https://linkedin.com', 'https://github.com', 45),
+('2025-26', 'Amartya Mondal', 'Coordinator - Web and App Development', 'web', '/assets/team/atm1504.jpg', 'amartya.mondal@iitp.ac.in', 'Leads portal programming, check-hours database integration, and guides junior web engineers. Focuses on full-stack portal operations.', 'https://linkedin.com', 'https://github.com', 46),
+('2025-26', 'Sajal Kumar', 'Executive Lead - Creatives and Design', 'web', '/assets/team/jgdcuag - Sajal Kumar.png', 'sajal.kumar@iitp.ac.in', 'Directs visual layouts, social media campaigns, print poster designs, and coordinates styling across web portals.', 'https://linkedin.com', 'https://github.com', 47),
+('2025-26', 'Abhay Patil', 'Web Developer', 'web', '/assets/team/Abhay Patil.jpg', 'abhay.patil@iitp.ac.in', 'Focuses on client-side programming, interactive components, responsive stylesheets, and browser optimization updates.', 'https://linkedin.com', 'https://github.com', 48),
+('2025-26', 'Omkar Deshpande', 'Web Developer', 'web', '/assets/team/20200606_113444 - Omkar Deshpande.jpg', 'omkar.deshpande@iitp.ac.in', 'Directs database connectors, dynamic table updates, event logs, and guides support integrations.', 'https://linkedin.com', 'https://github.com', 49),
+('2024-25', 'Rabi Kumar Shaw', 'General Secretary (2024-25)', 'secretary', '/assets/team1/Rabi_kumar.jpg', 'rabi.kumar@iitp.ac.in', 'General Secretary of NSS IIT Patna for the 2024-25 tenure. Led student outreach projects, community services, and coordinate local school initiatives.', 'https://linkedin.com', 'https://github.com', 10),
+('2024-25', 'Ade Balakrishna', 'Secretary - Logistics & Outreach', 'core', '/assets/team1/Ade_Balakrishna.jpg', 'ade.balakrishna@iitp.ac.in', 'Coordinated volunteer transportation, inventory support operations, and directed large-scale village camps logistics.', 'https://linkedin.com', 'https://github.com', 11),
+('2024-25', 'PR Veronica', 'Secretary - Environmental & Chetna', 'core', '/assets/team1/podili_Ruby_Veronica.jpg', 'pr.veronica@iitp.ac.in', 'Coordinates clean-up campaigns, rural plantation drives, and local health-hygiene education programs.', 'https://linkedin.com', 'https://github.com', 12),
+('2024-25', 'Sudhanshu Shekhar', 'Secretary - Rural Development', 'core', '/assets/team1/Sudhanshu_Kumar.jpg', 'sudhanshu.kumar@iitp.ac.in', 'Drives rural outreach, agricultural expansion programs, and self-help group setups.', 'https://linkedin.com', 'https://github.com', 13),
+('2024-25', 'Rishav Shivare', 'Secretary - Nukkad Awareness', 'core', '/assets/team1/Rishabh_shivhare.jpg', 'rishav.shivare@iitp.ac.in', 'Directs scriptwriting and schedules street plays (Nukkad Natak) about vital social issues.', 'https://linkedin.com', 'https://github.com', 14),
+('2024-25', 'Ayushman Singh', 'Secretary - Logistics Team', 'core', '/assets/team1/Ayushman_singh.jpg', 'ayushman.singh@iitp.ac.in', 'Directs transportation logistics, inventory allocation, and support systems during large camps.', 'https://linkedin.com', 'https://github.com', 15),
+('2024-25', 'Harshvardhan Singh', 'Secretary - Teaching & Tech', 'core', '/assets/team/20191020_144529 - harshvardhan singh.jpg', 'harsh@iitp.ac.in', 'Led rural high school computer classes, spoken English seminars, and designed lesson templates for volunteers.', 'https://linkedin.com', 'https://github.com', 16),
+('2024-25', 'Amartya Mondal', 'Coordinator - Web and App Development', 'web', '/assets/team/atm1504.jpg', 'amartya.mondal@iitp.ac.in', 'Leads portal programming, check-hours database integration, and guides junior web engineers.', 'https://linkedin.com', 'https://github.com', 17),
+('2024-25', 'Sajal Kumar', 'Executive Lead - Creatives and Design', 'web', '/assets/team/jgdcuag - Sajal Kumar.png', 'sajal.kumar@iitp.ac.in', 'Directs visual layouts, social media campaigns, print poster designs, and coordinates styling across web portals.', 'https://linkedin.com', 'https://github.com', 18),
+('2024-25', 'Hrishita Mishra', 'Web Developer (Former)', 'web', '/assets/team/20200606_000422 - Hrishita Mishra.jpg', 'hrishita@iitp.ac.in', 'Contributed client-side portal integrations, interactive user forms, responsive stylesheets, and database connectors.', 'https://linkedin.com', 'https://github.com', 19),
+('2024-25', 'Abhay Patil', 'Web Developer', 'web', '/assets/team/Abhay Patil.jpg', 'abhay.patil@iitp.ac.in', 'Focuses on client-side programming, interactive components, responsive stylesheets, and browser optimization updates.', 'https://linkedin.com', 'https://github.com', 20),
+('2024-25', 'Omkar Deshpande', 'Web Developer', 'web', '/assets/team/20200606_113444 - Omkar Deshpande.jpg', 'omkar.deshpande@iitp.ac.in', 'Directs database connectors, dynamic table updates, event logs, and guides support integrations.', 'https://linkedin.com', 'https://github.com', 21);

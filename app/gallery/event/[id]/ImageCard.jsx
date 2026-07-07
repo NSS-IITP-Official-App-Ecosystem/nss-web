@@ -5,13 +5,13 @@ import { useState } from "react";
 import { MdZoomOutMap, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function ImageCard({ src, title }) {
+export function ImageCard({ src, title, index }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
             {/* Gallery Card */}
-            <div 
+            {!isOpen && <motion.div layoutId={"imageCard-" + index}
                 onClick={() => setIsOpen(true)}
                 className="group relative rounded-3xl w-full max-w-sm aspect-video border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-zoom-in"
             >
@@ -31,7 +31,7 @@ export function ImageCard({ src, title }) {
                     height={225} 
                     className="rounded-[inherit] w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                 />
-            </div>
+            </motion.div>}
 
             {/* Lightbox Modal */}
             <AnimatePresence>
@@ -52,11 +52,11 @@ export function ImageCard({ src, title }) {
                         </button>
 
                         {/* Image Container */}
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 220 }}
+                        <motion.div layoutId={"imageCard-" + index}
+                            // initial={{ scale: 0.9, opacity: 0 }}
+                            // animate={{ scale: 1, opacity: 1 }}
+                            // exit={{ scale: 0.9, opacity: 0 }}
+                            // transition={{ type: "spring", damping: 25, stiffness: 220 }}
                             className="relative max-w-5xl max-h-[85vh] w-full h-full flex items-center justify-center pointer-events-none"
                         >
                             <img 
