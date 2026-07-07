@@ -1,0 +1,36 @@
+{
+    
+    "items" : [
+        {
+            "title" : "Unit 1",
+            "subTitle" : "one phrase motive",
+            "details" : "",
+            "thumbnail" : "/units/chetna_final.jpg",
+            "colorCode" : "",
+            "action" : {
+                "text" : "Know More",
+                "url" : "/units/unit-1"
+            }
+        },
+        {
+            "title" : "Unit 2",
+            "subTitle" : "one phrase motive",
+            "details" : "",
+            "thumbnail" : "/units/chetna_final.jpg",
+            "action" : {
+                "text" : "Know More",
+                "url" : "/units/unit-2"
+            }
+        },
+        {
+            "title" : "Unit 3",
+            "subTitle" : "one phrase motive",
+            "details" : "",
+            "thumbnail" : "/units/chetna_final.jpg",
+            "action" : {
+                "text" : "Know More",
+                "url" : "/units/unit-3"
+            }
+        }
+    ]
+}

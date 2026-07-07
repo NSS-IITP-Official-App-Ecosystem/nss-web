@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #f59e0b;
+  --text: #4A5568;
+  --border: #E2E8F0;
+  /* --brand-blue: #233A44;
+  --secondary-slate: #4A5568;
+  --neutral-foundation: #E2E8F0; */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
+     /* The new NSS Colors */
+  --brand-blue: #00256d;
+  --secondary-slate: #4A5568;
+  --neutral-foundation: #E2E8F0;
+
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary : var(--primary);
+  --color-text : var(--text);
+  --color-border: var(--border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-brand-blue: var(--brand-blue);
+  --color-secondary-slate: var(--secondary-slate);
+  --color-neutral-foundation: var(--neutral-foundation);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  --animate-fade-in-up: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  
+  
+}
+
+@layer base{
+  h1{
+    @apply text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight;
+  }
+  h2 {
+    @apply text-3xl font-bold text-slate-800 tracking-tight;
+  }
+  h3{
+    @apply text-2xl font-semibold text-slate-800 tracking-tight;
+  }
+  h4 {
+    @apply text-xl font-semibold text-slate-900;
+  }
+  h5, h6{
+    @apply text-base font-medium text-slate-500 uppercase tracking-wider;
+  }
+}
+
+
+/* for phase 2 */
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+
+@property --primary-button-bg-angle{
+  syntax: "<angle>";
+  inherits: false;
+  initial-value : 90deg;
+}
+
+button:disabled{
+  cursor: not-allowed;
+}
+
+.button-primary{
+  @apply rounded-md bg-primary text-white p-2 transition-all;
+  isolation : isolate;
+}
+
+.button-primary:hover{
+  @apply scale-105;
+}
+
+.rotate-border {
+  @apply relative transition-all isolate;
+}
+.rotate-border::before {
+  content : "";
+  @apply absolute bg-primary inset-0;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.rotate-border:hover::after{
+  content : "";
+  position: absolute;
+  inset : -2px;
+  display: block;
+  background: conic-gradient(
+    from var(--primary-button-bg-angle),
+    var(--color-primary) 0%,
+    transparent 80%,
+    var(--color-primary) 100%
+  );
+  z-index: -2;
+  animation : rotate-bg 2s linear infinite;
+  border-radius: inherit;
+}
+
+@keyframes rotate-bg {
+  from {
+   --primary-button-bg-angle : 0deg;
+  }
+  to {
+    --primary-button-bg-angle : 360deg;
+  }
+}
+
+/* Custom animations for Events Page cards and titles */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(245, 158, 11, 0);
+  }
+}
+
+.pulse-border-class {
+  animation: pulse-border 2s infinite;
+}
