@@ -62,6 +62,10 @@ const LINKS = [
     "icon": Compass,
     "sub-items": [
       {
+        "text": "Teaching Wing",
+        "link": "/wings/teaching"
+      },
+      {
         "text": "Prerna",
         "link": "/wings/prerna"
       },
@@ -76,10 +80,6 @@ const LINKS = [
       {
         "text": "Designer Creation (DNC)",
         "link": "/wings/dnc"
-      },
-      {
-        "text": "Teaching Wing",
-        "link": "/wings/teaching"
       }
     ]
   },
