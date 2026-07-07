@@ -231,7 +231,7 @@ export default function RulesAndPoliciesClient() {
                     </div>
                     <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white">3. Complaint or Suggestion</h3>
                     <p className="text-slate-200 text-sm md:text-base leading-relaxed">
-                      If you have any complaints, suggestions regarding anything in NSS please bring it to the notice of mentors or secretaries or submit it on <a href="https://nss.iitp.ac.in/think_thank.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-300 transition-colors">https://nss.iitp.ac.in/think_thank.html</a> <strong>“Think Thank”</strong> section. Ideas are always welcomed. Every proposal will be considered and will be worked upon if it is not considered by the mentor, feel free to contact any secretary.
+                      If you have any complaints, suggestions regarding anything in NSS please bring it to the notice of mentors or secretaries or submit it on <a href="/think-thank" className="underline hover:text-amber-300 transition-colors">Think Thank </a> section. Ideas are always welcomed. Every proposal will be considered and will be worked upon if it is not considered by the mentor, feel free to contact any secretary.
                     </p>
                   </div>
                   
