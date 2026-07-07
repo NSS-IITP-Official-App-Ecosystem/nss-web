@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { createClient } from '@/utils/supabase/client';
 import {createContext, useContext, useState, useEffect} from 'react'
 
