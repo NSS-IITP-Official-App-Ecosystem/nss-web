@@ -681,7 +681,7 @@ export default function OurTeam() {
                   <p className="modal-section-title">Biography / Roles</p>
                   <p className="modal-bio">{selectedMember.bio}</p>
                   {!(selectedMember.category === 'admin' || (selectedMember.category === 'secretary' && !selectedMember.role.toLowerCase().includes('deputy'))) && (
-                    <>
+                    <div className="modal-contact-section">
                       <p className="modal-section-title">Connect & Contact</p>
                       <div className="modal-contact-row">
                         {selectedMember.email && (
@@ -695,7 +695,7 @@ export default function OurTeam() {
                           </a>
                         )}
                       </div>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
