@@ -9,16 +9,11 @@ import {
   FaMagnifyingGlass,
   FaCircleInfo
 } from 'react-icons/fa6';
-import {
-  TEAM_MEMBERS_2025,
-  LEADERSHIP_TREE_2025,
-  TEAM_MEMBERS_2024,
-  LEADERSHIP_TREE_2024
-} from '@/data/team_fallback';
 import './our-team.css';
 
 export default function OurTeam() {
-  const [selectedYear, setSelectedYear] = useState('2025-26');
+  const [selectedYear, setSelectedYear] = useState('2026-27');
+  const [isYearOpen, setIsYearOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedMember, setSelectedMember] = useState(null);
@@ -43,65 +38,77 @@ export default function OurTeam() {
     fetchTeamFromDb();
   }, []);
 
+  // Handle click outside to close custom year dropdown
+  useEffect(() => {
+    if (!isYearOpen) return;
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.custom-dropdown-container')) {
+        setIsYearOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isYearOpen]);
+
   // Get active administrative leadership tree based on selected year
   const activeLeadershipTree = useMemo(() => {
-    if (dbMembers) {
-      const admins = dbMembers
-        .filter(m => m.category === 'admin' && m.academic_year === selectedYear)
-        .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
-        .map(m => ({
-          id: m.id,
-          name: m.name,
-          role: m.role,
-          detailedRole: m.role,
-          image: m.image_url,
-          email: m.email,
-          bio: m.bio,
-          category: m.category,
-          linkedin: m.linkedin_url || "https://linkedin.com",
-          github: m.github_url || "https://github.com"
-        }));
-      if (admins.length >= 6) {
-        return admins;
-      }
-    }
-
-    if (selectedYear === "2025-26") {
-      return LEADERSHIP_TREE_2025;
-    } else {
-      return LEADERSHIP_TREE_2024;
-    }
+    if (!dbMembers) return [];
+    return dbMembers
+      .filter(m => m.category === 'admin' && m.academic_year === selectedYear)
+      .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
+      .map(m => ({
+        id: m.id,
+        name: m.name,
+        role: m.role,
+        detailedRole: m.role,
+        image: m.image_url,
+        email: m.email,
+        bio: m.bio,
+        category: m.category,
+        linkedin: m.linkedin_url || "https://linkedin.com",
+        github: m.github_url || "https://github.com"
+      }));
   }, [selectedYear, dbMembers]);
 
   // Get active student core team based on selected year
   const activeTeamMembers = useMemo(() => {
-    if (dbMembers) {
-      const members = dbMembers
-        .filter(m => m.category !== 'admin' && m.academic_year === selectedYear)
-        .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
-        .map(m => ({
+    if (!dbMembers) return [];
+    return dbMembers
+      .filter(m => m.category !== 'admin' && m.academic_year === selectedYear)
+      .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
+      .map(m => {
+        let displayRole = m.role || "";
+        if (displayRole.toLowerCase().includes('sub coordinator') || displayRole.toLowerCase().includes('sub-coordinator')) {
+          displayRole = displayRole.replace(/sub[- ]coordinator/i, 'Mentor');
+        }
+        return {
           id: m.id,
           name: m.name,
-          role: m.role,
-          detailedRole: m.role,
+          role: displayRole,
+          detailedRole: displayRole,
           image: m.image_url,
           email: m.email,
           bio: m.bio,
           category: m.category,
           linkedin: m.linkedin_url || "https://linkedin.com",
           github: m.github_url || "https://github.com"
-        }));
-      if (members.length > 0) {
-        return members;
-      }
-    }
-
-    if (selectedYear === "2025-26") {
-      return TEAM_MEMBERS_2025;
-    } else {
-      return TEAM_MEMBERS_2024;
-    }
+        };
+      });
   }, [selectedYear, dbMembers]);
+
+  const activeGenSecs = useMemo(() => {
+    return activeTeamMembers.filter(m => 
+      m.category === 'secretary' && 
+      !m.role.toLowerCase().includes('deputy')
+    );
+  }, [activeTeamMembers]);
+
+  const activeDeputyGenSecs = useMemo(() => {
+    return activeTeamMembers.filter(m => 
+      m.category === 'secretary' && 
+      m.role.toLowerCase().includes('deputy')
+    );
+  }, [activeTeamMembers]);
 
   // Filtering Logic
   const filteredMembers = useMemo(() => {
@@ -117,7 +124,8 @@ export default function OurTeam() {
   }, [searchQuery, activeFilter, activeTeamMembers]);
 
   // Grouped and Filtered data for presentation
-  const secretaryMembers = useMemo(() => filteredMembers.filter(m => m.category === 'secretary'), [filteredMembers]);
+  const gensecMembers = useMemo(() => filteredMembers.filter(m => m.category === 'secretary' && !m.role.toLowerCase().includes('deputy')), [filteredMembers]);
+  const deputyGensecMembers = useMemo(() => filteredMembers.filter(m => m.category === 'secretary' && m.role.toLowerCase().includes('deputy')), [filteredMembers]);
   const coreMembers = useMemo(() => filteredMembers.filter(m => m.category === 'core'), [filteredMembers]);
   const pgMembers = useMemo(() => filteredMembers.filter(m => m.category === 'pg'), [filteredMembers]);
   const mentorMembers = useMemo(() => filteredMembers.filter(m => m.category === 'mentor'), [filteredMembers]);
@@ -129,10 +137,12 @@ export default function OurTeam() {
       "Teaching & Tech Wing": [],
       "Environmental Wing": [],
       "Prayatna Wing": [],
+      "Prerna Wing": [],
       "Rural Development Wing": [],
       "Chetna Wing": [],
       "Logistics Wing": [],
       "Nukkad Wing": [],
+      "DNC Wing": [],
       "Other Mentors": []
     };
 
@@ -144,6 +154,8 @@ export default function OurTeam() {
         wingsMap["Environmental Wing"].push(m);
       } else if (roleStr.includes("prayatna")) {
         wingsMap["Prayatna Wing"].push(m);
+      } else if (roleStr.includes("prerna")) {
+        wingsMap["Prerna Wing"].push(m);
       } else if (roleStr.includes("rural")) {
         wingsMap["Rural Development Wing"].push(m);
       } else if (roleStr.includes("chetna")) {
@@ -152,6 +164,8 @@ export default function OurTeam() {
         wingsMap["Logistics Wing"].push(m);
       } else if (roleStr.includes("nukkad")) {
         wingsMap["Nukkad Wing"].push(m);
+      } else if (roleStr.includes("dnc")) {
+        wingsMap["DNC Wing"].push(m);
       } else {
         wingsMap["Other Mentors"].push(m);
       }
@@ -159,6 +173,22 @@ export default function OurTeam() {
 
     return Object.entries(wingsMap).filter(([_, members]) => members.length > 0);
   }, [mentorMembers]);
+
+  if (dbMembers === null) {
+    return (
+      <div className="team-page-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+          <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3px solid #e2e8f0", borderTopColor: "var(--primary)", animation: "spin 1s linear infinite" }}></div>
+          <p style={{ color: "var(--text-muted)", fontWeight: "500" }}>Loading NSS Team Roster...</p>
+        </div>
+        <style jsx global>{`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <div className="team-page-container">
@@ -175,75 +205,108 @@ export default function OurTeam() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="page-title">Our Team</h1>
-          
+
           <p className="intro-text mt-4 text-slate-500 max-w-3xl">
             The driving force behind NSS IIT Patna. Our general secretary, core cell secretaries, and developers work passionately together to orchestrate outreach campaigns, educational services, and rural development efforts.
           </p>
         </motion.section>
 
-        <motion.div 
-          className="year-selector-container"
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          <label htmlFor="year-select" className="year-select-label">Select Roster Year</label>
-          <select 
-            id="year-select" 
-            className="year-select-dropdown" 
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-          >
-            <option value="2025-26">2025 - 2026</option>
-            <option value="2024-25">2024 - 2025</option>
-          </select>
-        </motion.div>
+        <div className="year-selector-container">
+          <span className="year-label">Academic Year</span>
+          <div className="custom-dropdown-container">
+            <button
+              className={`custom-dropdown-trigger ${isYearOpen ? 'active' : ''}`}
+              onClick={() => setIsYearOpen(!isYearOpen)}
+              aria-haspopup="listbox"
+              aria-expanded={isYearOpen}
+            >
+              <span>{selectedYear}</span>
+              <span className={`dropdown-arrow-icon ${isYearOpen ? 'open' : ''}`}></span>
+            </button>
+            
+            <AnimatePresence>
+              {isYearOpen && (
+                <motion.ul
+                  className="custom-dropdown-menu"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  role="listbox"
+                >
+                  <li
+                    className={`custom-dropdown-item ${selectedYear === '2026-27' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSelectedYear('2026-27');
+                      setIsYearOpen(false);
+                    }}
+                    role="option"
+                    aria-selected={selectedYear === '2026-27'}
+                  >
+                    2026-27
+                  </li>
+                  <li
+                    className={`custom-dropdown-item ${selectedYear === '2025-26' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSelectedYear('2025-26');
+                      setIsYearOpen(false);
+                    }}
+                    role="option"
+                    aria-selected={selectedYear === '2025-26'}
+                  >
+                    2025-26
+                  </li>
+                </motion.ul>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
 
       {/* Leadership Hierarchy flowchart */}
       <section className="hierarchy-section">
         <div className="tree-container">
-          
+
           {/* Tier 1: Director */}
-          <motion.div 
+          <motion.div
             className="tree-tier"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <div className="tree-node node-highlight" onClick={() => setSelectedMember(activeLeadershipTree[0])}>
+            <div className="tree-node node-highlight" onClick={() => activeLeadershipTree[0] && setSelectedMember(activeLeadershipTree[0])}>
               <div className="node-avatar-wrapper">
-                <img src={activeLeadershipTree[0]?.image} alt={activeLeadershipTree[0]?.name} className="node-avatar" />
+                <img src={activeLeadershipTree[0]?.image || "/placeholder.svg"} alt={activeLeadershipTree[0]?.name || "Director"} className="node-avatar" />
               </div>
               <span className="node-role-tag">Director</span>
-              <h4 className="node-admin-name">{activeLeadershipTree[0]?.name}</h4>
+              <h4 className="node-admin-name">{activeLeadershipTree[0]?.name || "To Be Decided"}</h4>
             </div>
           </motion.div>
 
           <div className="tree-line-v"></div>
 
-          {/* Tier 2: Dean Student Affairs */}
-          <motion.div 
+          {/* Tier 2: Academic Dean UG */}
+          <motion.div
             className="tree-tier"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="tree-node node-highlight" onClick={() => setSelectedMember(activeLeadershipTree[1])}>
+            <div className="tree-node node-highlight" onClick={() => activeLeadershipTree[1] && setSelectedMember(activeLeadershipTree[1])}>
               <div className="node-avatar-wrapper">
-                <img src={activeLeadershipTree[1]?.image} alt={activeLeadershipTree[1]?.name} className="node-avatar" />
+                <img src={activeLeadershipTree[1]?.image || "/placeholder.svg"} alt={activeLeadershipTree[1]?.name || "Academic Dean UG"} className="node-avatar" />
               </div>
-              <span className="node-role-tag">Dean Student Affairs</span>
-              <h4 className="node-admin-name">{activeLeadershipTree[1]?.name}</h4>
+              <span className="node-role-tag">Academic Dean UG</span>
+              <h4 className="node-admin-name">{activeLeadershipTree[1]?.name || "To Be Decided"}</h4>
             </div>
           </motion.div>
 
           <div className="tree-line-v"></div>
 
           {/* Tier 3: PIC & Security Officer */}
-          <motion.div 
+          <motion.div
             className="tree-branch-container"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -253,22 +316,22 @@ export default function OurTeam() {
             <div className="tree-branch-row">
               {/* PIC */}
               <div className="tree-branch-col">
-                <div className="tree-node" onClick={() => setSelectedMember(activeLeadershipTree[2])}>
+                <div className="tree-node" onClick={() => activeLeadershipTree[2] && setSelectedMember(activeLeadershipTree[2])}>
                   <div className="node-avatar-wrapper">
-                    <img src={activeLeadershipTree[2]?.image} alt={activeLeadershipTree[2]?.name} className="node-avatar" />
+                    <img src={activeLeadershipTree[2]?.image || "/placeholder.svg"} alt={activeLeadershipTree[2]?.name || "Professor in Charge"} className="node-avatar" />
                   </div>
                   <span className="node-role-tag">Professor in Charge</span>
-                  <h4 className="node-admin-name">{activeLeadershipTree[2]?.name}</h4>
+                  <h4 className="node-admin-name">{activeLeadershipTree[2]?.name || "To Be Decided"}</h4>
                 </div>
               </div>
               {/* Security Officer */}
               <div className="tree-branch-col">
-                <div className="tree-node" onClick={() => setSelectedMember(activeLeadershipTree[3])}>
+                <div className="tree-node" onClick={() => activeLeadershipTree[3] && setSelectedMember(activeLeadershipTree[3])}>
                   <div className="node-avatar-wrapper">
-                    <img src={activeLeadershipTree[3]?.image} alt={activeLeadershipTree[3]?.name} className="node-avatar" />
+                    <img src={activeLeadershipTree[3]?.image || "/placeholder.svg"} alt={activeLeadershipTree[3]?.name || "Security Officer"} className="node-avatar" />
                   </div>
                   <span className="node-role-tag">Security Officer</span>
-                  <h4 className="node-admin-name">{activeLeadershipTree[3]?.name}</h4>
+                  <h4 className="node-admin-name">{activeLeadershipTree[3]?.name || "To Be Decided"}</h4>
                 </div>
               </div>
             </div>
@@ -276,8 +339,8 @@ export default function OurTeam() {
 
           <div className="tree-line-v"></div>
 
-          {/* Tier 4: Core Committee Advisors */}
-          <motion.div 
+          {/* Tier 4: General Secretaries Branch */}
+          <motion.div
             className="tree-branch-container"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -285,65 +348,66 @@ export default function OurTeam() {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <div className="tree-branch-row">
-              {/* Advisor 1 */}
+              {/* General Secretary 1 */}
               <div className="tree-branch-col">
-                <div className="tree-node" onClick={() => setSelectedMember(activeLeadershipTree[4])}>
+                <div className="tree-node" onClick={() => activeGenSecs[0] && setSelectedMember(activeGenSecs[0])}>
                   <div className="node-avatar-wrapper">
-                    <img src={activeLeadershipTree[4]?.image} alt={activeLeadershipTree[4]?.name} className="node-avatar" />
-                  </div>
-                  <span className="node-role-tag">Core Committee</span>
-                  <h4 className="node-admin-name">{activeLeadershipTree[4]?.name}</h4>
-                </div>
-              </div>
-              {/* Advisor 2 */}
-              <div className="tree-branch-col">
-                <div className="tree-node" onClick={() => setSelectedMember(activeLeadershipTree[5])}>
-                  <div className="node-avatar-wrapper">
-                    <img src={activeLeadershipTree[5]?.image} alt={activeLeadershipTree[5]?.name} className="node-avatar" />
-                  </div>
-                  <span className="node-role-tag">Core Committee</span>
-                  <h4 className="node-admin-name">{activeLeadershipTree[5]?.name}</h4>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <div className="tree-line-v"></div>
-
-          {/* Tier 5: Gensec & Core Leads Branch */}
-          <motion.div 
-            className="tree-branch-container"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            <div className="tree-branch-row">
-              {/* General Secretary */}
-              <div className="tree-branch-col">
-                <div className="tree-node" onClick={() => setSelectedMember(activeTeamMembers.find(m => m.category === 'secretary'))}>
-                  <div className="node-avatar-wrapper">
-                    <img src={activeTeamMembers.find(m => m.category === 'secretary')?.image} alt="Gensec" className="node-avatar" />
+                    <img src={activeGenSecs[0]?.image || "/placeholder.svg"} alt="General Secretary" className="node-avatar" />
                   </div>
                   <span className="node-role-tag">General Secretary</span>
-                  <h4 className="node-admin-name">{activeTeamMembers.find(m => m.category === 'secretary')?.name}</h4>
+                  <h4 className="node-admin-name">{activeGenSecs[0]?.name || "To Be Decided"}</h4>
                 </div>
               </div>
-              {/* Core Student Leads Anchor */}
+              {/* General Secretary 2 */}
               <div className="tree-branch-col">
-                <div className="tree-node" onClick={() => {
-                  const el = document.getElementById('search-directory-anchor');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}>
+                <div className="tree-node" onClick={() => activeGenSecs[1] && setSelectedMember(activeGenSecs[1])}>
                   <div className="node-avatar-wrapper">
-                    <img src="/assets/team1/podili_Ruby_Veronica.jpg" alt="Student Leads" className="node-avatar" />
+                    <img src={activeGenSecs[1]?.image || "/placeholder.svg"} alt="General Secretary" className="node-avatar" />
                   </div>
-                  <span className="node-role-tag">NSS Student Cell Leads</span>
-                  <h4 className="node-admin-name">Core Leads</h4>
+                  <span className="node-role-tag">General Secretary</span>
+                  <h4 className="node-admin-name">{activeGenSecs[1]?.name || "To Be Decided"}</h4>
                 </div>
               </div>
             </div>
           </motion.div>
+
+          {selectedYear !== '2025-26' && (
+            <>
+              <div className="tree-line-v"></div>
+
+              {/* Tier 5: Deputy General Secretaries Branch */}
+              <motion.div
+                className="tree-branch-container"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <div className="tree-branch-row">
+                  {/* Deputy General Secretary 1 */}
+                  <div className="tree-branch-col">
+                    <div className="tree-node" onClick={() => activeDeputyGenSecs[0] && setSelectedMember(activeDeputyGenSecs[0])}>
+                      <div className="node-avatar-wrapper">
+                        <img src={activeDeputyGenSecs[0]?.image || "/placeholder.svg"} alt="Deputy General Secretary" className="node-avatar" />
+                      </div>
+                      <span className="node-role-tag">Deputy General Secretary</span>
+                      <h4 className="node-admin-name">{activeDeputyGenSecs[0]?.name || "To Be Decided"}</h4>
+                    </div>
+                  </div>
+                  {/* Deputy General Secretary 2 */}
+                  <div className="tree-branch-col">
+                    <div className="tree-node" onClick={() => activeDeputyGenSecs[1] && setSelectedMember(activeDeputyGenSecs[1])}>
+                      <div className="node-avatar-wrapper">
+                        <img src={activeDeputyGenSecs[1]?.image || "/placeholder.svg"} alt="Deputy General Secretary" className="node-avatar" />
+                      </div>
+                      <span className="node-role-tag">Deputy General Secretary</span>
+                      <h4 className="node-admin-name">{activeDeputyGenSecs[1]?.name || "To Be Decided"}</h4>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
 
         </div>
       </section>
@@ -379,13 +443,13 @@ export default function OurTeam() {
               className={`filter-tab ${activeFilter === 'secretary' ? 'active' : ''}`}
               onClick={() => setActiveFilter('secretary')}
             >
-              Secretaries
+              General Secretaries
             </button>
             <button
               className={`filter-tab ${activeFilter === 'core' ? 'active' : ''}`}
               onClick={() => setActiveFilter('core')}
             >
-              Core Leads
+              Secretaries
             </button>
             <button
               className={`filter-tab ${activeFilter === 'pg' ? 'active' : ''}`}
@@ -413,7 +477,7 @@ export default function OurTeam() {
       <section className="team-directory">
 
         {/* General Secretary Group */}
-        {secretaryMembers.length > 0 && (
+        {gensecMembers.length > 0 && (
           <motion.div
             className="team-category-group"
             initial={{ opacity: 0 }}
@@ -421,11 +485,36 @@ export default function OurTeam() {
             transition={{ duration: 0.5 }}
           >
             <div className="category-header">
-              <h2 className="category-title text-2xl font-bold">General Secretary</h2>
-              <span className="category-count">{secretaryMembers.length} member{secretaryMembers.length !== 1 ? 's' : ''}</span>
+              <h2 className="category-title text-2xl font-bold">General Secretaries</h2>
+              <span className="category-count">{gensecMembers.length} member{gensecMembers.length !== 1 ? 's' : ''}</span>
             </div>
             <div className="team-grid">
-              {secretaryMembers.map((member, i) => (
+              {gensecMembers.map((member, i) => (
+                <TeamCard
+                  key={member.id}
+                  member={member}
+                  index={i}
+                  onQuickView={setSelectedMember}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Deputy General Secretary Group */}
+        {deputyGensecMembers.length > 0 && (
+          <motion.div
+            className="team-category-group"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+          >
+            <div className="category-header">
+              <h2 className="category-title text-2xl font-bold">Deputy General Secretary</h2>
+              <span className="category-count">{deputyGensecMembers.length} member{deputyGensecMembers.length !== 1 ? 's' : ''}</span>
+            </div>
+            <div className="team-grid">
+              {deputyGensecMembers.map((member, i) => (
                 <TeamCard
                   key={member.id}
                   member={member}
@@ -446,7 +535,7 @@ export default function OurTeam() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <div className="category-header">
-              <h2 className="category-title text-2xl font-bold">Core Leads</h2>
+              <h2 className="category-title text-2xl font-bold">Secretaries</h2>
               <span className="category-count">{coreMembers.length} member{coreMembers.length !== 1 ? 's' : ''}</span>
             </div>
             <div className="team-grid">
@@ -586,21 +675,28 @@ export default function OurTeam() {
                   />
                 </div>
                 <div className="modal-profile-content">
-                  <span className="modal-tag">NSS Roster</span>
                   <h3 className="modal-name">{selectedMember.name}</h3>
                   <p className="modal-role">{selectedMember.detailedRole}</p>
                   <hr className="modal-divider" />
                   <p className="modal-section-title">Biography / Roles</p>
                   <p className="modal-bio">{selectedMember.bio}</p>
-                  <p className="modal-section-title">Connect & Contact</p>
-                  <div className="modal-contact-row">
-                    <a href={`mailto:${selectedMember.email}`} className="btn-modal-contact">
-                      <FaEnvelope /> Email Coordinator
-                    </a>
-                    <a href={selectedMember.linkedin} target="_blank" rel="noopener noreferrer" className="btn-modal-contact secondary">
-                      <FaLinkedinIn /> LinkedIn
-                    </a>
-                  </div>
+                  {!(selectedMember.category === 'admin' || (selectedMember.category === 'secretary' && !selectedMember.role.toLowerCase().includes('deputy'))) && (
+                    <>
+                      <p className="modal-section-title">Connect & Contact</p>
+                      <div className="modal-contact-row">
+                        {selectedMember.email && (
+                          <a href={`mailto:${selectedMember.email}`} className="btn-modal-contact">
+                            <FaEnvelope /> Email
+                          </a>
+                        )}
+                        {selectedMember.linkedin && (
+                          <a href={selectedMember.linkedin} target="_blank" rel="noopener noreferrer" className="btn-modal-contact secondary">
+                            <FaLinkedinIn /> LinkedIn
+                          </a>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -645,14 +741,20 @@ function TeamCard({ member, index, onQuickView }) {
       <div className="card-info">
         <h3 className="member-name">{member.name}</h3>
         <p className="member-role">{member.role}</p>
-        <div className="member-socials">
-          <a href={`mailto:${member.email}`} className="social-link" title="Email">
-            <FaEnvelope />
-          </a>
-          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="social-link" title="LinkedIn">
-            <FaLinkedinIn />
-          </a>
-        </div>
+        {!(member.category === 'admin' || (member.category === 'secretary' && !member.role.toLowerCase().includes('deputy'))) && (
+          <div className="member-socials">
+            {member.email && (
+              <a href={`mailto:${member.email}`} className="social-link" title="Email">
+                <FaEnvelope />
+              </a>
+            )}
+            {member.linkedin && (
+              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="social-link" title="LinkedIn">
+                <FaLinkedinIn />
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </motion.div>
   );

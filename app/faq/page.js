@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -196,7 +196,6 @@ const FAQ_DATA = [
 ];
 
 const CATEGORIES = [
-  { id: "All", label: "All Questions", icon: HelpCircle },
   { id: "Basics", label: "Basics", icon: BookOpen },
   { id: "Technical Skills", label: "Technical Skills", icon: Cpu },
   { id: "Rural Development", label: "Rural Development", icon: HeartHandshake },
@@ -206,9 +205,12 @@ const CATEGORIES = [
 ];
 
 export default function FAQPage() {
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeSection, setActiveSection] = useState("Basics");
   const [searchQuery, setSearchQuery] = useState("");
   const [openAccordionIds, setOpenAccordionIds] = useState([]);
+
+  const isManualScroll = useRef(false);
+  const manualScrollTimeout = useRef(null);
 
   const toggleAccordion = (id) => {
     setOpenAccordionIds(prev =>
@@ -218,27 +220,97 @@ export default function FAQPage() {
 
   const filteredFAQs = useMemo(() => {
     return FAQ_DATA.filter(faq => {
-      const matchesCategory = activeTab === "All" || faq.category === activeTab;
       const matchesSearch = searchQuery.trim() === "" ||
         faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
         faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
+      return matchesSearch;
     });
-  }, [activeTab, searchQuery]);
+  }, [searchQuery]);
 
   const groupedFAQs = useMemo(() => {
-    if (activeTab !== "All") {
-      return { [activeTab === "Prerna" ? "Prerna Wing" : activeTab]: filteredFAQs };
-    }
     const groups = {};
-    CATEGORIES.slice(1).forEach(cat => {
+    CATEGORIES.forEach(cat => {
       const items = filteredFAQs.filter(f => f.category === cat.id);
       if (items.length > 0) {
-        groups[cat.label] = items;
+        groups[cat.id] = {
+          label: cat.label,
+          items: items
+        };
       }
     });
     return groups;
-  }, [activeTab, filteredFAQs]);
+  }, [filteredFAQs]);
+
+  const handleCategoryClick = (catId) => {
+    setActiveSection(catId);
+    isManualScroll.current = true;
+    if (manualScrollTimeout.current) {
+      clearTimeout(manualScrollTimeout.current);
+    }
+
+    const element = document.getElementById(`faq-section-${catId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+
+    manualScrollTimeout.current = setTimeout(() => {
+      isManualScroll.current = false;
+    }, 800);
+  };
+
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      return;
+    }
+
+    const sections = CATEGORIES.map(cat =>
+      document.getElementById(`faq-section-${cat.id}`)
+    ).filter(Boolean);
+
+    if (sections.length === 0) return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-25% 0px -55% 0px",
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      if (isManualScroll.current) return;
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id.replace("faq-section-", "");
+          setActiveSection(sectionId);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+
+    const handleScroll = () => {
+      if (isManualScroll.current) return;
+
+      if (window.scrollY < 200) {
+        setActiveSection("Basics");
+        return;
+      }
+
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50) {
+        const lastCat = CATEGORIES[CATEGORIES.length - 1];
+        setActiveSection(lastCat.id);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      sections.forEach(section => observer.unobserve(section));
+      window.removeEventListener("scroll", handleScroll);
+      if (manualScrollTimeout.current) {
+        clearTimeout(manualScrollTimeout.current);
+      }
+    };
+  }, [searchQuery]);
 
   return (
     <div className="faq-page-container">
@@ -272,7 +344,7 @@ export default function FAQPage() {
           </div>
           <div className="faq-contact-info">
             <h4>Visit Office</h4>
-            <p>Block 9, IIT Patna Campus, Bihta, Patna - 801106</p>
+            <p>Admin Building, IIT Patna, Bihta, Patna - 801106</p>
             <span className="text-xs font-bold text-slate-400 uppercase">Mon-Fri (9am - 5pm)</span>
           </div>
         </div>
@@ -282,9 +354,8 @@ export default function FAQPage() {
             <PhoneCall className="w-6 h-6" />
           </div>
           <div className="faq-contact-info">
-            <h4>Professor Incharge</h4>
-            <p>Dr. Somanath Pradhan (PIC NSS)</p>
-            <a href="mailto:pic_nss@iitp.ac.in">pic_nss@iitp.ac.in</a>
+            <h4>General Secretary</h4>
+            <a href="mailto:nss_gen_sec@iitp.ac.in">nss_gen_sec@iitp.ac.in</a>
           </div>
         </div>
       </section>
@@ -341,8 +412,8 @@ export default function FAQPage() {
               return (
                 <button
                   key={cat.id}
-                  onClick={() => setActiveTab(cat.id)}
-                  className={`faq-sidebar-btn ${activeTab === cat.id ? "active" : ""}`}
+                  onClick={() => handleCategoryClick(cat.id)}
+                  className={`faq-sidebar-btn ${activeSection === cat.id ? "active" : ""}`}
                 >
                   <span>{cat.label}</span>
                   <span className="faq-sidebar-count">{count}</span>
@@ -363,17 +434,17 @@ export default function FAQPage() {
               </p>
             </div>
           ) : (
-            Object.entries(groupedFAQs).map(([categoryLabel, items]) => (
-              <div key={categoryLabel} className="faq-section-group">
+            Object.entries(groupedFAQs).map(([categoryId, group]) => (
+              <div key={categoryId} id={`faq-section-${categoryId}`} className="faq-section-group">
                 <h2 className="faq-section-heading">
-                  <span>{categoryLabel}</span>
+                  <span>{group.label}</span>
                   <span className="text-xs font-semibold bg-slate-200 text-slate-600 px-3 py-1 rounded-full">
-                    {items.length} {items.length === 1 ? "question" : "questions"}
+                    {group.items.length} {group.items.length === 1 ? "question" : "questions"}
                   </span>
                 </h2>
 
                 <div className="flex flex-col gap-3">
-                  {items.map((faq) => {
+                  {group.items.map((faq) => {
                     const isOpen = openAccordionIds.includes(faq.id);
                     return (
                       <div key={faq.id} className={`faq-accordion-card ${isOpen ? "open" : ""}`}>
