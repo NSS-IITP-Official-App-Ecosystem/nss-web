@@ -513,10 +513,12 @@
 .category-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 12px;
     border-bottom: 2px solid var(--border-color);
     padding-bottom: 14px;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .category-title {
@@ -537,9 +539,10 @@
 }
 
 .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
 }
 
 .team-card {
@@ -549,6 +552,8 @@
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-color);
     transition: var(--transition-spring);
+    width: 240px;
+    flex: 0 0 240px;
 }
 
 .team-card:hover {
@@ -1433,3 +1438,122 @@
         height: 30px;
     }
 }
+
+/* Premium Year Selector Dropdown */
+.year-selector-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 40; /* Ensure dropdown displays below navbar (z-50) but above flowchart rows */
+    min-width: 180px;
+    position: relative;
+}
+
+.year-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.custom-dropdown-container {
+    position: relative;
+    width: 100%;
+}
+
+.custom-dropdown-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 37, 109, 0.08);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    outline: none;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+}
+
+.custom-dropdown-trigger:hover, .custom-dropdown-trigger.active {
+    background: var(--bg-white);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
+}
+
+.dropdown-arrow-icon {
+    width: 6px;
+    height: 6px;
+    border-left: 2px solid var(--text-dark);
+    border-bottom: 2px solid var(--text-dark);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: var(--transition-smooth);
+    margin-right: 2px;
+}
+
+.dropdown-arrow-icon.open {
+    transform: rotate(135deg) translateY(2px);
+    border-color: var(--primary);
+}
+
+.custom-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 37, 109, 0.08);
+    border-radius: var(--radius-md);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 37, 109, 0.02);
+    padding: 6px;
+    margin: 0;
+    list-style: none;
+    z-index: 100;
+}
+
+.custom-dropdown-item {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    border-radius: calc(var(--radius-md) - 4px);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-dropdown-item:hover {
+    background: rgba(245, 158, 11, 0.08);
+    color: var(--primary-hover);
+    font-weight: 600;
+}
+
+.custom-dropdown-item.selected {
+    background: var(--primary);
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .team-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 32px;
+        gap: 24px;
+    }
+    
+    .year-selector-container {
+        width: 100%;
+    }
+}
+
