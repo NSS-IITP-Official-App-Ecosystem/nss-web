@@ -878,11 +878,17 @@
     opacity: 0.9;
 }
 
+.modal-contact-section {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .modal-contact-row {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    margin-top: auto;
 }
 
 .btn-modal-contact {
