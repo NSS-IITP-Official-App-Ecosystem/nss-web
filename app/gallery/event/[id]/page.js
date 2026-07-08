@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import { FaArrowLeft, FaCalendarAlt, FaFileAlt, FaTag } from 'react-icons/fa';
 import { getWingBadgeStyle } from '@/app/gallery/wing-utils';
+import { resolveMediaUrls } from '@/components/server-utils';
 
 export default async function EventPage({ params }) {
     const { id } = await params;
@@ -38,13 +39,16 @@ export default async function EventPage({ params }) {
             .maybeSingle();
 
         if (!error && data) {
+            const mediaUrls = data.event_media ? data.event_media.map(m => m.media_url) : [];
+            const resolvedMedia = await resolveMediaUrls(mediaUrls);
             event = {
                 id: data.id,
                 title: data.title,
                 details: data.details,
                 date: data.event_date,
                 resources: data.resources || [],
-                images: data.event_media ? data.event_media.map(m => m.media_url) : [],
+                images: resolvedMedia.filter(m => m.type === 'image').map(m => m.url),
+                media: resolvedMedia,
                 wings: data.event_wings ? data.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
             };
         }
@@ -54,7 +58,15 @@ export default async function EventPage({ params }) {
 
     // Fallback logic
     if (!event) {
-        event = events_data.find(item => item.id.toString() === id.toString());
+        const rawEvent = events_data.find(item => item.id.toString() === id.toString());
+        if (rawEvent) {
+            const resolvedMedia = await resolveMediaUrls(rawEvent.images || []);
+            event = {
+                ...rawEvent,
+                images: resolvedMedia.filter(m => m.type === 'image').map(m => m.url),
+                media: resolvedMedia
+            };
+        }
     }
 
     if (!event) {
@@ -125,22 +137,22 @@ export default async function EventPage({ params }) {
                 </div>
             </section>
 
-            {/* Event Images Gallery */}
+            {/* Event Media Gallery */}
             <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
                 <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-slate-800">Event Photos</h3>
-                    <p className="text-slate-400 text-sm mt-1">Click on any image to view in full size.</p>
+                    <h3 className="text-2xl font-bold text-slate-800">Event Gallery</h3>
+                    <p className="text-slate-400 text-sm mt-1">Click on any image or video to view or play.</p>
                 </div>
 
-                {event.images && event.images.length > 0 ? (
+                {event.media && event.media.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
-                        {event.images.map((src, i) => (
-                            <ImageCard key={i} src={src} title={event.title} index={i} />
+                        {event.media.map((item, i) => (
+                            <ImageCard key={i} src={item.url} type={item.type} title={event.title} index={i} />
                         ))}
                     </div>
                 ) : (
                     <div className="bg-white border border-slate-200/80 rounded-3xl p-12 text-center max-w-md mx-auto shadow-sm text-slate-400 font-semibold">
-                        No photos available for this event.
+                        No media available for this event.
                     </div>
                 )}
             </section>
