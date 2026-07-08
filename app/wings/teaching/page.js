@@ -5,7 +5,7 @@ const categories = [
     {
         title: "Academic Support & Subject Mentorship",
         description: "Student volunteers conducting structured weekend classes at regional government schools, simplifying core Mathematics, Science, and language curricula.",
-        images:[
+        images: [
             { img: "/events/session/2025-26/teaching/Screenshot 2026-06-27 at 2.58.28 AM copy.png" },
             { img: "/events/session/2025-26/teaching/IMG_1720 (1) copy.JPG" },
             { img: "/events/session/2025-26/teaching/IMG20260411102755 copy.jpg" },
@@ -22,13 +22,6 @@ const categories = [
     }
 ];
 
-const stats = [
-    { num: "1,200+", label: "Students Taught" },
-    { num: "8+", label: "Adopted Schools" },
-    { num: "150+", label: "Active Student Mentors" },
-    { num: "10k+", label: "Teaching Hours" },
-];
-
 export default function TeachingWing() {
     const [selected, setSelected] = useState(null);
     const scrollRefs = useRef([]);
@@ -41,60 +34,67 @@ export default function TeachingWing() {
     };
 
     return (
-        <div className="min-h-screen text-slate-900 font-sans pb-32 bg-slate-50/50 selection:bg-amber-400/30">
-            <div className="w-full h-1.5 bg-gradient-to-r from-[#ff9933] via-slate-200 to-[#138808]" />
-  <div style={{
-                background: '#000023', color: '#90EE90', padding: '3rem 1.5rem 4rem',
-                textAlign: 'center', position: 'relative', overflow: 'hidden',
-                clipPath: 'polygon(0 0, 100% 0, 100% 95%, 0 100%)'
-            }}>
-                <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1rem', color: '#FFD700' }}>
-                    TEACHING <span style={{ fontWeight: 900, color: '#FFD700' }}>Wing</span>
-                </h1>
-                <p style={{ color: 'rgba(255,255,255,0.8)', maxWidth: 500, margin: '0 auto' }}>
-                    Driving active grassroots education and mentorship initiatives across regional government schools.
-                </p>
+        <div style={{ minHeight: '100vh', background: '#ffffff', color: '#0b1a10', fontFamily: "'Inter', sans-serif" }}>
+            
+            {/* Header Section */}
+            <div className="flex flex-row items-center justify-center gap-6 px-6 py-8 bg-[#000023] min-h-[220px]">
+                <div className="h-[80px] w-[80px] lg:h-[100px] lg:w-[100px] rounded-full overflow-hidden flex-shrink-0 border-2 border-[#FFD700]"> 
+                    <img 
+                        src="/wings_logo/WhatsApp Image 2026-07-08 at 14.10.36.jpeg" 
+                        alt="Teaching Wing Logo" 
+                        className="h-full w-full object-cover" 
+                    />
+                </div>
+                <div className="text-left">
+                    <h1 className="text-5xl font-black text-[#FFD700]">
+                        TEACHING <span className="font-black text-white">Wing</span>
+                    </h1>
+                    <p className="text-white/80">
+                        Driving active grassroots education and mentorship initiatives across regional government schools.
+                    </p>
+                </div>
             </div>
-           
 
-            {/* Gallery Section */}
-            <div className="max-w-6xl mx-auto px-4 mt-24">
-                {categories.map((cat, ci) => (
-                    <div key={ci} style={{ marginBottom: '3rem' }}>
-                        <div className="mb-8 max-w-3xl">
-                            <h2 className="text-2xl font-black text-slate-900 mb-2">{cat.title}</h2>
-                            <p className="text-sm text-slate-500">{cat.description}</p>
-                        </div>
+            {/* Gallery Section with Background Image */}
+            <div style={{
+                backgroundImage: "url('/wings_logo/WhatsApp Image 2026-07-08 at 14.10.36.jpeg')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'fixed',
+                position: 'relative'
+            }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'rgba(255, 255, 255, 0.92)', zIndex: 0 }} />
 
-                        <div style={{ position: 'relative' }}>
-                            {/* Left Button */}
-                            <button onClick={() => scrollByAmount(ci, -1)} className="absolute left-[-14px] top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-lg hover:bg-slate-50 text-slate-900">ᐸ</button>
+                <div style={{ position: 'relative', zIndex: 1, paddingBottom: '5rem' }}>
+                    <div style={{ maxWidth: 1000, margin: '2rem auto', padding: '0 1.5rem' }}>
+                        {categories.map((cat, ci) => (
+                            <div key={ci} style={{ marginBottom: '3rem' }}>
+                                <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '0.5rem', color: '#000000' }}>{cat.title}</h2>
+                                <p style={{ fontSize: '1rem', color: '#333', marginBottom: '1rem' }}>{cat.description}</p>
 
-                            {/* Carousel Grid */}
-                            <div 
-                                ref={(el) => (scrollRefs.current[ci] = el)}
-                                className="flex gap-6 overflow-x-auto scroll-smooth pb-4"
-                                style={{ scrollbarWidth: 'none' }}
-                            >
-                                <style>{`div::-webkit-scrollbar { display: none; }`}</style>
-                                {cat.images.map((item, ii) => (
-                                    <div key={ii} onClick={() => setSelected(item)} className="min-w-[30%] aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-slate-200 hover:scale-[1.02] transition-transform">
-                                        <img src={item.img} alt={cat.title} className="w-full h-full object-cover" />
+                                <div style={{ position: 'relative' }}>
+                                    <button onClick={() => scrollByAmount(ci, -1)} aria-label="Scroll left" style={{ position: 'absolute', left: -14, top: '50%', zIndex: 10, width: 32, height: 32, borderRadius: '50%', border: '1px solid #d7dcd3', background: '#fff', cursor: 'pointer', boxShadow: '0 2px 6px rgba(0,0,0,0.12)' }}>ᐸ</button>
+                                    
+                                    <div ref={(el) => (scrollRefs.current[ci] = el)} className="env-img-grid" style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc(33.33% - 11px)', gap: 16, overflowX: 'auto', scrollbarWidth: 'none', scrollBehavior: 'smooth' }}>
+                                        {cat.images.map((item, ii) => (
+                                            <div key={ii} onClick={() => setSelected(item)} style={{ borderRadius: 10, overflow: 'hidden', aspectRatio: '4/3', cursor: 'pointer', flexShrink: 0, border: '1px solid #e4e8e2' }}>
+                                                <img src={item.img} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
 
-                            {/* Right Button */}
-                            <button onClick={() => scrollByAmount(ci, 1)} className="absolute right-[-14px] top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-lg hover:bg-slate-50 text-slate-900">ᐳ</button>
-                        </div>
+                                    <button onClick={() => scrollByAmount(ci, 1)} aria-label="Scroll right" style={{ position: 'absolute', right: -14, top: '50%', zIndex: 10, width: 32, height: 32, borderRadius: '50%', border: '1px solid #d7dcd3', background: '#fff', cursor: 'pointer', boxShadow: '0 2px 6px rgba(0,0,0,0.12)' }}>ᐳ</button>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
 
             {/* Modal */}
             {selected && (
-                <div className="fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-4" onClick={() => setSelected(null)}>
-                    <img src={selected.img} className="max-w-full max-h-[80vh] rounded-lg shadow-2xl" />
+                <div onClick={() => setSelected(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(5, 20, 10, 0.95)', zIndex: 999, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(8px)' }}>
+                    <img src={selected.img} style={{ maxWidth: '90%', maxHeight: '80vh', objectFit: 'contain', borderRadius: 8 }} />
                 </div>
             )}
         </div>
