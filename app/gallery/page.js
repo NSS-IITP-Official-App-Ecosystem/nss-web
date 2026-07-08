@@ -5,6 +5,7 @@ import { Suspense } from 'react'
 import { createClient } from '@/utils/supabase/server'
 import NSS_SESSION from '@/data/nss_session.json'
 import GalleryHero from './GalleryHero'
+import { resolveMediaUrls } from '@/components/server-utils'
 
 export default async function GalleryPage({ searchParams }) {
     const resolvedParams = await searchParams;
@@ -60,14 +61,19 @@ export default async function GalleryPage({ searchParams }) {
         if (error) throw error;
         
         if (data) {
-            dbEvents = data.map(e => ({
-                id: e.id,
-                title: e.title,
-                details: e.details,
-                date: e.event_date,
-                resources: e.resources || [],
-                images: e.event_media ? e.event_media.map(m => m.media_url) : [],
-                wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
+            dbEvents = await Promise.all(data.map(async (e) => {
+                const mediaUrls = e.event_media ? e.event_media.map(m => m.media_url) : [];
+                const resolvedMedia = await resolveMediaUrls(mediaUrls);
+                return {
+                    id: e.id,
+                    title: e.title,
+                    details: e.details,
+                    date: e.event_date,
+                    resources: e.resources || [],
+                    images: resolvedMedia.filter(m => m.type === 'image').map(m => m.url),
+                    media: resolvedMedia,
+                    wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
+                };
             }));
         }
     } catch (err) {
@@ -76,7 +82,14 @@ export default async function GalleryPage({ searchParams }) {
 
     // Fallback logic
     if (dbEvents.length === 0) {
-        dbEvents = events_data;
+        dbEvents = await Promise.all(events_data.map(async (e) => {
+            const resolvedMedia = await resolveMediaUrls(e.images || []);
+            return {
+                ...e,
+                images: resolvedMedia.filter(m => m.type === 'image').map(m => m.url),
+                media: resolvedMedia
+            };
+        }));
     }
     if (wings.length === 0) {
         wings = [

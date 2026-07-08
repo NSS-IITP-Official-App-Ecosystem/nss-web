@@ -3,9 +3,9 @@
     "items" : [
         {
             "title" : "Unit 1",
-            "subTitle" : "one phrase motive",
+            "subTitle" : "Education & Awareness | ज्ञान से परिवर्तन",
             "details" : "",
-            "thumbnail" : "/units/chetna_final.jpg",
+            "thumbnail" : "/units/technical.jpg",
             "colorCode" : "",
             "action" : {
                 "text" : "Know More",
@@ -14,9 +14,9 @@
         },
         {
             "title" : "Unit 2",
-            "subTitle" : "one phrase motive",
+            "subTitle" : "Environment & Sustainability | प्रकृति से प्रगति",
             "details" : "",
-            "thumbnail" : "/units/chetna_final.jpg",
+            "thumbnail" : "/units/ruraldev.jpeg",
             "action" : {
                 "text" : "Know More",
                 "url" : "/units/unit-2"
@@ -24,7 +24,7 @@
         },
         {
             "title" : "Unit 3",
-            "subTitle" : "one phrase motive",
+            "subTitle" : "Community & Social Welfare | सेवा ही शक्ति",
             "details" : "",
             "thumbnail" : "/units/chetna_final.jpg",
             "action" : {

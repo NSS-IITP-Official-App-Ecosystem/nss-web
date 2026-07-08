@@ -1,16 +1,28 @@
 {
     "items" : [
         {
-            "img" : "/testimonial/person-1.jpg",
-            "name" : "Anirudh😎",
-            "position" : "Undergraduate at IITP",
-            "text" : "<strong>NSS IITP is like a family for me.</strong> It helped me to meet  other students from different programs and levels (UG/PG) to work on issues of social importance. I was involved in projects related to education, health, and environment. It gives a lot of satisfaction when NSS team was able to contribute in these sectors.  A holistic feeling where we enjoyed and was able to bring some change, living the tag line 'NOT ME BUT ME'."
+            "img": "https://drive.google.com/open?id=1aR9WiM5uSUjTsaFF_j61XobrCfZIC2r-",
+            "name": "Satyam Kumar",
+            "position": "NSS Volunteer (Roll: 2501CT06)",
+            "text": "NSS gave me lessons no classroom could. It taught me to embrace hardships, to be there for others, and to lead with compassion. Through every camp, drive, and interaction, I learned that true growth happens when we step up for the society. NSS didn't just give me experiences, it gave me perspective and purpose."
         },
         {
-            "img" : "/testimonial/person-2.jpg",
-            "name" : "Anirudh😎",
-            "position" : "Undergraduate at IITP",
-            "text" : "NSS IITP is like a family for me. It helped me to meet  other students from different programs and levels (UG/PG) to work on issues of social importance. I was involved in projects related to education, health, and environment. It gives a lot of satisfaction when NSS team was able to contribute in these sectors.  A holistic feeling where we enjoyed and was able to bring some change, living the tag line 'NOT ME BUT ME'."
+            "img": "https://drive.google.com/open?id=1nTz-FenyVh4t_BUFBWJ1e_rm08zSdvL-",
+            "name": "Shailendra Meena",
+            "position": "NSS Volunteer (Roll: 2501CE56)",
+            "text": "NSS has been a wonderful journey of learning, teamwork, and social service. It helped me grow as a responsible and confident person. During my journey in NSS, I truly understood the real meaning of \"Not Me But You\". Working for society and helping others taught me that selfless service is the greatest way to create a positive impact. Proud to be an NSS volunteer. Learn, Serve, Grow!"
+        },
+        {
+            "img": "https://drive.google.com/open?id=17wqYE6MoySWQpvuXsscN0d1YQzREcgqu",
+            "name": "Amoolya Sharan",
+            "position": "NSS Volunteer (Roll: 2503CB02)",
+            "text": "My time with NSS has been full of moments I genuinely enjoyed and carried something back from. Teaching in government schools especially taught me that impact isn't always loud - sometimes it's just one child understanding a topic a little better because you took the time to explain it differently. Dr. A.P.J. Abdul Kalam once spoke about how educators carry the responsibility of nurturing curiosity and moral character in their students, becoming role models in the process - and standing in front of a classroom made that idea real for me. A child doesn't just learn a subject from you, they quietly learn a little of how to be, too, and that gave me a quiet sense of responsibility to stay ethically upright and give back to the society that has given me so much. Every event, every small effort, has left me more grounded and more aware of the world beyond my own bubble - and if NSS is about \"not me, but you\", this is where I felt it the most."
+        },
+        {
+            "img": "https://drive.google.com/open?id=1Rm6cEWP1_F4SRlAhkeosxrhnUIUt8g2L",
+            "name": "Kavya Gupta",
+            "position": "NSS Volunteer (Roll: 2501CB29)",
+            "text": "My first year in NSS IIT Patna has been a journey of learning, service, and personal growth. From participating in social initiatives to working with dedicated volunteers, every activity helped me become more responsible, confident, and disciplined. NSS gave me opportunities to interact with people, work as a team, and understand the importance of giving back to society. The supportive seniors and coordinators made every event a valuable learning experience. Being a part of NSS has made my first year of college more meaningful, and I look forward to contributing even more in the coming years."
         }
     ]
 }
