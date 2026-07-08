@@ -62,7 +62,6 @@ export default function ChetnaWing() {
     return (
         <div style={{ minHeight: '100vh', background: '#ffffff', color: '#0b1a10', fontFamily: "'Inter', sans-serif" }}>
             
-            {/* Header Section */}
             <div className="flex flex-row items-center justify-center gap-6 px-6 py-8 bg-[#000023] min-h-[220px]">
                 <div className="h-[80px] w-[80px] lg:h-[100px] lg:w-[100px] rounded-full overflow-hidden flex-shrink-0 border-2 border-[#FFD700]"> 
                     <img 
@@ -81,7 +80,6 @@ export default function ChetnaWing() {
                 </div>
             </div>
 
-            {/* Gallery Section with Background Image */}
             <div style={{
                 backgroundImage: "url('/wings_logo/WhatsApp Image 2026-07-08 at 11.57.41.jpeg')",
                 backgroundSize: 'cover',
@@ -103,7 +101,18 @@ export default function ChetnaWing() {
                                     
                                     <div ref={(el) => (scrollRefs.current[ci] = el)} className="env-img-grid" style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc(33.33% - 11px)', gap: 16, overflowX: 'auto', scrollbarWidth: 'none', scrollBehavior: 'smooth' }}>
                                         {cat.images.map((item, ii) => (
-                                            <div key={ii} onClick={() => setModalIdx(getGlobalIdx(ci, ii))} style={{ borderRadius: 10, overflow: 'hidden', aspectRatio: '4/3', cursor: 'pointer', flexShrink: 0, border: '1px solid #e4e8e2' }}>
+                                            <div 
+                                                key={ii} 
+                                                onClick={() => setModalIdx(getGlobalIdx(ci, ii))} 
+                                                style={{ 
+                                                    borderRadius: 10, 
+                                                    overflow: 'hidden', 
+                                                    aspectRatio: '4/3', 
+                                                    cursor: 'pointer', 
+                                                    flexShrink: 0, 
+                                                    border: '7px solid #000080' // Added 7px dark navy blue border
+                                                }}
+                                            >
                                                 <img src={item.img} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             </div>
                                         ))}
@@ -117,7 +126,6 @@ export default function ChetnaWing() {
                 </div>
             </div>
 
-            {/* Modal */}
             {modalIdx !== null && (
                 <div onClick={() => setModalIdx(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(5, 20, 10, 0.95)', zIndex: 999, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(8px)' }}>
                     <img src={allImages[modalIdx].img} style={{ maxWidth: '90%', maxHeight: '80vh', objectFit: 'contain', borderRadius: 8 }} />

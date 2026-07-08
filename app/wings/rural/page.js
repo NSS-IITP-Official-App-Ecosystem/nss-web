@@ -85,7 +85,7 @@ export default function RuralDevelopment() {
                 </div>
             </div>
 
-            {/* Gallery Section with Background Image */}
+            {/* Gallery Section */}
             <div style={{
                 backgroundImage: "url('/wings_logo/WhatsApp Image 2026-07-08 at 11.57.41 (1).jpeg')",
                 backgroundSize: 'cover',
@@ -107,7 +107,18 @@ export default function RuralDevelopment() {
                                     
                                     <div ref={(el) => (scrollRefs.current[ci] = el)} className="env-img-grid" style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc(33.33% - 11px)', gap: 16, overflowX: 'auto', scrollbarWidth: 'none', scrollBehavior: 'smooth' }}>
                                         {cat.images.map((item, ii) => (
-                                            <div key={ii} onClick={() => setSelected(item)} style={{ borderRadius: 10, overflow: 'hidden', aspectRatio: '4/3', cursor: 'pointer', flexShrink: 0, border: '1px solid #e4e8e2' }}>
+                                            <div 
+                                                key={ii} 
+                                                onClick={() => setSelected(item)} 
+                                                style={{ 
+                                                    borderRadius: 10, 
+                                                    overflow: 'hidden', 
+                                                    aspectRatio: '4/3', 
+                                                    cursor: 'pointer', 
+                                                    flexShrink: 0, 
+                                                    border: '7px solid #000080' // Added 7px dark navy blue border
+                                                }}
+                                            >
                                                 <img src={item.img} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             </div>
                                         ))}
