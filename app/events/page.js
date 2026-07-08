@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { createClient } from "../../utils/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Calendar, 
@@ -13,150 +14,6 @@ import {
   Download
 } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
-
-// 1. Events Database
-const eventsData = [
-  {
-    id: "blood-donation-2026",
-    title: "Mega Blood Donation Camp",
-    date: "2026-05-15",
-    venue: "IIT Patna Main Gymkhana Hall",
-    desc: "Organized in collaboration with PMCH Patna. Over 250 units of blood were collected from enthusiastic student and faculty volunteers, potentially saving up to 750 lives.",
-    extendedDesc: "The Mega Blood Donation Camp is organized annually by NSS IIT Patna in association with leading state hospitals such as PMCH Patna. Volunteers work round-the-clock to manage registration desks, provide donor assistance, and coordinate the collection logs.\n\nEvery year, we see a massive turnout of students, faculty members, and campus residents eager to make a difference. Aside from donating blood, this drive serves to raise awareness on blood disorders and dispel common myths surrounding blood donation. All donors receive a certificate of appreciation and high-energy refreshments.",
-    category: "past",
-    tag: "Health & Welfare",
-    images: [
-      "https://images.unsplash.com/photo-1615461066841-6116ecdccd04?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536856788636-e87514859089?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1579684389782-64d84b5e905d?auto=format&fit=crop&w=800&q=80"
-    ],
-    social: {
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com"
-    }
-  },
-  {
-    id: "tree-plantation-2026",
-    title: "Earth Day Tree Plantation Drive",
-    date: "2026-04-22",
-    venue: "IIT Patna Campus & Surrounding Villages",
-    desc: "Celebrating Earth Day by planting over 500 indigenous saplings including Neem, Peepal, and Gulmohar. Our volunteers raised awareness on water conservation and local biodiversity.",
-    extendedDesc: "Organized on the occasion of Earth Day, this plantation drive is one of our flagship green initiatives. NSS volunteers target both campus spots and surrounding villages to restore native green cover.\n\nWe focus on planting sturdy, indigenous species like Neem, Peepal, and Gulmohar that support local ecosystems. Beyond planting, our volunteers spend time teaching local villagers and children about watering routines, sapling protection, and the importance of tree conservation in mitigating local climate challenges.",
-    category: "past",
-    tag: "Environment",
-    images: [
-      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=800&q=80"
-    ],
-    social: {
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com"
-    }
-  },
-  {
-    id: "digital-literacy-2026",
-    title: "Rural Digital Literacy Workshop",
-    date: "2026-02-10",
-    venue: "Amhara Village Primary School, Bihta",
-    desc: "Empowering local school children with essential computing skills, online safety knowledge, and introductory coding concepts using interactive learning blocks.",
-    extendedDesc: "A part of our wing's commitment to adopted villages, this digital literacy workshop brings computers and tablets to school children in Amhara village.\n\nOver the course of three days, volunteers walk students through operating systems, web browsing safely, and using educational blocks. We aim to spark curiosity in technology and assist teachers in adopting digital toolkits for local classrooms.",
-    category: "past",
-    tag: "Education",
-    images: [
-      "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
-    ],
-    social: {
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com"
-    }
-  },
-  {
-    id: "cleanliness-drive-2026",
-    title: "Independence Day Swachhata Campaign",
-    date: "2026-08-20",
-    venue: "Bihta Railway Station & Public Park",
-    desc: "An upcoming mega cleanliness drive under Swachh Bharat Abhiyan. NSS Volunteers will lead waste segregation awareness, clean public spaces, and paint educational murals.",
-    extendedDesc: "This upcoming mega drive under the Swachh Bharat initiative aims to transform public sanitation habits in Bihta. NSS volunteers will coordinate with municipal corporations to conduct cleanups and set up waste-segregation points.\n\nTo make a lasting impact, our creative design teams will paint education-themed wall murals depicting water sanitation, recycling, and plastic-free living routines.",
-    category: "upcoming",
-    tag: "Cleanliness & Sanitation",
-    images: [
-      "https://images.unsplash.com/photo-1618477388954-7852f32655ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1532996127610-b7318658f77b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80"
-    ],
-    social: {
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com"
-    }
-  },
-  {
-    id: "youth-convention-2026",
-    title: "National Youth Convention & Summit",
-    date: "2026-10-15",
-    venue: "IIT Patna Senate Hall & Seminar Complex",
-    desc: "An inspiring two-day summit featuring panel discussions with social reformers, workshops on sustainable development, and awards for grassroots community service ideas.",
-    extendedDesc: "The National Youth Convention serves as a prominent platform bringing social reform leaders and youth innovators together. The convention comprises technical roundtables on rural sustainability, interactive educational workshops, and an exhibition for grassroots community service projects developed by volunteers.\n\nRegistration will be open for all students and young activists in late September.",
-    category: "upcoming",
-    tag: "Leadership",
-    images: [
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80"
-    ],
-    social: {
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com"
-    }
-  },
-  {
-    id: "donation-drive-2025",
-    title: "Winter Cloth & Toy Donation Drive",
-    date: "2025-11-14",
-    venue: "Slum settlements near Bihta & Danapur",
-    desc: "Distributed warm winter clothes, blankets, shoes, and toys collected from campus residents. Brought smiles to over 150 families during the harsh winter months.",
-    extendedDesc: "Conducted during the peak winter transition, this donation drive aimed to bring comfort to homeless families and children in nearby settlements.\n\nThanks to the generosity of IIT Patna residents, volunteers collected, sorted, and distributed over 800 items, including heavy blankets, sweaters, kids' toys, and footwear.",
-    category: "past",
-    tag: "Social Welfare",
-    images: [
-      "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80"
-    ],
-    social: {
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com"
-    }
-  },
-  {
-    id: "gandhi-jayanti-2025",
-    title: "Gandhi Jayanti Shramdaan & Cleanliness",
-    date: "2025-10-02",
-    venue: "IIT Patna Administrative Block Premises",
-    desc: "A campus-wide cleanliness and beautification drive honoring Mahatma Gandhi. Includes setting up eco-friendly compost bins and holding a campus clean-up race.",
-    extendedDesc: "To celebrate Gandhi Jayanti, volunteers held a campus-wide cleanliness drive focused on solid waste collection and the installation of local organic compost bins.\n\nThe day ended with a 'Plog Run' (jogging while picking up litter) around the academic block, encouraging physical wellness alongside institutional cleanliness.",
-    category: "past",
-    tag: "Cleanliness & Sanitation",
-    images: [
-      "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1618477388954-7852f32655ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1532996127610-b7318658f77b?auto=format&fit=crop&w=800&q=80"
-    ],
-    social: {
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com"
-    }
-  }
-];
 
 // Date formatter helper
 const formatDate = (dateString) => {
@@ -195,12 +52,97 @@ export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [modalSlideIndex, setModalSlideIndex] = useState(0);
 
-  // Sorting & Filtering Logic
+  // States for database content and loading
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch events dynamically from Supabase database tables
+  useEffect(() => {
+    const supabase = createClient();
+    async function fetchEvents() {
+      try {
+        setLoading(true);
+        console.log("Fetching events dynamically from Supabase database...");
+        
+        // Joined query fetching events + media folder + wing relationship
+        const { data, error } = await supabase
+          .from("events")
+          .select("*, event_media (*), event_wings (wing_id, wings (*))")
+          .order("event_date", { ascending: false });
+
+        if (error) throw error;
+
+        if (data) {
+          const formattedEvents = data.map((event) => {
+            const dateOnly = event.event_date ? event.event_date.split("T")[0] : "";
+            
+            // 1. Resolve Tag/Wing name dynamically from database
+            let tag = "NSS Campaign";
+            if (event.event_wings && event.event_wings.length > 0 && event.event_wings[0].wings) {
+              tag = event.event_wings[0].wings.name;
+            }
+
+            // 2. Resolve Images dynamically from database event_media path
+            let images = [];
+            const baseUrl = "https://gstzefgkmclumyygjzrr.supabase.co/storage/v1/object/public/nss-web/";
+            
+            if (event.event_media && event.event_media.length > 0) {
+              const folderPath = event.event_media[0].media_url;
+              // Clean folder path and URL-encode subfolders
+              const cleanFolder = folderPath.trim();
+              const encodedFolder = cleanFolder.split("/").map(encodeURIComponent).join("/");
+              
+              // Load three event images from the storage folder
+              images = [
+                `${baseUrl}${encodedFolder}1.jpg`,
+                `${baseUrl}${encodedFolder}2.jpg`,
+                `${baseUrl}${encodedFolder}3.jpg`
+              ];
+            } else {
+              // Fallback to high-quality unsplash placeholders if event has no media URL
+              images = [
+                "https://images.unsplash.com/photo-1615461066841-6116ecdccd04?auto=format&fit=crop&w=800&q=80"
+              ];
+            }
+
+            // 3. Resolve Social links dynamically (fallback if missing)
+            const social = {
+              instagram: (event.event_media && event.event_media[0]?.instagram) || "https://instagram.com",
+              facebook: (event.event_media && event.event_media[0]?.facebook) || "https://facebook.com",
+              linkedin: (event.event_media && event.event_media[0]?.linkedin) || "https://linkedin.com"
+            };
+
+            return {
+              id: event.id,
+              title: event.title,
+              date: dateOnly,
+              venue: event.venue || "IIT Patna Campus",
+              desc: event.details ? (event.details.length > 180 ? event.details.slice(0, 180) + "..." : event.details) : "No details provided.",
+              extendedDesc: event.details || "No further details available.",
+              category: new Date(event.event_date) > new Date() ? "upcoming" : "past",
+              tag: tag,
+              images: images,
+              social: social
+            };
+          });
+
+          setEvents(formattedEvents);
+        }
+      } catch (err) {
+        console.error("Error fetching events:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEvents();
+  }, []);
+
+  // Sorting & Filtering Logic (Listening to events state)
   const sortedEvents = useMemo(() => {
-    return [...eventsData].sort((a, b) => {
+    return [...events].sort((a, b) => {
       return new Date(b.date.replace(/-/g, "/")) - new Date(a.date.replace(/-/g, "/"));
     });
-  }, []);
+  }, [events]);
 
   const filteredEvents = useMemo(() => {
     return sortedEvents.filter((event) => {
@@ -342,150 +284,157 @@ export default function EventsPage() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredEvents.map((event) => {
-              const activeSlide = carouselIndices[event.id] || 0;
-              const isUpcoming = event.category === "upcoming";
-              return (
-                <motion.article 
-                  key={event.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  onClick={() => handleOpenModal(event)}
-                  className="group flex flex-col bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer"
-                >
-                  {/* Image Carousel Container */}
-                  <div className="relative h-64 md:h-56 lg:h-64 overflow-hidden">
-                    <div 
-                      className="flex h-full transition-transform duration-500 ease-out" 
-                      style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-                    >
-                      {event.images.map((img, idx) => (
-                        <div key={idx} className="w-full h-full flex-shrink-0 relative select-none">
-                          <img 
-                            src={img} 
-                            alt={`${event.title} - Slide ${idx + 1}`} 
-                            className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" 
-                            loading="lazy" 
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"></div>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* Badge over image */}
-                    <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
-                      {isUpcoming ? (
-                        <span className="pulse-border-class inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950 shadow-sm border border-amber-400/30">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-950 mr-1.5 animate-pulse"></span>
-                          Upcoming
+            {loading ? (
+              /* Beautiful dynamic loader grid */
+              <div className="col-span-full text-center py-24 bg-white border border-slate-100 rounded-3xl shadow-sm">
+                <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <h4 className="text-base font-bold text-slate-800 mb-1">Loading Campaigns...</h4>
+                <p className="text-slate-400 text-xs">Fetching dynamic timeline data from Supabase...</p>
+              </div>
+            ) : filteredEvents.length === 0 ? (
+              <div className="col-span-full text-center py-20 bg-white border border-slate-100 rounded-3xl shadow-sm">
+                <Info size={40} className="text-slate-300 mx-auto mb-4" />
+                <h4 className="text-base font-bold text-slate-800 mb-1">No Events Found</h4>
+                <p className="text-slate-500 text-xs max-w-sm mx-auto">
+                  We couldn't find any events matching your query. Try adjusting your search keywords.
+                </p>
+              </div>
+            ) : (
+              filteredEvents.map((event) => {
+                const activeSlide = carouselIndices[event.id] || 0;
+                const isUpcoming = event.category === "upcoming";
+                return (
+                  <motion.article 
+                    key={event.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4 }}
+                    onClick={() => handleOpenModal(event)}
+                    className="group flex flex-col bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer"
+                  >
+                    {/* Image Carousel Container */}
+                    <div className="relative h-64 md:h-56 lg:h-64 overflow-hidden">
+                      <div 
+                        className="flex h-full transition-transform duration-500 ease-out" 
+                        style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                      >
+                        {event.images.map((img, idx) => (
+                          <div key={idx} className="w-full h-full flex-shrink-0 relative select-none">
+                            <img 
+                              src={img} 
+                              alt={`${event.title} - Slide ${idx + 1}`} 
+                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" 
+                              loading="lazy" 
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"></div>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Badge over image */}
+                      <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
+                        {isUpcoming ? (
+                          <span className="pulse-border-class inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950 shadow-sm border border-amber-400/30">
+                            <span className="w-1.5 h-1.5 rounded-full bg-slate-950 mr-1.5 animate-pulse"></span>
+                            Upcoming
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200">
+                            Completed
+                          </span>
+                        )}
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-950/80 backdrop-blur-md text-white shadow-sm border border-white/10">
+                          {event.tag}
                         </span>
-                      ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200">
-                          Completed
-                        </span>
+                      </div>
+
+                      {/* Card Download Button (Top-Right Overlay) */}
+                      <button 
+                        onClick={(e) => downloadImage(e, event.images[activeSlide], event.title)}
+                        className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur-xs text-white flex items-center justify-center hover:bg-slate-950/80 transition-all cursor-pointer opacity-0 group-hover:opacity-100"
+                        aria-label="Download current image"
+                        title="Download image"
+                      >
+                        <Download size={14} />
+                      </button>
+
+                      {/* Controls */}
+                      {event.images.length > 1 && (
+                        <>
+                          <button 
+                            onClick={(e) => handlePrevSlide(e, event.id, event.images.length)}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-slate-900/80 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 cursor-pointer"
+                          >
+                            <ChevronLeft size={16} strokeWidth={3} />
+                          </button>
+                          <button 
+                            onClick={(e) => handleNextSlide(e, event.id, event.images.length)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-slate-900/80 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 cursor-pointer"
+                          >
+                            <ChevronRight size={16} strokeWidth={3} />
+                          </button>
+                        </>
                       )}
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-950/80 backdrop-blur-md text-white shadow-sm border border-white/10">
-                        {event.tag}
-                      </span>
-                    </div>
-
-                    {/* Card Download Button (Top-Right Overlay) */}
-                    <button 
-                      onClick={(e) => downloadImage(e, event.images[activeSlide], event.title)}
-                      className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur-xs text-white flex items-center justify-center hover:bg-slate-950/80 transition-all cursor-pointer opacity-0 group-hover:opacity-100"
-                      aria-label="Download current image"
-                      title="Download image"
-                    >
-                      <Download size={14} />
-                    </button>
-
-                    {/* Controls */}
-                    {event.images.length > 1 && (
-                      <>
-                        <button 
-                          onClick={(e) => handlePrevSlide(e, event.id, event.images.length)}
-                          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-slate-900/80 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 cursor-pointer"
-                        >
-                          <ChevronLeft size={16} strokeWidth={3} />
-                        </button>
-                        <button 
-                          onClick={(e) => handleNextSlide(e, event.id, event.images.length)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-slate-900/80 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 cursor-pointer"
-                        >
-                          <ChevronRight size={16} strokeWidth={3} />
-                        </button>
-                      </>
-                    )}
-                    {/* Dots indicators */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/30 backdrop-blur-md">
-                      {event.images.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => handleSetSlide(e, event.id, idx)}
-                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                            idx === activeSlide ? "bg-amber-500 w-3" : "bg-white/60"
-                          }`}
-                        ></button>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Card content body */}
-                  <div className="flex-grow flex flex-col p-6">
-                    <h3 className="text-lg font-bold text-slate-900 mb-2.5 group-hover:text-blue-950 transition-colors line-clamp-1">
-                      {event.title}
-                    </h3>
-                    
-                    <div className="space-y-1.5 mb-4 text-xs font-semibold text-slate-600">
-                      <div className="flex items-center gap-2">
-                        <Calendar size={14} className="text-amber-500" />
-                        <span>{formatDate(event.date)}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin size={14} className="text-blue-900" />
-                        <span className="line-clamp-1">{event.venue}</span>
+                      {/* Dots indicators */}
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/30 backdrop-blur-md">
+                        {event.images.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={(e) => handleSetSlide(e, event.id, idx)}
+                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                              idx === activeSlide ? "bg-amber-500 w-3" : "bg-white/60"
+                            }`}
+                          ></button>
+                        ))}
                       </div>
                     </div>
-                    <p className="text-slate-600 text-xs leading-relaxed mb-6 line-clamp-3">
-                      {event.desc}
-                    </p>
-                    {/* Footer Row (Media Links) */}
-                    <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                      <span className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
-                        Event Coverage
-                      </span>
-                      <div className="flex items-center gap-2.5 text-slate-500">
-                        <span onClick={(e) => e.stopPropagation()} className="inline-flex gap-2">
-                          <a href={event.social.instagram} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-50 hover:bg-amber-100 hover:text-amber-600 flex items-center justify-center transition-all border border-slate-100" aria-label="Instagram Coverage">
-                            <FaInstagram size={14} />
-                          </a>
-                          <a href={event.social.facebook} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-50 hover:bg-amber-100 hover:text-amber-600 flex items-center justify-center transition-all border border-slate-100" aria-label="Facebook Coverage">
-                            <FaFacebookF size={12} />
-                          </a>
-                          <a href={event.social.linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-50 hover:bg-amber-100 hover:text-amber-600 flex items-center justify-center transition-all border border-slate-100" aria-label="LinkedIn Coverage">
-                            <FaLinkedinIn size={14} />
-                          </a>
+                    {/* Card content body */}
+                    <div className="flex-grow flex flex-col p-6">
+                      <h3 className="text-lg font-bold text-slate-900 mb-2.5 group-hover:text-blue-950 transition-colors line-clamp-1">
+                        {event.title}
+                      </h3>
+                      
+                      <div className="space-y-1.5 mb-4 text-xs font-semibold text-slate-600">
+                        <div className="flex items-center gap-2">
+                          <Calendar size={14} className="text-amber-500" />
+                          <span>{formatDate(event.date)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin size={14} className="text-blue-900" />
+                          <span className="line-clamp-1">{event.venue}</span>
+                        </div>
+                      </div>
+                      <p className="text-slate-600 text-xs leading-relaxed mb-6 line-clamp-3">
+                        {event.desc}
+                      </p>
+                      {/* Footer Row (Media Links) */}
+                      <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
+                          Event Coverage
                         </span>
+                        <div className="flex items-center gap-2.5 text-slate-500">
+                          <span onClick={(e) => e.stopPropagation()} className="inline-flex gap-2">
+                            <a href={event.social.instagram} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-50 hover:bg-amber-100 hover:text-amber-600 flex items-center justify-center transition-all border border-slate-100" aria-label="Instagram Coverage">
+                              <FaInstagram size={14} />
+                            </a>
+                            <a href={event.social.facebook} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-50 hover:bg-amber-100 hover:text-amber-600 flex items-center justify-center transition-all border border-slate-100" aria-label="Facebook Coverage">
+                              <FaFacebookF size={12} />
+                            </a>
+                            <a href={event.social.linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-50 hover:bg-amber-100 hover:text-amber-600 flex items-center justify-center transition-all border border-slate-100" aria-label="LinkedIn Coverage">
+                              <FaLinkedinIn size={14} />
+                            </a>
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.article>
-              );
-            })}
+                  </motion.article>
+                );
+              })
+            )}
           </AnimatePresence>
         </motion.div>
-        {/* Empty state alert */}
-        {filteredEvents.length === 0 && (
-          <div className="text-center py-20 bg-white border border-slate-100 rounded-3xl shadow-sm">
-            <Info size={40} className="text-slate-300 mx-auto mb-4" />
-            <h4 className="text-base font-bold text-slate-800 mb-1">No Events Found</h4>
-            <p className="text-slate-500 text-xs max-w-sm mx-auto">
-              We couldn't find any events matching your query. Try adjusting your search keywords.
-            </p>
-          </div>
-        )}
       </main>
 
       {/* 3. Quote Section */}
@@ -500,7 +449,6 @@ export default function EventsPage() {
           </p>
         </div>
       </section>
-
 
       {/* 5. Glassmorphic Event Details Modal Overlay */}
       <AnimatePresence>
