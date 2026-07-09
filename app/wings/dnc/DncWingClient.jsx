@@ -13,8 +13,8 @@ const ExpandableDescription = ({ text }) => {
     return (
         <p className="text-xs md:text-sm text-slate-500 font-normal leading-relaxed">
             {isExpanded ? text : `${text.slice(0, 140)}...`}
-            <button 
-                onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }} 
+            <button
+                onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}
                 className="text-[#0a1128] font-bold bg-none border-none cursor-pointer p-0 ml-1.5 text-xs underline inline"
             >
                 {isExpanded ? 'Show Less' : 'Show More'}
@@ -53,16 +53,16 @@ export default function DncWingClient({ events }) {
             <div className="w-full h-1.5 bg-gradient-to-r from-[#ff9933] via-slate-200 to-[#138808]" />
 
             {/* Premium Deep Navy Hero with Asymmetrical Angled Cut */}
-            <div 
+            <div
                 className="bg-gradient-to-br from-[#060b18] via-[#0f1b3a] to-[#040712] text-white pt-20 pb-44 px-4 text-center relative overflow-hidden"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 100% 88%, 0% 100%)' }}
             >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent opacity-70 pointer-events-none" />
-                
+
                 <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
                     {/* Circular Logo in Hero Section */}
                     <div className="h-20 w-20 md:h-24 md:w-24 rounded-full overflow-hidden border-2 border-amber-400 shadow-lg mb-6 flex-shrink-0 bg-white">
-                        <img src="/wings/WhatsApp Image 2026-07-08 at 14.10.36.jpeg" alt="DNC Logo" className="h-full w-full object-cover" />
+                        <img src="/wings/WhatsApp Image 2026-07-08 at 14.10.50.jpeg" alt="DNC Logo" className="h-full w-full object-cover" />
                     </div>
 
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-xs">
@@ -71,11 +71,11 @@ export default function DncWingClient({ events }) {
                             Official Wing Portal
                         </span>
                     </div>
-                    
+
                     <h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight mb-6 text-white drop-shadow-xs">
                         DNC & Social Media <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 font-light">Wing</span>
                     </h1>
-                    
+
                     <p className="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base md:text-lg font-normal leading-relaxed opacity-90 tracking-wide">
                         The creative engine and media backbone of NSS IIT Patna, translating raw on-field service actions into visually stunning digital narratives.
                     </p>
@@ -107,26 +107,12 @@ export default function DncWingClient({ events }) {
                 ))}
             </div>
 
-            {/* Core Description / Mission Section */}
-            <div className="max-w-4xl mx-auto px-4 mt-16 relative z-10">
-                <div className="bg-white border border-slate-200/60 shadow-xs rounded-2xl p-6 md:p-8">
-                    <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <span className="w-1 h-3.5 bg-[#0a1128] rounded-full inline-block" />
-                        Our Creative Mandate
-                    </h2>
-                    <p className="text-sm md:text-base text-slate-700 leading-relaxed font-normal">
-                        The <span className="text-slate-900 font-bold">Designer Creation (DNC) Wing</span> serves as the official creative engine and media spine of NSS IIT Patna. Tasked with complete multimedia and design responsibilities, our students translate raw on-field service actions into visually stunning narratives. From high-fidelity event photography and cinematic impact documentaries to modern graphic architectures and frontend interface designs, DNC captures the soul of every single initiative to amplify social awareness globally.
-                    </p>
-                </div>
-            </div>
-
             {/* Event Galleries from Database */}
             {displayCategories.length > 0 && (
                 <div className="max-w-6xl mx-auto px-4 mt-24 relative">
-                  
+
 
                     <div className="relative z-10 space-y-20">
-                        <h2 className="text-2xl font-black text-slate-900 border-b-2 border-amber-400 pb-2 mb-10">Wing Showcases</h2>
                         {displayCategories.map((cat, ci) => {
                             const catImages = cat.images || [];
                             if (catImages.length === 0) return null;
@@ -148,15 +134,15 @@ export default function DncWingClient({ events }) {
 
                                     {/* Horizontal Slider Layout */}
                                     <div className="relative px-4">
-                                        <button 
-                                            onClick={() => scrollByAmount(ci, -1)} 
+                                        <button
+                                            onClick={() => scrollByAmount(ci, -1)}
                                             className="absolute -left-2 top-[40%] z-10 w-9 h-9 rounded-full bg-white/50 border border-slate-200 shadow-md flex items-center justify-center cursor-pointer text-slate-700 hover:bg-slate-50 transition-colors"
                                         >
-                                            <ChevronLeft/>
+                                            <ChevronLeft />
                                         </button>
-                                        
-                                        <div 
-                                            ref={(el) => (scrollRefs.current[ci] = el)} 
+
+                                        <div
+                                            ref={(el) => (scrollRefs.current[ci] = el)}
                                             style={{ scrollbarWidth: 'none' }}
                                             className="flex gap-4 overflow-x-auto scroll-smooth pb-3"
                                         >
@@ -167,9 +153,9 @@ export default function DncWingClient({ events }) {
                                                     className="group bg-white border border-slate-200/60 shadow-xs rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1.5 flex-shrink-0 w-[290px] aspect-[4/3] relative"
                                                 >
                                                     <div className="w-full h-full bg-slate-900 flex items-center justify-center relative overflow-hidden">
-                                                        <img 
-                                                            src={imgUrl} 
-                                                            alt={`${cat.title} snap ${ii + 1}`} 
+                                                        <img
+                                                            src={imgUrl}
+                                                            alt={`${cat.title} snap ${ii + 1}`}
                                                             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-103"
                                                         />
                                                         <div className="absolute inset-0 bg-slate-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -182,12 +168,12 @@ export default function DncWingClient({ events }) {
                                                 </div>
                                             ))}
                                         </div>
-                                        
-                                        <button 
-                                            onClick={() => scrollByAmount(ci, 1)} 
+
+                                        <button
+                                            onClick={() => scrollByAmount(ci, 1)}
                                             className="absolute -right-2 top-[40%] z-10 w-9 h-9 rounded-full bg-white/50 border border-slate-200 shadow-md flex items-center justify-center cursor-pointer text-slate-700 hover:bg-slate-50 transition-colors"
                                         >
-                                            <ChevronRight/>
+                                            <ChevronRight />
                                         </button>
                                     </div>
                                 </div>
@@ -197,21 +183,6 @@ export default function DncWingClient({ events }) {
                 </div>
             )}
 
-            {/* Creative Disciplines Grid */}
-            <div className="max-w-4xl mx-auto px-4 mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 relative z-10">
-                <div className="bg-white border border-slate-200/60 p-5 rounded-2xl shadow-2xs">
-                    <div className="text-slate-900 font-bold text-sm mb-1">Visual Architecture</div>
-                    <div className="text-xs text-slate-500">Graphic design layouts, identity branding, and UI assets.</div>
-                </div>
-                <div className="bg-white border border-slate-200/60 p-5 rounded-2xl shadow-2xs">
-                    <div className="text-slate-900 font-bold text-sm mb-1">Cinematic Media</div>
-                    <div className="text-xs text-slate-500">Documenting direct human impact via high-fidelity video production.</div>
-                </div>
-                <div className="bg-white border border-slate-200/60 p-5 rounded-2xl shadow-2xs">
-                    <div className="text-slate-900 font-bold text-sm mb-1">Digital Awareness</div>
-                    <div className="text-xs text-slate-500">Publishing, scaling narratives, and public digital management.</div>
-                </div>
-            </div>
 
             {/* Immersive True-Center Big Image Modal Framework */}
             {selected && (
@@ -231,11 +202,11 @@ export default function DncWingClient({ events }) {
                             <span>Close</span>
                             <span className="text-sm font-normal">✕</span>
                         </button>
-                        
+
                         <div className="w-full bg-slate-900/40 rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.8)] max-h-[75vh] flex items-center justify-center">
-                            <img 
-                                src={selected} 
-                                alt="Selected expansion view" 
+                            <img
+                                src={selected}
+                                alt="Selected expansion view"
                                 className="w-full h-full max-h-[75vh] object-contain block select-none"
                             />
                         </div>
