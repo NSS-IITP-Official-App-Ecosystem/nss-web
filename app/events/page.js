@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import Link from "next/link";
 import { createClient } from "../../utils/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -92,11 +93,9 @@ export default function EventsPage() {
               const cleanFolder = folderPath.trim();
               const encodedFolder = cleanFolder.split("/").map(encodeURIComponent).join("/");
               
-              // Load three event images from the storage folder
+              // Load one event image from the storage folder
               images = [
-                `${baseUrl}${encodedFolder}1.jpg`,
-                `${baseUrl}${encodedFolder}2.jpg`,
-                `${baseUrl}${encodedFolder}3.jpg`
+                `${baseUrl}${encodedFolder}1.jpg`
               ];
             } else {
               // Fallback to high-quality unsplash placeholders if event has no media URL
@@ -315,7 +314,11 @@ export default function EventsPage() {
                     className="group flex flex-col bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer"
                   >
                     {/* Image Carousel Container */}
-                    <div className="relative h-64 md:h-56 lg:h-64 overflow-hidden">
+                    <Link 
+                      href={`/gallery/event/${event.id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="relative h-64 md:h-56 lg:h-64 overflow-hidden block group/img cursor-pointer"
+                    >
                       <div 
                         className="flex h-full transition-transform duration-500 ease-out" 
                         style={{ transform: `translateX(-${activeSlide * 100}%)` }}
@@ -325,7 +328,8 @@ export default function EventsPage() {
                             <img 
                               src={img} 
                               alt={`${event.title} - Slide ${idx + 1}`} 
-                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" 
+                              onError={(e) => { e.target.src = '/home_slider/nss_home.jpg'; }}
+                              className="w-full h-full object-cover group-hover/img:scale-[1.03] transition-transform duration-700" 
                               loading="lazy" 
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"></div>
@@ -389,7 +393,7 @@ export default function EventsPage() {
                           ></button>
                         ))}
                       </div>
-                    </div>
+                    </Link>
                     {/* Card content body */}
                     <div className="flex-grow flex flex-col p-6">
                       <h3 className="text-lg font-bold text-slate-900 mb-2.5 group-hover:text-blue-950 transition-colors line-clamp-1">
@@ -436,6 +440,139 @@ export default function EventsPage() {
           </AnimatePresence>
         </motion.div>
       </main>
+
+      {/* Swachhata Hi Seva Special Spotlight Section */}
+      <section className="bg-gradient-to-br from-emerald-950 via-slate-950 to-slate-900 text-white py-20 border-t border-emerald-900/30">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Mega Campaign Spotlight
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-4">
+              Swachhata Hi Seva Campaign
+            </h2>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+              A nation-wide cleanliness crusade driven by NSS volunteers at IIT Patna. Spanning multiple weeks, this mega event mobilized hundreds of students to raise hygiene standards, eliminate plastic waste, and educate local communities.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Sub-Event 1 */}
+            <div className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="relative aspect-video rounded-xl overflow-hidden mb-5 bg-slate-800">
+                  <img 
+                    src="https://images.unsplash.com/photo-1618477388954-7852f32655ec?auto=format&fit=crop&w=400&q=80" 
+                    alt="Campus Shramdaan"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute top-3 left-3 bg-emerald-500 text-slate-950 font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase tracking-wider">
+                    Drive
+                  </div>
+                </div>
+                <h4 className="text-base font-extrabold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+                  Campus Shramdaan Drive
+                </h4>
+                <p className="text-slate-300 text-xs leading-relaxed mb-4">
+                  Mass mobilization of volunteers for cleaning common areas, residential blocks, and academic squares on campus.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-emerald-400">
+                <span>IMPACT</span>
+                <span className="bg-emerald-500/10 px-2 py-1 rounded-md text-emerald-400">120+ kg Waste Cleared</span>
+              </div>
+            </div>
+
+            {/* Sub-Event 2 */}
+            <div className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="relative aspect-video rounded-xl overflow-hidden mb-5 bg-slate-800">
+                  <img 
+                    src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80" 
+                    alt="Awareness Rallies"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute top-3 left-3 bg-blue-500 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase tracking-wider">
+                    Awareness
+                  </div>
+                </div>
+                <h4 className="text-base font-extrabold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+                  Cleanliness Pledge & Rally
+                </h4>
+                <p className="text-slate-300 text-xs leading-relaxed mb-4">
+                  Raising awareness through marches, interactive banners, and administering the Swachhata Pledge to residents.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-emerald-400">
+                <span>IMPACT</span>
+                <span className="bg-blue-500/10 px-2 py-1 rounded-md text-blue-300">400+ Pledges Administered</span>
+              </div>
+            </div>
+
+            {/* Sub-Event 3 */}
+            <div className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="relative aspect-video rounded-xl overflow-hidden mb-5 bg-slate-800">
+                  <img 
+                    src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=400&q=80" 
+                    alt="Village Campaign"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute top-3 left-3 bg-amber-500 text-slate-950 font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase tracking-wider">
+                    Outreach
+                  </div>
+                </div>
+                <h4 className="text-base font-extrabold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+                  Village Cleanliness Campaign
+                </h4>
+                <p className="text-slate-300 text-xs leading-relaxed mb-4">
+                  Spreading waste management systems and door-to-door sanitation surveys in adopted local villages like Bihta.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-emerald-400">
+                <span>IMPACT</span>
+                <span className="bg-amber-500/10 px-2 py-1 rounded-md text-amber-400">150+ Families Reached</span>
+              </div>
+            </div>
+
+            {/* Sub-Event 4 */}
+            <div className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="relative aspect-video rounded-xl overflow-hidden mb-5 bg-slate-800">
+                  <img 
+                    src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=400&q=80" 
+                    alt="Creative Competitions"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute top-3 left-3 bg-rose-500 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase tracking-wider">
+                    Competition
+                  </div>
+                </div>
+                <h4 className="text-base font-extrabold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+                  Nukkad Natak & Art Drives
+                </h4>
+                <p className="text-slate-300 text-xs leading-relaxed mb-4">
+                  Dramatizing sanitation practices through street plays and organizing poster competitions for local school kids.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-emerald-400">
+                <span>IMPACT</span>
+                <span className="bg-rose-500/10 px-2 py-1 rounded-md text-rose-300">500+ Spectators Engaged</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link 
+              href="/gallery?wing=environmental" 
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-emerald-500/20 hover:-translate-y-0.5 transition-all duration-300"
+            >
+              Explore Campaign Gallery
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* 3. Quote Section */}
       <section className="bg-slate-900 py-16 border-t border-slate-800">
@@ -485,10 +622,14 @@ export default function EventsPage() {
                   style={{ transform: `translateX(-${modalSlideIndex * 100}%)` }}
                 >
                   {selectedEvent.images.map((img, idx) => (
-                    <div key={idx} className="w-full h-full flex-shrink-0 relative">
-                      <img src={img} alt="" className="w-full h-full object-cover" />
+                    <Link 
+                      key={idx}
+                      href={`/gallery/event/${selectedEvent.id}`}
+                      className="w-full h-full flex-shrink-0 relative block cursor-pointer group/modalimg"
+                    >
+                      <img src={img} alt="" onError={(e) => { e.target.src = '/home_slider/nss_home.jpg'; }} className="w-full h-full object-cover group-hover/modalimg:scale-[1.01] transition-transform duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
                 
