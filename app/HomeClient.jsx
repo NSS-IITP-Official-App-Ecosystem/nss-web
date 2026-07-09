@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { resolveImageUrl } from '@/utils/imageUrl';
 import {
     FaArrowRight,
     FaChevronLeft,
@@ -124,7 +125,7 @@ export default function HomeClient({
                                     className="absolute inset-0 w-full h-full"
                                 >
                                     <Image
-                                        src={item.url}
+                                        src={resolveImageUrl(item.url, "/home_slider/nss_home.jpg")}
                                         alt="Hero slide image"
                                         fill
                                         priority={i === 0}
@@ -385,7 +386,7 @@ export default function HomeClient({
                                     {/* Thumbnail containing zoom loop */}
                                     <div className="relative aspect-video w-full overflow-hidden rounded-2xl mb-4  group">
                                         <Image
-                                            src={item.thumbnail}
+                                            src={resolveImageUrl(item.thumbnail, "/units/chetna_final.jpg")}
                                             alt={item.title}
                                             fill
                                             className="object-contain group-hover:scale-105 transition-transform duration-500"
@@ -735,8 +736,8 @@ function EventTimelineCard({ item, slideFromLeft }) {
             {/* Hover-zoom frame wrapper */}
             <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-100 mb-4 group">
                 <Image
-                    src={item.thumbnail}
-                    alt={item.title}
+                    src={resolveImageUrl(item.thumbnail, "/units/chetna_final.jpg")}
+                    alt={item.title || "Event thumbnail"}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 300px, 350px"
@@ -771,7 +772,7 @@ function CollaborateElement(props) {
         <div className="flex flex-col items-center justify-center bg-white border border-slate-200/60 rounded-3xl p-6 aspect-square w-full max-w-[155px] shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 select-none group">
             <div className="relative w-full h-14 flex items-center justify-center">
                 <Image
-                    src={data.logo}
+                    src={resolveImageUrl(data.logo, "/placeholder.svg")}
                     alt={data.name || "Collaborator Logo"}
                     width={100}
                     height={60}

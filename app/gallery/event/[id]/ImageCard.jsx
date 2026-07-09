@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { MdZoomOutMap, MdClose, MdPlayArrow } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { resolveImageUrl } from "@/utils/imageUrl";
 
 export function ImageCard({ src, type = 'image', title, index }) {
     const [isOpen, setIsOpen] = useState(false);

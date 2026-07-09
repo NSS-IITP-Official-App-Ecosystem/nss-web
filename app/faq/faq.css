@@ -50,9 +50,27 @@
 .faq-title {
     font-size: 42px;
     font-weight: 900;
-    color: #0f172a;
-    letter-spacing: -1px;
     margin-bottom: 12px;
+    letter-spacing: -1px;
+    color: var(--brand-blue);
+    background: linear-gradient(135deg, var(--brand-blue) 0%, #2563eb 45%, var(--primary, #f59e0b) 90%, var(--brand-blue) 100%);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGradientShift 10s ease infinite;
+}
+
+@keyframes textGradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .faq-subtitle {
@@ -84,8 +102,8 @@
 }
 
 .faq-search-input:focus {
-    border-color: var(--brand-blue);
-    box-shadow: 0 0 0 3px rgba(0, 37, 109, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
 }
 
 .faq-search-icon {
@@ -182,21 +200,23 @@
 }
 
 .faq-sidebar-btn:hover {
-    background: #f1f5f9;
-    color: #0f172a;
+    background: rgba(245, 158, 11, 0.05);
+    color: var(--primary);
 }
 
 .faq-sidebar-btn.active {
-    background: #e2e8f0;
-    color: #0f172a;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--primary);
     font-weight: 700;
+    border-left: 4px solid var(--primary);
 }
 
 @media (min-width: 1024px) {
     .faq-sidebar-btn.active {
-        background: #00256d;
+        background: var(--brand-blue);
         color: #ffffff;
         box-shadow: 0 4px 12px rgba(0, 37, 109, 0.2);
+        border-left: 4px solid var(--primary);
     }
 }
 
@@ -247,8 +267,8 @@
 }
 
 .faq-accordion-card.open {
-    border-color: rgba(0, 37, 109, 0.25);
-    box-shadow: 0 8px 16px -4px rgba(0, 37, 109, 0.06);
+    border-color: rgba(245, 158, 11, 0.3);
+    box-shadow: 0 8px 16px -4px rgba(245, 158, 11, 0.08);
 }
 
 .faq-accordion-header {
@@ -273,7 +293,7 @@
 }
 
 .faq-accordion-card.open .faq-question-label {
-    color: #00256d;
+    color: var(--brand-blue);
 }
 
 .faq-chevron {
@@ -290,7 +310,7 @@
 }
 
 .faq-accordion-card.open .faq-chevron {
-    background: #00256d;
+    background: var(--primary);
     color: #ffffff;
     transform: rotate(180deg);
 }
@@ -344,7 +364,7 @@
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
-    background: #00256d;
+    background: var(--brand-blue);
     color: #ffffff;
     font-weight: 700;
     font-size: 14px;
@@ -355,7 +375,8 @@
 }
 
 .faq-contact-btn:hover {
-    background: #001b50;
+    background: var(--primary);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
 }
 
 /* Top Contact Section Grid */
@@ -389,9 +410,9 @@
 }
 
 .faq-contact-card:hover {
-    border-color: #cbd5e1;
+    border-color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px -4px rgba(0, 37, 109, 0.08);
+    box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.12);
 }
 
 .faq-contact-icon-box {
@@ -399,7 +420,7 @@
     height: 46px;
     border-radius: 12px;
     background: rgba(0, 37, 109, 0.08);
-    color: #00256d;
+    color: var(--brand-blue);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -408,7 +429,7 @@
 }
 
 .faq-contact-card:hover .faq-contact-icon-box {
-    background: #00256d;
+    background: var(--primary);
     color: #ffffff;
 }
 
@@ -426,9 +447,14 @@
 }
 
 .faq-contact-info a {
-    color: #00256d;
+    color: var(--brand-blue);
     font-weight: 700;
     text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.faq-contact-info a:hover {
+    color: var(--primary);
 }
 
 /* Interactive Google Maps Section */
