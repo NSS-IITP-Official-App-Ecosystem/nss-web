@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
+import { resolveImageUrl } from '@/utils/imageUrl';
 import {
   FaEnvelope,
   FaLinkedinIn,
@@ -669,7 +670,7 @@ export default function OurTeam() {
               <div className="modal-body">
                 <div className="modal-profile-aside">
                   <img
-                    src={selectedMember.image}
+                    src={resolveImageUrl(selectedMember.image, "/testimonial/person-1.jpg")}
                     alt={selectedMember.name}
                     className="modal-profile-img"
                   />
@@ -725,7 +726,7 @@ function TeamCard({ member, index, onQuickView }) {
     >
       <div className="card-img-container">
         <img
-          src={member.image}
+          src={resolveImageUrl(member.image, "/testimonial/person-1.jpg")}
           alt={member.name}
           className="member-img"
         />

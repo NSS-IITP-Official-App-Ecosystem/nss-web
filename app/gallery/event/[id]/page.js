@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import { FaArrowLeft, FaCalendarAlt, FaFileAlt, FaTag } from 'react-icons/fa';
 import { getWingBadgeStyle } from '@/app/gallery/wing-utils';
+import { resolveImageUrl } from '@/utils/imageUrl';
 
 export default async function EventPage({ params }) {
     const { id } = await params;
@@ -44,7 +45,7 @@ export default async function EventPage({ params }) {
                 details: data.details,
                 date: data.event_date,
                 resources: data.resources || [],
-                images: data.event_media ? data.event_media.map(m => m.media_url) : [],
+                images: data.event_media ? data.event_media.map(m => resolveImageUrl(m.media_url, '/home_slider/nss_home.jpg')).filter(Boolean) : [],
                 wings: data.event_wings ? data.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
             };
         }

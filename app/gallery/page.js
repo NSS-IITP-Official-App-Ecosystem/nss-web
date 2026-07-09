@@ -5,6 +5,7 @@ import { Suspense } from 'react'
 import { createClient } from '@/utils/supabase/server'
 import NSS_SESSION from '@/data/nss_session.json'
 import GalleryHero from './GalleryHero'
+import { resolveImageUrl } from '@/utils/imageUrl'
 
 export default async function GalleryPage({ searchParams }) {
     const resolvedParams = await searchParams;
@@ -66,7 +67,7 @@ export default async function GalleryPage({ searchParams }) {
                 details: e.details,
                 date: e.event_date,
                 resources: e.resources || [],
-                images: e.event_media ? e.event_media.map(m => m.media_url) : [],
+                images: e.event_media ? e.event_media.map(m => resolveImageUrl(m.media_url, '/home_slider/nss_home.jpg')).filter(Boolean) : [],
                 wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
             }));
         }

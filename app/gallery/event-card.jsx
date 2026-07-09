@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
 import { getWingBadgeStyle } from "./wing-utils";
+import { resolveImageUrl } from "@/utils/imageUrl";
 
 export function EventCard({ data }) {
     return (
@@ -14,8 +15,8 @@ export function EventCard({ data }) {
             {/* Image container */}
             <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
                 <Image 
-                    src={data.images && data.images[0] ? data.images[0] : '/home_slider/nss_home.jpg'} 
-                    alt={data.title}
+                    src={resolveImageUrl(data.images && data.images[0], '/home_slider/nss_home.jpg')} 
+                    alt={data.title || "Event photo"}
                     width={400} 
                     height={225} 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

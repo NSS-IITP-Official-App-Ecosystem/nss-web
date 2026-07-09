@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import HomeClient from './HomeClient';
+import { resolveImageUrl } from '@/utils/imageUrl';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,7 +38,7 @@ export default async function HomePage() {
             units = dbUnits.map(u => ({
                 title: `Unit ${u.number}`,
                 subTitle: u.motive || "Service Unit",
-                thumbnail: u.thumbnail_url || "/units/chetna_final.jpg",
+                thumbnail: resolveImageUrl(u.thumbnail_url, "/units/chetna_final.jpg"),
                 action: {
                     text: "Know More",
                     url: `/units/unit-${u.number}`
@@ -62,7 +63,7 @@ export default async function HomePage() {
                 name: t.name,
                 position: t.position,
                 text: t.text,
-                img: t.img_url || '/testimonial/person-1.jpg'
+                img: resolveImageUrl(t.img_url, '/testimonial/person-1.jpg')
             }));
         }
     } catch (err) {
@@ -81,7 +82,7 @@ export default async function HomePage() {
         if (!collabsErr && dbCollaborators) {
             collaborators = dbCollaborators.map(c => ({
                 name: c.name,
-                logo: c.logo_url,
+                logo: resolveImageUrl(c.logo_url, '/placeholder.svg'),
                 url: c.url
             }));
         }
@@ -148,7 +149,7 @@ export default async function HomePage() {
                         day: 'numeric',
                         year: 'numeric'
                     }),
-                    thumbnail: thumb ? thumb.media_url : "/units/chetna_final.jpg",
+                    thumbnail: resolveImageUrl(thumb ? thumb.media_url : null, "/units/chetna_final.jpg"),
                     wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
                 };
             });
@@ -182,7 +183,7 @@ export default async function HomePage() {
             title: e.title,
             details: e.details,
             date: e.date,
-            thumbnail: e.thumbnail,
+            thumbnail: resolveImageUrl(e.thumbnail, "/units/chetna_final.jpg"),
             wings: e.wings || []
         }));
     }

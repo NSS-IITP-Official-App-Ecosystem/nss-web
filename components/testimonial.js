@@ -6,6 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
 import { cn } from '@/components/utils'
 import Image from 'next/image';
+import { resolveImageUrl } from '@/utils/imageUrl';
 import { FaQuoteLeft } from "react-icons/fa";
 import useEmblaCarousel from 'embla-carousel-react'
 import { usePrevNextButtons, PrevButton, NextButton } from '@/components/EmblaNextPrev'
@@ -147,7 +148,7 @@ export function TestimonialItem({ data, className }) {
                 >
                     <Image 
                         className="object-cover" 
-                        src={data.img} 
+                        src={resolveImageUrl(data.img, '/testimonial/person-1.jpg')} 
                         alt={data.name || 'Volunteer avatar'} 
                         fill
                         sizes="(max-width: 768px) 96px, 144px"

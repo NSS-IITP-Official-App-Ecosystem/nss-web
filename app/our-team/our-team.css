@@ -396,8 +396,8 @@
     .team-header-row {
         flex-direction: column;
         align-items: stretch;
-        gap: 36px;
-        padding: 36px 28px;
+        gap: 24px;
+        padding: 24px 16px;
     }
     
     .year-selector-container {
@@ -407,8 +407,9 @@
     }
 
     .header-stats-row {
-        gap: 20px;
+        gap: 16px;
         justify-content: space-between;
+        flex-wrap: wrap;
     }
 
     .header-stat-divider {
@@ -1165,7 +1166,7 @@
 
 @media (max-width: 768px) {
     .team-page-container {
-        padding: 40px 16px 60px 16px;
+        padding: 24px 16px 60px 16px;
     }
     
     .page-title {
@@ -1174,30 +1175,46 @@
     
     .intro-text {
         font-size: 14px;
+        line-height: 1.5;
     }
     
     .filter-controls {
         flex-direction: column;
         align-items: stretch;
         padding: 16px;
+        gap: 16px;
+    }
+
+    .search-box {
+        width: 100%;
+        min-width: 0;
     }
     
     .filter-tabs {
         width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+        flex-wrap: wrap;
         gap: 6px;
+        justify-content: center;
     }
     
     .filter-tab {
-        padding: 8px;
+        flex: 1 1 auto;
+        padding: 8px 12px;
         font-size: 12px;
         text-align: center;
     }
     
     .team-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 16px;
+        width: 100%;
+    }
+
+    .team-card {
+        width: 100% !important;
+        flex: auto !important;
     }
     
     .modal-card {
@@ -1219,17 +1236,31 @@
     }
     
     .modal-profile-content {
-        padding: 24px;
+        padding: 20px;
     }
 }
 
 @media (max-width: 480px) {
     .filter-tabs {
-        grid-template-columns: 1fr;
+        flex-direction: row;
     }
     
     .team-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .team-card {
+        border-radius: var(--radius-sm);
+    }
+
+    .member-name {
+        font-size: 13px;
+    }
+
+    .member-role {
+        font-size: 11px;
     }
 }
 
@@ -1421,27 +1452,93 @@
 @media (max-width: 768px) {
     .hierarchy-header-title {
         font-size: 26px;
-        margin-bottom: 60px;
+        margin-bottom: 50px;
     }
 
     .tree-branch-row {
-        flex-direction: column;
-        align-items: center;
-        gap: 50px;
-        padding-top: 0;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        padding-top: 24px;
+        margin-bottom: 0;
     }
 
     .tree-branch-row::before {
-        display: none;
+        display: block;
+        top: 0;
+        left: 23%;
+        right: 23%;
+        height: 2px;
     }
 
     .tree-branch-col::before {
-        top: -40px;
-        height: 40px;
+        top: -24px;
+        height: 24px;
     }
     
     .tree-line-v {
         height: 30px;
+    }
+
+    .tree-node {
+        width: 155px;
+        padding: 12px 10px;
+    }
+
+    .node-avatar-wrapper {
+        width: 56px;
+        height: 56px;
+        margin-top: -40px;
+        margin-bottom: 8px;
+    }
+
+    .node-role-tag {
+        font-size: 9.5px;
+        letter-spacing: 0.5px;
+        margin-bottom: 3px;
+    }
+
+    .node-admin-name {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tree-branch-row {
+        gap: 12px;
+        padding-top: 20px;
+    }
+
+    .tree-branch-row::before {
+        left: 25%;
+        right: 25%;
+    }
+
+    .tree-branch-col::before {
+        top: -20px;
+        height: 20px;
+    }
+
+    .tree-node {
+        width: 140px;
+        padding: 10px 8px;
+    }
+
+    .node-avatar-wrapper {
+        width: 48px;
+        height: 48px;
+        margin-top: -34px;
+        margin-bottom: 6px;
+        border-width: 2.5px;
+    }
+
+    .node-role-tag {
+        font-size: 8.5px;
+        letter-spacing: 0.3px;
+    }
+
+    .node-admin-name {
+        font-size: 11.5px;
     }
 }
 
@@ -1548,18 +1645,5 @@
     background: var(--primary);
     color: var(--text-light);
     font-weight: 600;
-}
-
-@media (max-width: 768px) {
-    .team-header-row {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 32px;
-        gap: 24px;
-    }
-    
-    .year-selector-container {
-        width: 100%;
-    }
 }
 

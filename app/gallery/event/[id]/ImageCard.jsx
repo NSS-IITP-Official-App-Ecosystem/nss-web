@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { MdZoomOutMap, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { resolveImageUrl } from "@/utils/imageUrl";
 
 export function ImageCard({ src, title, index }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,7 @@ export function ImageCard({ src, title, index }) {
                     <MdZoomOutMap />
                 </button>
                 <Image 
-                    src={src} 
+                    src={resolveImageUrl(src, '/home_slider/nss_home.jpg')} 
                     alt={title || "Event photo"}
                     width={400} 
                     height={225} 
@@ -60,7 +61,7 @@ export function ImageCard({ src, title, index }) {
                             className="relative max-w-5xl max-h-[85vh] w-full h-full flex items-center justify-center pointer-events-none"
                         >
                             <img 
-                                src={src} 
+                                src={resolveImageUrl(src, '/home_slider/nss_home.jpg')} 
                                 alt={title || "Zoomed event photo"}
                                 className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl pointer-events-auto border border-white/10"
                             />
