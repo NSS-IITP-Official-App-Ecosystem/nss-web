@@ -2,7 +2,7 @@ import { LuInstagram, LuLinkedin, LuYoutube } from "react-icons/lu";
 import Link from "next/link";
 
 export default function Footer() {
-   
+
     return (<footer className="bg-slate-950 text-slate-400 border-t border-slate-900 pt-16 pb-12 text-xs font-semibold">
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-slate-900">
@@ -25,21 +25,20 @@ export default function Footer() {
                         </div>
                     </div>
                     <p className="text-slate-400 text-xs font-normal leading-relaxed max-w-sm">
-                        IIT Patna's NSS Unit coordinates voluntary community services, giving students a chance to connect with local demographics, understand societal challenges, and take action.
+                        IIT Patna&apos;s NSS Unit coordinates voluntary community services, giving students a chance to connect with local demographics, understand societal challenges, and take action.
                     </p>
                     <div className="flex flex-row flex-nowrap gap-4 justify-start">
-                        <a href="https://www.youtube.com" target="_blank" className="text-xl border rounded-full border-gray-500/60 bg-gray-500/50 p-3 hover:scale-105"><LuYoutube/></a>
-                        <a href="https://www.instagram.com" target="_blank" className="text-xl border rounded-full border-gray-500/60 bg-gray-500/50 p-3 hover:scale-105"><LuInstagram/></a>
-                        <a href="https://www.linkedin.com" target="_blank" className="text-xl border rounded-full border-gray-500/60 bg-gray-500/50 p-3 hover:scale-105"><LuLinkedin/></a>
+                        <a href="https://www.youtube.com/@nssiitpatna3209" target="_blank" className="text-xl border rounded-full border-gray-500/60 bg-gray-500/50 p-3 hover:scale-105"><LuYoutube /></a>
+                        <a href="https://www.instagram.com/nss.iitp" target="_blank" className="text-xl border rounded-full border-gray-500/60 bg-gray-500/50 p-3 hover:scale-105"><LuInstagram /></a>
                     </div>
                 </div>
                 {/* Quick Links column */}
                 <div>
                     <h3 className="text-white font-extrabold text-xs uppercase tracking-wider mb-6">Quick Links</h3>
                     <ul className="space-y-3 font-bold uppercase tracking-wider text-slate-400">
-                        <li><a href="#" className="hover:text-amber-500 transition-colors">Home Page</a></li>
-                        <li><a href="#" className="hover:text-amber-500 transition-colors">Events Archive</a></li>
-                        <li><a href="#" className="hover:text-amber-500 transition-colors">Annual Reports</a></li>
+                        <li><Link href="/" className="hover:text-amber-500 transition-colors">Home Page</Link></li>
+                        <li><Link href="/events" className="hover:text-amber-500 transition-colors">Events Archive</Link></li>
+                        <li><Link href="/awards" className="hover:text-amber-500 transition-colors">Awards &amp; Achievements</Link></li>
                         <li><Link href="/rules-and-policies" className="hover:text-amber-500 transition-colors">Volunteering Guidelines</Link></li>
                     </ul>
                 </div>
@@ -61,9 +60,8 @@ export default function Footer() {
             <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-500 font-bold uppercase tracking-wider">
                 <p>&copy; 2026 NSS IIT Patna. All rights reserved.</p>
                 <div className="flex items-center gap-6">
-                    <a href="#" className="hover:text-slate-400 transition-colors">Contact Us</a>
-                    <a href="#" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
-                    <a href="#" className="hover:text-slate-400 transition-colors">Terms of Service</a>
+                    <Link href="/faq" className="hover:text-slate-400 transition-colors">Contact Us</Link>
+                    <Link href="/rules-and-policies" className="hover:text-slate-400 transition-colors">Rules &amp; Policies</Link>
                 </div>
             </div>
         </div>

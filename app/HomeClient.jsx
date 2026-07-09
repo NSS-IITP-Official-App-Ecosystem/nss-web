@@ -383,12 +383,12 @@ export default function HomeClient({
                             >
                                 <div>
                                     {/* Thumbnail containing zoom loop */}
-                                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-100 mb-4 shadow-inner group">
+                                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl mb-4  group">
                                         <Image
                                             src={item.thumbnail}
                                             alt={item.title}
                                             fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            className="object-contain group-hover:scale-105 transition-transform duration-500"
                                             sizes="(max-width: 768px) 300px, 350px"
                                         />
                                     </div>
@@ -427,9 +427,9 @@ export default function HomeClient({
                     {/* Timeline Path Container */}
                     <div className="relative mt-12 pl-8 sm:pl-0">
                         {/* Gradient Line Path */}
-                        <div className="absolute top-0 bottom-0 left-[26px] sm:left-1/2 w-0.5 bg-gradient-to-b from-amber-400 via-indigo-500 to-rose-500 -translate-x-1/2 pointer-events-none" />
-
-                        {upcomingEventsData.map((item, i) => {
+                        {upcomingEventsData.length > 0 && <div className="absolute top-0 bottom-0 left-[26px] sm:left-1/2 w-0.5 bg-gradient-to-b from-amber-400 via-indigo-500 to-rose-500 -translate-x-1/2 pointer-events-none" />
+                        }
+                        {upcomingEventsData.length > 0 ? upcomingEventsData.map((item, i) => {
                             const isOdd = i % 2 !== 0;
                             return (
                                 <div key={i} className="relative mb-16 flex flex-col sm:flex-row items-center justify-center w-full">
@@ -461,7 +461,11 @@ export default function HomeClient({
 
                                 </div>
                             );
-                        })}
+                        }) :
+                            <div className='text-center max-w-xl border border-border rounded-xl bg-white p-6 m-auto'>
+                                There is Currently No Upcoming Event
+                            </div>
+                        }
                     </div>
 
                     <div className="text-center mt-12 flex flex-row gap-5 justify-center">
@@ -580,7 +584,7 @@ export default function HomeClient({
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center items-stretch relative z-10">
                     {impactsData.map((item, i) => (
                         <div
                             key={i}

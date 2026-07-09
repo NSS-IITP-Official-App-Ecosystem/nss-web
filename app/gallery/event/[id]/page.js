@@ -106,7 +106,7 @@ export default async function EventPage({ params }) {
                     {/* Date stamp */}
                     <div className="flex items-center gap-2 text-slate-400 text-sm font-mono font-semibold pb-4 border-b border-slate-100 w-full">
                         <FaCalendarAlt />
-                        <span>{new Date(event.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                        <span>{event.date ? new Date(event.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : "To be decided"}</span>
                     </div>
 
                     <p className="text-slate-600 text-base leading-relaxed whitespace-pre-line mt-4">

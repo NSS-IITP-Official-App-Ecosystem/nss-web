@@ -204,8 +204,9 @@ create table public.events (
     id uuid default gen_random_uuid() primary key,
     title text not null,
     details text not null,
-    event_date timestamp with time zone not null,
+    event_date timestamp with time zone,
     resources text[], -- Array of links/downloads
+    tags text[] default array[]::text[], -- Array of tags/categories
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
@@ -537,9 +538,9 @@ insert into public.wings (name, slug, description) values
 
 -- Seed Units
 insert into public.units (number, motive, thumbnail_url) values
-(1, 'Education & Awareness | ज्ञान से परिवर्तन', '/units/unit-1.jpg'),
-(2, 'Environment & Sustainability | प्रकृति से प्रगति', '/units/unit-2.jpg'),
-(3, 'Community & Social Welfare | सेवा ही शक्ति', '/units/unit-3.jpg');
+(1, 'Education & Awareness | ज्ञान से परिवर्तन', '/units/unit-1.png'),
+(2, 'Environment & Sustainability | प्रकृति से प्रगति', '/units/unit-2.png'),
+(3, 'Community & Social Welfare | सेवा ही शक्ति', '/units/unit-3.png');
 
 -- Seed Collaborators
 insert into public.collaborators (name, logo_url) values
@@ -548,7 +549,8 @@ insert into public.collaborators (name, logo_url) values
 ('Prathama Blood Centre', '/collaborators/prathama.png'),
 ('Anwesha', '/collaborators/anwesha.png'),
 ('Babban Kumar Seva Samiti', '/collaborators/babban_kumar.png'),
-('Bihta Primary Health Centre (PHC)', '/collaborators/bihta_phc.png');
+('Bihta Primary Health Centre (PHC)', '/collaborators/bihta_phc.png'),
+('Bihar State AIDS Control Society', '/collaborators/bsacs.png');
 
 -- Seed Impacts
 insert into public.impacts (icon, title, description, count, unit) values
@@ -569,28 +571,28 @@ insert into public.events (id, title, details, event_date, resources) values
 ('e0000000-0000-0000-0000-000000000012', 'Environmental Video Screening', 'Screening of environmental documentaries and short films to educate volunteers on climate action.', '2025-10-13 16:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000013', 'Environmental Wing Quiz', 'Quiz competition organized by the Environmental Wing to test environmental science awareness.', '2025-10-16 11:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000014', 'Youth Awareness Session', 'Inspirational seminar and discussion focusing on youth development, social responsibility, and national service.', '2026-01-11 11:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000015', 'Anwesha Donation Drive', 'Outreach drive supporting Anwesha NGO to distribute clothing and resources to underprivileged households.', '2025-12-15 10:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000016', 'Blood Donation Drive', 'Annual blood donation drive organized in collaboration with regional healthcare partners to mobilize donors.', '2026-02-06 09:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000015', 'Anwesha Donation Drive', 'In collaboration with Anwesha, this direct outreach campaign mobilized campus donations of clothing, food, and essentials, distributing them to over 100 underprivileged households in nearby villages.', '2025-12-15 10:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000016', 'Blood Donation Drive', 'Organized in collaboration with Prathama Blood Centre under medical supervision, this flagship camp mobilized over 300 donors from the IIT Patna community, fostering social responsibility.', '2026-02-06 09:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000017', 'Box Collection Drive', 'Resource collection drive gathering clothing, books, and basic essentials for community distribution.', '2025-10-22 10:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000018', 'Budget Quiz', 'Interactive educational quiz focusing on national economics, budget literacy, and citizen roles.', '2026-02-10 14:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000019', 'Closing Ceremony', 'Celebrating the achievements of the academic year, awarding outstanding volunteers and concluding campaigns.', '2026-04-30 16:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000019', 'Closing Ceremony', 'Culminating the academic year and Seva Sankalp 2026, this ceremony reviewed unit-wide achievements, awarded certificates, and felicitated outstanding volunteers under PIC and PO guidance.', '2026-04-30 16:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000020', 'Social Debate Session', 'Townhall style competitive debate session discussing critical social issues and public policies.', '2025-11-05 15:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000021', 'Debate Competition', 'Debating tournament held to encourage critical thinking on community welfare and civic duties.', '2025-10-19 13:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000022', 'Winter Donation Drive', 'Winter resource donation drive providing support and supplies to local rural communities.', '2025-11-03 10:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000023', 'Holistic Way Of Life', 'Interactive wellness session on physical health, mental hygiene, and balanced lifestyle practices.', '2025-11-08 14:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000024', 'Menstrual Awareness Campaign', 'Educational camp and health counseling session on menstrual health, hygiene, and breaking taboos.', '2025-11-01 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000024', 'Menstrual Awareness Campaign', 'Fostered confidence and dignity by educating participants on healthy menstrual practices, addressing taboos, and promoting open discussions about menstrual hygiene and supportive communities.', '2025-11-01 11:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000025', 'Mental Health Awareness Seminar', 'Seminar focusing on psychological wellness, stress management techniques, and supportive counseling.', '2025-01-17 15:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000026', 'Nukkad Natak Street Play', 'Street play performance addressing critical social challenges and encouraging community action.', '2025-10-25 12:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000026', 'Nukkad Natak Street Play', 'A street play performance titled "Pattiyon Ke Paar" by the NSS Nukkad Team during Seva Sankalp 2026, addressing critical social issues like domestic violence and women''s rights.', '2025-10-25 12:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000027', 'Chetna PPT Competition', 'Presentation competition showcasing solutions to healthcare accessibility, hygiene, and social welfare.', '2025-10-15 14:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000028', 'Social PPT Presentations', 'Student presentation forum displaying research findings on rural development and community challenges.', '2025-11-01 14:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000029', 'Social Poster Making', 'Creative painting and poster making competition focused on social advocacy and visual activism.', '2025-10-20 11:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000030', 'Civic Video Screening', 'Educational video screening on civic rights, sanitation hygiene, and community support networks.', '2025-11-02 16:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000031', 'Mental Health Day Quiz', 'Global wellness quiz competition raising awareness about mental health resources and support systems.', '2025-10-10 11:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000032', 'Youth Day Quiz', 'National Youth Day commemorative quiz testing knowledge on leadership and civic history.', '2026-01-12 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000032', 'Youth Day Quiz', 'Commemorating National Unity Day (Rashtriya Ekta Diwas), this event featured a competitive quiz on the life of Sardar Vallabhbhai Patel and a video awareness initiative to inspire national integration.', '2026-01-12 11:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000033', 'Youth Talk Session', 'Interactive dialogue forum on youth empowerment, student roles in social service, and leadership.', '2026-01-09 15:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000034', 'SnehAI Showcase', 'Introductory project showcase of AI-driven solutions addressing rural community support and digital accessibility.', '2026-01-20 14:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000034', 'SnehAI Showcase', 'Spearheaded by the Chetna Wing, Sneh AI was a large-scale women empowerment conclave at the Senate Hall, bringing together distinguished speakers to discuss women''s leadership, equality, and safety.', '2026-01-20 14:00:00+00', array[]::text[]),
 ('e0000000-0000-0000-0000-000000000035', 'Literacy Essay Writing', 'Essay writing competition on education access, digital literacy, and student empowerment.', '2025-10-26 11:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000036', 'Seva Sankalp Launch', 'Central campaign event initiating talent examinations and social support activities in adopted schools.', '2025-10-18 10:00:00+00', array[]::text[]);
+('e0000000-0000-0000-0000-000000000036', 'Seva Sankalp Launch', 'Month-long flagship celebration of service and social impact, collaborating with various organizations to coordinate health camps, plantation drives, donor registrations, and academic exams.', '2025-10-18 10:00:00+00', array[]::text[]);
 
 
 -- Links for the 2025-2026 events

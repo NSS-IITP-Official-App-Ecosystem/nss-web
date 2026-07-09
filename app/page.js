@@ -145,11 +145,11 @@ export default async function HomePage() {
                     id: e.id,
                     title: e.title,
                     details: e.details,
-                    date: new Date(e.event_date).toLocaleDateString('en-US', {
+                    date: e.event_date ? new Date(e.event_date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric'
-                    }),
+                    }) : "To be decided",
                     thumbnail,
                     wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
                 };
@@ -180,8 +180,8 @@ export default async function HomePage() {
                     )
                 )
             `)
-            .gte('event_date', new Date().toISOString())
-            .order('event_date', { ascending: false })
+            .or(`event_date.gte.${new Date().toISOString()},event_date.is.null`)
+            .order('event_date', { ascending: false, nullsFirst: true })
             .limit(4);
 
         if (!upcomingEventsErr && dbUpcomingEvents) {
@@ -191,11 +191,11 @@ export default async function HomePage() {
                     id: e.id,
                     title: e.title,
                     details: e.details,
-                    date: new Date(e.event_date).toLocaleDateString('en-US', {
+                    date: e.event_date ? new Date(e.event_date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric'
-                    }),
+                    }) : "To be decided",
                     thumbnail,
                     wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
                 };
