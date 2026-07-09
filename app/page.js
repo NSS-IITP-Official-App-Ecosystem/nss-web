@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import HomeClient from './HomeClient';
-import { resolveImageUrl } from '@/utils/imageUrl';
+import { resolveEventThumbnail } from '@/components/server-utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +20,7 @@ export const metadata = {
 export default async function HomePage() {
     let units = [];
     let events = [];
+    let upcomingEvents  = [];
     let testimonials = [];
     let impacts = [];
     let collaborators = [];
@@ -138,24 +139,70 @@ export default async function HomePage() {
             .limit(4);
 
         if (!eventsErr && dbEvents) {
-            events = dbEvents.map(e => {
-                const thumb = e.event_media?.find(m => m.is_thumbnail) || e.event_media?.[0];
+            events = await Promise.all(dbEvents.map(async (e) => {
+                const thumbnail = await resolveEventThumbnail(e.event_media || []);
                 return {
                     id: e.id,
                     title: e.title,
                     details: e.details,
-                    date: new Date(e.event_date).toLocaleDateString('en-US', {
+                    date: e.event_date ? new Date(e.event_date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric'
-                    }),
-                    thumbnail: resolveImageUrl(thumb ? thumb.media_url : null, "/units/chetna_final.jpg"),
+                    }) : "To be decided",
+                    thumbnail,
                     wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
                 };
-            });
+            }));
         }
     } catch (err) {
         console.error("Supabase fetch events error:", err);
+    }
+
+     try {
+        const supabase = await createClient();
+
+        // 5. Fetch Events (Limit 4 for Timeline)
+        const { data: dbUpcomingEvents, error: upcomingEventsErr } = await supabase
+            .from('events')
+            .select(`
+                id,
+                title,
+                details,
+                event_date,
+                event_media (
+                    media_url,
+                    is_thumbnail
+                ),
+                event_wings (
+                    wings (
+                        name
+                    )
+                )
+            `)
+            .or(`event_date.gte.${new Date().toISOString()},event_date.is.null`)
+            .order('event_date', { ascending: false, nullsFirst: true })
+            .limit(4);
+
+        if (!upcomingEventsErr && dbUpcomingEvents) {
+            upcomingEvents = await Promise.all(dbUpcomingEvents.map(async (e) => {
+                const thumbnail = await resolveEventThumbnail(e.event_media || []);
+                return {
+                    id: e.id,
+                    title: e.title,
+                    details: e.details,
+                    date: e.event_date ? new Date(e.event_date).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }) : "To be decided",
+                    thumbnail,
+                    wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
+                };
+            }));
+        }
+    } catch (err) {
+        console.error("Supabase fetch upcoming events error:", err);
     }
 
     // Resilience mapping to static JSON if database returns empty
@@ -193,6 +240,7 @@ export default async function HomePage() {
             sliderData={slider_data}
             unitsData={units}
             eventsData={events}
+            upcomingEventsData={upcomingEvents}
             testimonialsData={testimonials}
             impactsData={impacts}
             collaboratorsData={collaborators}

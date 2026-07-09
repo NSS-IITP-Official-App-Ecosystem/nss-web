@@ -38,6 +38,7 @@ export default function HomeClient({
     sliderData = {},
     unitsData = [],
     eventsData = [],
+    upcomingEventsData = [],
     testimonialsData = [],
     impactsData = [],
     collaboratorsData = []
@@ -329,14 +330,15 @@ export default function HomeClient({
                                 className="relative w-full max-w-lg p-3 rounded-[2.2rem] bg-slate-900 shadow-2xl border border-slate-200/10 overflow-hidden"
                             >
                                 <div className="relative aspect-video w-full rounded-[1.6rem] overflow-hidden bg-black">
-                                    <iframe
+                                    {/* <iframe
                                         className="w-full h-full"
                                         src="https://www.youtube.com/embed/EngW7tLk6R8"
                                         title="NSS IIT Patna Promotional Video"
                                         frameBorder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
-                                    />
+                                    /> */}
+                                    <video controls={true} src={'/nss highlights.mp4'} />
                                 </div>
                             </motion.div>
                         </div>
@@ -382,12 +384,12 @@ export default function HomeClient({
                             >
                                 <div>
                                     {/* Thumbnail containing zoom loop */}
-                                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-100 mb-4 shadow-inner group">
+                                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl mb-4  group">
                                         <Image
                                             src={resolveImageUrl(item.thumbnail, "/units/chetna_final.jpg")}
                                             alt={item.title}
                                             fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            className="object-contain group-hover:scale-105 transition-transform duration-500"
                                             sizes="(max-width: 768px) 300px, 350px"
                                         />
                                     </div>
@@ -409,6 +411,71 @@ export default function HomeClient({
                             </motion.div>
                         );
                     })}
+                </div>
+            </section>
+
+            {/* 4. UPCOMING EVENTS SECTION WITH GRADIENT TRACK LINE & SLIDE ENTRIES */}
+            <section className="py-24 bg-gray-100/50 border-t border-b border-slate-200/60" id="upcoming-events">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-20 max-w-xl mx-auto">
+                        <span className="text-xs font-bold uppercase tracking-widest text-brand-blue font-mono">NSS Events</span>
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mt-2 font-sans tracking-tight">Upcoming Event Timeline</h2>
+                        <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">
+                            Trace Upcoming Events By NSS
+                        </p>
+                    </div>
+
+                    {/* Timeline Path Container */}
+                    <div className="relative mt-12 pl-8 sm:pl-0">
+                        {/* Gradient Line Path */}
+                        {upcomingEventsData.length > 0 && <div className="absolute top-0 bottom-0 left-[26px] sm:left-1/2 w-0.5 bg-gradient-to-b from-amber-400 via-indigo-500 to-rose-500 -translate-x-1/2 pointer-events-none" />
+                        }
+                        {upcomingEventsData.length > 0 ? upcomingEventsData.map((item, i) => {
+                            const isOdd = i % 2 !== 0;
+                            return (
+                                <div key={i} className="relative mb-16 flex flex-col sm:flex-row items-center justify-center w-full">
+
+                                    {/* Left Card Element */}
+                                    <div className="w-full sm:w-1/2 flex justify-start sm:justify-end pl-12 sm:pl-0 sm:pr-10">
+                                        {!isOdd ? (
+                                            <EventTimelineCard item={item} slideFromLeft={true} />
+                                        ) : (
+                                            <div className="hidden sm:block w-full" />
+                                        )}
+                                    </div>
+
+                                    {/* Pulsing Concentric Node */}
+                                    <div className="absolute left-[26px] sm:left-1/2 w-10 h-10 rounded-full border-4 border-[#FAF9F6] bg-white -translate-x-1/2 z-20 flex items-center justify-center shadow-md">
+                                        {/* Outer ping pulse */}
+                                        <div className="w-10 h-10 rounded-full bg-indigo-500/20 absolute animate-ping pointer-events-none" />
+                                        <div className="w-4 h-4 rounded-full bg-indigo-600" />
+                                    </div>
+
+                                    {/* Right Card Element */}
+                                    <div className="w-full sm:w-1/2 flex justify-start pl-12 sm:pl-10">
+                                        {isOdd ? (
+                                            <EventTimelineCard item={item} slideFromLeft={false} />
+                                        ) : (
+                                            <div className="hidden sm:block w-full" />
+                                        )}
+                                    </div>
+
+                                </div>
+                            );
+                        }) :
+                            <div className='text-center max-w-xl border border-border rounded-xl bg-white p-6 m-auto'>
+                                There is Currently No Upcoming Event
+                            </div>
+                        }
+                    </div>
+
+                    <div className="text-center mt-12 flex flex-row gap-5 justify-center">
+                        <Link href="/events">
+                            <button className="bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg transition-all active:scale-98 cursor-pointer text-sm font-sans flex items-center gap-2 mx-auto group">
+                                View Upcoming Events <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </section>
 
@@ -466,14 +533,10 @@ export default function HomeClient({
                     <div className="text-center mt-12 flex flex-row gap-5 justify-center">
                         <Link href="/gallery">
                             <button className="bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg transition-all active:scale-98 cursor-pointer text-sm font-sans flex items-center gap-2 mx-auto group">
-                                <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" /> View Event Gallery
+                                View Event Gallery <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                             </button>
                         </Link>
-                        <Link href="/events">
-                            <button className="bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg transition-all active:scale-98 cursor-pointer text-sm font-sans flex items-center gap-2 mx-auto group">
-                                View Upcoming Events <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                            </button>
-                        </Link>
+
                     </div>
                 </div>
             </section>
@@ -522,7 +585,7 @@ export default function HomeClient({
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center items-stretch relative z-10">
                     {impactsData.map((item, i) => (
                         <div
                             key={i}
@@ -693,7 +756,7 @@ function EventTimelineCard({ item, slideFromLeft }) {
                     ))}
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-800 mt-3 leading-tight font-sans">{item.title}</h3>
+                <h3 className="text-lg font-bold text-slate-800 mt-3 leading-tight font-sans"><Link href={`/gallery/event/${item.id}`}>{item.title}</Link></h3>
                 <p className="text-slate-500 text-xs mt-2 leading-relaxed line-clamp-3">
                     {item.details}
                 </p>

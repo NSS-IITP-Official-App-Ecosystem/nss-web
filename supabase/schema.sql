@@ -204,8 +204,9 @@ create table public.events (
     id uuid default gen_random_uuid() primary key,
     title text not null,
     details text not null,
-    event_date timestamp with time zone not null,
+    event_date timestamp with time zone,
     resources text[], -- Array of links/downloads
+    tags text[] default array[]::text[], -- Array of tags/categories
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
@@ -529,69 +530,131 @@ create trigger audit_collaborate_requests_trigger
 
 -- Seed Wings
 insert into public.wings (name, slug, description) values
-('Adhyayan', 'adhyayan', 'Academic wings library, education center and core support systems.'),
-('Teaching Wing', 'teaching', 'Regular evening classes, homework guidance, and mentorship for rural children.'),
-('Technical Skills', 'technical-skills', 'Computer literacy classes, basic programming workshops, and spoken English tutorials.'),
-('Rural Development', 'rural-development', 'Vocational training, government welfare schemes awareness, and sanitation improvements.'),
+('Teaching and Technical Wing', 'teaching-and-technical', 'Regular evening classes, homework guidance, computer literacy, and digital skill workshops to local school children.'),
+('Rural Development', 'rural-development', 'Vocational training, solar installations, self-help groups, and government welfare awareness in neighboring villages.'),
 ('Environment Wing', 'environment', 'Campus cleanliness campaigns, seasonal tree plantation drives, and environmental sustainability lectures.'),
-('Chetna Wing', 'chetna', 'Health checkup camps, yoga training, first-aid campaigns, and blood donation drives.'),
-('Prayatna Wing', 'prayatna', 'Underprivileged collections, children safety, winter clothing distribution, and books support campaigns.');
+('DNC Wing', 'dnc', 'Official creative engine managing graphic design, multimedia production, event photography, and visual narratives.'),
+('Prerna Wing', 'prerna', 'Empowering local communities through civil compliance, legal literacy, street play awareness, and clothing drives.');
 
 -- Seed Units
 insert into public.units (number, motive, thumbnail_url) values
-(1, 'one phrase motive', '/units/chetna_final.jpg'),
-(2, 'one phrase motive', '/units/chetna_final.jpg'),
-(3, 'one phrase motive', '/units/chetna_final.jpg');
-
--- Seed Testimonials
-insert into public.testimonials (name, position, text, img_url, is_published) values
-('Anirudh😎', 'Undergraduate at IITP', '<strong>NSS IITP is like a family for me.</strong> It helped me to meet other students from different programs and levels (UG/PG) to work on issues of social importance. I was involved in projects related to education, health, and environment. It gives a lot of satisfaction when NSS team was able to contribute in these sectors. A holistic feeling where we enjoyed and was able to bring some change, living the tag line ''NOT ME BUT ME''.', '/testimonial/person-1.jpg', true),
-('Anirudh', 'Undergraduate at IITP', 'NSS IITP is like a family for me. It helped me to meet other students from different programs and levels (UG/PG) to work on issues of social importance. I was involved in projects related to education, health, and environment. It gives a lot of satisfaction when NSS team was able to contribute in these sectors. A holistic feeling where we enjoyed and was able to bring some change, living the tag line ''NOT ME BUT ME''.', '/testimonial/person-2.jpg', true);
+(1, 'Education & Awareness | ज्ञान से परिवर्तन', '/units/unit-1.png'),
+(2, 'Environment & Sustainability | प्रकृति से प्रगति', '/units/unit-2.png'),
+(3, 'Community & Social Welfare | सेवा ही शक्ति', '/units/unit-3.png');
 
 -- Seed Collaborators
 insert into public.collaborators (name, logo_url) values
-('CLP', '/collaborators/CLP.png'),
-('LCCWA', '/collaborators/lccwa.png'),
-('Udaan', '/collaborators/udaan.png'),
-('Vidya', '/collaborators/vidya.png');
+('Being Helper Foundation', '/collaborators/being_helper.png'),
+('DKMS Foundation', '/collaborators/dkms.png'),
+('Prathama Blood Centre', '/collaborators/prathama.png'),
+('Anwesha', '/collaborators/anwesha.png'),
+('Babban Kumar Seva Samiti', '/collaborators/babban_kumar.png'),
+('Bihta Primary Health Centre (PHC)', '/collaborators/bihta_phc.png'),
+('Bihar State AIDS Control Society', '/collaborators/bsacs.png');
 
 -- Seed Impacts
 insert into public.impacts (icon, title, description, count, unit) values
-('PiShoppingBagFill', 'Nutritious Meals Packed', 'Helped over 15,000 people by packing and distributing nutritious meals.', '15_000', 'meal'),
-('PiStudentBold', 'Students Reached', 'Cumulatively we reached out to over 50,000+ students since inception through teaching projects.', '50_000', 'students'),
-('PiHeartFill', 'Blood Donation Camps', 'Conducted 4 blood donation camps with BloodConnect Foundation, collecting 10,000+ units in the past 10 years.', '10_000', 'units'),
-('PiFileTextFill', 'Urgent Scribe Requests', 'Provided 500+ Scribes for the visually impaired children in collaboration with NAB the past 5 years.', '500', 'units');
+('PiUsersBold', 'Total Volunteers', 'Dedicated student volunteers leading social change and community development.', '384', 'volunteers'),
+('PiNotebookBold', 'Government Schools Served', 'Operating educational outreach programs in 6 local government schools: Raghopur, Amhara, Urehan, and more.', '6', 'schools'),
+('PiExamBold', 'Talent Hunt Examination', 'Underprivileged students from various local schools participated in our competitive Talent Hunt.', '600+', 'students'),
+('PiRibbonBold', 'DKMS Stem Cell Registrations', 'Volunteers registered as potential stem cell donors to support blood cancer patients.', '400+', 'donors'),
+('PiHeartbeatBold', 'Blood Donors Mobilized', 'Donors mobilized during campus blood donation drives (students, faculty, and staff).', '300+', 'donors'),
+('PiFirstAidBold', 'Health Check-up Beneficiaries', 'Free healthcare consultations and checkups held in partnership with Bihta PHC.', '300+', 'beneficiaries'),
+('PiDropBold', 'Hydration Packets Distributed', 'Packets of Glucon-D distributed to local community members during summer drives.', '1,000', 'packets'),
+('PiTrashBold', 'Campus Waste Collected', 'Cleanliness and sanitation drive conducted at campus Gate No. 1.', '20+', 'kg');
 
 -- Seed Events
 insert into public.events (id, title, details, event_date, resources) values
-('e0000000-0000-0000-0000-000000000001', 'Blood Donation Camp 2026', 'Annual blood donation camp organized by NSS IIT Patna in collaboration with local hospitals. We successfully collected over 200 units of blood to help patients in need.', '2026-04-15 09:00:00+00', array['https://example.com/blood-donation-guidelines.pdf']),
-('e0000000-0000-0000-0000-000000000002', 'Village Cleanliness Drive', 'A massive cleanliness drive was organized in the nearby Amhara village under the Swachh Bharat Abhiyan. Over 50 volunteers participated in raising awareness and cleaning the surroundings.', '2026-05-02 08:00:00+00', array[]::text[]),
-('e0000000-0000-0000-0000-000000000003', 'Education Outreach Program', 'Weekly education outreach program for the underprivileged children near the campus. Volunteers taught basic science and mathematics concepts through interactive activities.', '2026-05-18 16:00:00+00', array['https://example.com/study-materials.zip']),
-('e0000000-0000-0000-0000-000000000004', 'World Environment Day - Tree Plantation', 'Planted 500 saplings across the campus and neighboring areas to promote a greener environment. The event saw participation from students and faculty alike.', '2026-06-05 07:00:00+00', array[]::text[]);
 
--- Link Events with Wings
--- For Event 1: Blood Donation Camp 2026 -> link to Chetna (e.g. Health)
-insert into public.event_wings (event_id, wing_id) 
-select 'e0000000-0000-0000-0000-000000000001', id from public.wings where slug = 'chetna';
+('e0000000-0000-0000-0000-000000000010', 'DNC x TTW Quiz', 'Collaborative quiz competition organized by the DNC and Teaching & Technical Wings to test student knowledge.', '2025-11-01 10:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000011', 'Climate Change Session', 'Interactive session focusing on global warming, ecosystem preservation, and sustainable community living.', '2025-10-19 14:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000012', 'Environmental Video Screening', 'Screening of environmental documentaries and short films to educate volunteers on climate action.', '2025-10-13 16:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000013', 'Environmental Wing Quiz', 'Quiz competition organized by the Environmental Wing to test environmental science awareness.', '2025-10-16 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000014', 'Youth Awareness Session', 'Inspirational seminar and discussion focusing on youth development, social responsibility, and national service.', '2026-01-11 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000015', 'Anwesha Donation Drive', 'In collaboration with Anwesha, this direct outreach campaign mobilized campus donations of clothing, food, and essentials, distributing them to over 100 underprivileged households in nearby villages.', '2025-12-15 10:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000016', 'Blood Donation Drive', 'Organized in collaboration with Prathama Blood Centre under medical supervision, this flagship camp mobilized over 300 donors from the IIT Patna community, fostering social responsibility.', '2026-02-06 09:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000017', 'Box Collection Drive', 'Resource collection drive gathering clothing, books, and basic essentials for community distribution.', '2025-10-22 10:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000018', 'Budget Quiz', 'Interactive educational quiz focusing on national economics, budget literacy, and citizen roles.', '2026-02-10 14:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000019', 'Closing Ceremony', 'Culminating the academic year and Seva Sankalp 2026, this ceremony reviewed unit-wide achievements, awarded certificates, and felicitated outstanding volunteers under PIC and PO guidance.', '2026-04-30 16:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000020', 'Social Debate Session', 'Townhall style competitive debate session discussing critical social issues and public policies.', '2025-11-05 15:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000021', 'Debate Competition', 'Debating tournament held to encourage critical thinking on community welfare and civic duties.', '2025-10-19 13:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000022', 'Winter Donation Drive', 'Winter resource donation drive providing support and supplies to local rural communities.', '2025-11-03 10:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000023', 'Holistic Way Of Life', 'Interactive wellness session on physical health, mental hygiene, and balanced lifestyle practices.', '2025-11-08 14:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000024', 'Menstrual Awareness Campaign', 'Fostered confidence and dignity by educating participants on healthy menstrual practices, addressing taboos, and promoting open discussions about menstrual hygiene and supportive communities.', '2025-11-01 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000025', 'Mental Health Awareness Seminar', 'Seminar focusing on psychological wellness, stress management techniques, and supportive counseling.', '2025-01-17 15:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000026', 'Nukkad Natak Street Play', 'A street play performance titled "Pattiyon Ke Paar" by the NSS Nukkad Team during Seva Sankalp 2026, addressing critical social issues like domestic violence and women''s rights.', '2025-10-25 12:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000027', 'Chetna PPT Competition', 'Presentation competition showcasing solutions to healthcare accessibility, hygiene, and social welfare.', '2025-10-15 14:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000028', 'Social PPT Presentations', 'Student presentation forum displaying research findings on rural development and community challenges.', '2025-11-01 14:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000029', 'Social Poster Making', 'Creative painting and poster making competition focused on social advocacy and visual activism.', '2025-10-20 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000030', 'Civic Video Screening', 'Educational video screening on civic rights, sanitation hygiene, and community support networks.', '2025-11-02 16:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000031', 'Mental Health Day Quiz', 'Global wellness quiz competition raising awareness about mental health resources and support systems.', '2025-10-10 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000032', 'Youth Day Quiz', 'Commemorating National Unity Day (Rashtriya Ekta Diwas), this event featured a competitive quiz on the life of Sardar Vallabhbhai Patel and a video awareness initiative to inspire national integration.', '2026-01-12 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000033', 'Youth Talk Session', 'Interactive dialogue forum on youth empowerment, student roles in social service, and leadership.', '2026-01-09 15:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000034', 'SnehAI Showcase', 'Spearheaded by the Chetna Wing, Sneh AI was a large-scale women empowerment conclave at the Senate Hall, bringing together distinguished speakers to discuss women''s leadership, equality, and safety.', '2026-01-20 14:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000035', 'Literacy Essay Writing', 'Essay writing competition on education access, digital literacy, and student empowerment.', '2025-10-26 11:00:00+00', array[]::text[]),
+('e0000000-0000-0000-0000-000000000036', 'Seva Sankalp Launch', 'Month-long flagship celebration of service and social impact, collaborating with various organizations to coordinate health camps, plantation drives, donor registrations, and academic exams.', '2025-10-18 10:00:00+00', array[]::text[]);
 
--- For Event 2: Cleanliness Drive -> Environment and Rural Development
-insert into public.event_wings (event_id, wing_id)
-select 'e0000000-0000-0000-0000-000000000002', id from public.wings where slug in ('environment', 'rural-development');
 
--- For Event 3: Education Outreach -> Teaching Wing
-insert into public.event_wings (event_id, wing_id)
-select 'e0000000-0000-0000-0000-000000000003', id from public.wings where slug = 'teaching';
-
--- For Event 4: Environment Day -> Environment Wing
-insert into public.event_wings (event_id, wing_id)
-select 'e0000000-0000-0000-0000-000000000004', id from public.wings where slug = 'environment';
+-- Links for the 2025-2026 events
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000010', id from public.wings where slug = 'dnc';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000011', id from public.wings where slug = 'environment';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000012', id from public.wings where slug = 'environment';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000013', id from public.wings where slug = 'environment';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000014', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000015', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000016', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000017', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000018', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000019', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000020', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000021', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000022', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000023', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000024', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000025', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000026', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000027', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000028', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000029', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000030', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000031', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000032', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000033', id from public.wings where slug = 'prerna';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000034', id from public.wings where slug = 'rural-development';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000035', id from public.wings where slug = 'teaching-and-technical';
+insert into public.event_wings (event_id, wing_id) select 'e0000000-0000-0000-0000-000000000036', id from public.wings where slug = 'teaching-and-technical';
 
 -- Seed Event Gallery Media
 insert into public.event_media (event_id, media_url, caption, is_thumbnail) values
-('e0000000-0000-0000-0000-000000000001', '/home_slider/SWACHHATA_HI_SEVA.jpeg', 'Swachhata Banner', false),
-('e0000000-0000-0000-0000-000000000001', '/home_slider/nss_home.jpg', 'Blood Drive Photo', true),
-('e0000000-0000-0000-0000-000000000002', '/home_slider/nss_home.jpg', 'Group picture of cleanliness drive', true),
-('e0000000-0000-0000-0000-000000000004', '/home_slider/nss_home.jpg', 'Sapling plantation photo', true);-- ==========================================
+
+('e0000000-0000-0000-0000-000000000010', 'events/2025-2026/Dnc/DNC x TTW Quiz (1st Nov)/', 'DNC x TTW Quiz Gallery', true),
+('e0000000-0000-0000-0000-000000000011', 'events/2025-2026/Environmental/Climate Change Session (19th Oct)/', 'Climate Change Session Gallery', true),
+('e0000000-0000-0000-0000-000000000012', 'events/2025-2026/Environmental/Environmental video screening(13th October)/', 'Environmental video screening Gallery', true),
+('e0000000-0000-0000-0000-000000000013', 'events/2025-2026/Environmental/Environmental Wing Quiz (16th Oct 2025)/', 'Environmental Wing Quiz Gallery', true),
+('e0000000-0000-0000-0000-000000000014', 'events/2025-2026/Prerna/(11th Jan 2026)/', 'Youth Awareness Session Gallery', true),
+('e0000000-0000-0000-0000-000000000015', 'events/2025-2026/Prerna/Anwesha Donation/', 'Anwesha Donation Gallery', true),
+('e0000000-0000-0000-0000-000000000016', 'events/2025-2026/Prerna/Blood Donation (6th Feb 2026)/', 'Blood Donation Gallery', true),
+('e0000000-0000-0000-0000-000000000017', 'events/2025-2026/Prerna/Box collection (22th Oct)/', 'Box collection Gallery', true),
+('e0000000-0000-0000-0000-000000000018', 'events/2025-2026/Prerna/Budget Quiz 10 Feb/', 'Budget Quiz Gallery', true),
+('e0000000-0000-0000-0000-000000000019', 'events/2025-2026/Prerna/Closing Ceremony/', 'Closing Ceremony Gallery', true),
+('e0000000-0000-0000-0000-000000000020', 'events/2025-2026/Prerna/Debate (5th nov)/', 'Social Debate Session Gallery', true),
+('e0000000-0000-0000-0000-000000000021', 'events/2025-2026/Prerna/Debate competition (19th Oct)/', 'Debate Competition Gallery', true),
+('e0000000-0000-0000-0000-000000000022', 'events/2025-2026/Prerna/Donation 3-11-25/', 'Winter Donation Drive Gallery', true),
+('e0000000-0000-0000-0000-000000000023', 'events/2025-2026/Prerna/Holistic Way Of Life (8th Nov 2025)/', 'Holistic Way Of Life Gallery', true),
+('e0000000-0000-0000-0000-000000000024', 'events/2025-2026/Prerna/Menstrual Awareness (1st Nov 2025)/', 'Menstrual Awareness Gallery', true),
+('e0000000-0000-0000-0000-000000000025', 'events/2025-2026/Prerna/Mental Health Awareness  (17th Jan 2025)/', 'Mental Health Awareness Gallery', true),
+('e0000000-0000-0000-0000-000000000026', 'events/2025-2026/Prerna/Nukkad Natak (25th Oct 2025)/', 'Nukkad Natak Gallery', true),
+('e0000000-0000-0000-0000-000000000027', 'events/2025-2026/Prerna/PPT Competition Chetna Wing (15th Oct 2025)/', 'Chetna PPT Competition Gallery', true),
+('e0000000-0000-0000-0000-000000000028', 'events/2025-2026/Prerna/PPT Presentation (1st Nov 2025)/', 'Social PPT Presentations Gallery', true),
+('e0000000-0000-0000-0000-000000000029', 'events/2025-2026/Prerna/Social Awareness Poster Making/', 'Social Poster Making Gallery', true),
+('e0000000-0000-0000-0000-000000000030', 'events/2025-2026/Prerna/Video Screening (2nd November 2025)/', 'Civic Video Screening Gallery', true),
+('e0000000-0000-0000-0000-000000000031', 'events/2025-2026/Prerna/World Mental Health Day Quiz/', 'Mental Health Day Quiz Gallery', true),
+('e0000000-0000-0000-0000-000000000032', 'events/2025-2026/Prerna/Youth Day Quiz/', 'Youth Day Quiz Gallery', true),
+('e0000000-0000-0000-0000-000000000033', 'events/2025-2026/Prerna/Youth Talk (9th Jan 2026)/', 'Youth Talk Gallery', true),
+('e0000000-0000-0000-0000-000000000034', 'events/2025-2026/Rural/SnehAI/', 'SnehAI Showcase Gallery', true),
+('e0000000-0000-0000-0000-000000000035', 'events/2025-2026/Teaching/Essay Writing (26th Oct 2025)/', 'Literacy Essay Writing Gallery', true),
+('e0000000-0000-0000-0000-000000000036', 'events/2025-2026/Teaching/SEVA SANKALP/', 'Seva Sankalp Launch Gallery', true);
+-- ==========================================
 -- 13. Thanks Table (for public appreciation of volunteers)
 -- ==========================================
 create table public.thanks (
@@ -714,3 +777,10 @@ INSERT INTO public.team_members (academic_year, name, role, category, image_url,
 ('2024-25', 'Hrishita Mishra', 'Web Developer (Former)', 'web', '/assets/team/20200606_000422 - Hrishita Mishra.jpg', 'hrishita@iitp.ac.in', 'Contributed client-side portal integrations, interactive user forms, responsive stylesheets, and database connectors.', 'https://linkedin.com', 'https://github.com', 19),
 ('2024-25', 'Abhay Patil', 'Web Developer', 'web', '/assets/team/Abhay Patil.jpg', 'abhay.patil@iitp.ac.in', 'Focuses on client-side programming, interactive components, responsive stylesheets, and browser optimization updates.', 'https://linkedin.com', 'https://github.com', 20),
 ('2024-25', 'Omkar Deshpande', 'Web Developer', 'web', '/assets/team/20200606_113444 - Omkar Deshpande.jpg', 'omkar.deshpande@iitp.ac.in', 'Directs database connectors, dynamic table updates, event logs, and guides support integrations.', 'https://linkedin.com', 'https://github.com', 21);
+
+-- Seed Testimonials
+insert into public.testimonials (name, position, text, img_url, is_published) values
+('Satyam Kumar', 'NSS Volunteer (Roll: 2501CT06)', 'NSS gave me lessons no classroom could. It taught me to embrace hardships, to be there for others, and to lead with compassion. Through every camp, drive, and interaction, I learned that true growth happens when we step up for the society. NSS didn''t just give me experiences, it gave me perspective and purpose.', 'https://drive.google.com/open?id=1aR9WiM5uSUjTsaFF_j61XobrCfZIC2r-', true),
+('Shailendra Meena', 'NSS Volunteer (Roll: 2501CE56)', 'NSS has been a wonderful journey of learning, teamwork, and social service. It helped me grow as a responsible and confident person. During my journey in NSS, I truly understood the real meaning of "Not Me But You". Working for society and helping others taught me that selfless service is the greatest way to create a positive impact. Proud to be an NSS volunteer. Learn, Serve, Grow!', 'https://drive.google.com/open?id=1nTz-FenyVh4t_BUFBWJ1e_rm08zSdvL-', true),
+('Amoolya Sharan', 'NSS Volunteer (Roll: 2503CB02)', 'My time with NSS has been full of moments I genuinely enjoyed and carried something back from. Teaching in government schools especially taught me that impact isn''t always loud - sometimes it''s just one child understanding a topic a little better because you took the time to explain it differently. Dr. A.P.J. Abdul Kalam once spoke about how educators carry the responsibility of nurturing curiosity and moral character in their students, becoming role models in the process - and standing in front of a classroom made that idea real for me. A child doesn''t just learn a subject from you, they quietly learn a little of how to be, too, and that gave me a quiet sense of responsibility to stay ethically upright and give back to the society that has given me so much. Every event, every small effort, has left me more grounded and more aware of the world beyond my own bubble - and if NSS is about "not me, but you", this is where I felt it the most.', 'https://drive.google.com/open?id=17wqYE6MoySWQpvuXsscN0d1YQzREcgqu', true),
+('Kavya Gupta', 'NSS Volunteer (Roll: 2501CB29)', 'My first year in NSS IIT Patna has been a journey of learning, service, and personal growth. From participating in social initiatives to working with dedicated volunteers, every activity helped me become more responsible, confident, and disciplined. NSS gave me opportunities to interact with people, work as a team, and understand the importance of giving back to society. The supportive seniors and coordinators made every event a valuable learning experience. Being a part of NSS has made my first year of college more meaningful, and I look forward to contributing even more in the coming years.', 'https://drive.google.com/open?id=1Rm6cEWP1_F4SRlAhkeosxrhnUIUt8g2L', true);
