@@ -786,10 +786,11 @@
     width: 36px;
     height: 36px;
     border-radius: var(--radius-full);
-    background-color: #f1f5f9;
+    background-color: rgba(255, 255, 255, 0.95);
     border: none;
     font-size: 20px;
-    color: var(--text-muted);
+    color: var(--text-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -819,6 +820,7 @@
     height: 100%;
     min-height: 280px;
     object-fit: cover;
+    object-position: center top;
 }
 
 .modal-profile-content {
@@ -1220,19 +1222,36 @@
     .modal-card {
         max-width: 100%;
         border-radius: var(--radius-md);
+        max-height: calc(100vh - 32px);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
     }
     
     .modal-body {
         flex-direction: column;
+        width: 100%;
     }
     
     .modal-profile-aside {
-        flex: 1 1 auto;
+        flex: 0 0 auto;
+        width: 100%;
+        background-color: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
     }
     
     .modal-profile-img {
-        min-height: 220px;
-        max-height: 280px;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        min-height: unset;
+        max-height: 340px;
+        object-fit: contain;
+        object-position: center;
+        border-radius: var(--radius-sm);
     }
     
     .modal-profile-content {
@@ -1261,6 +1280,22 @@
 
     .member-role {
         font-size: 11px;
+    }
+
+    .modal-card {
+        max-height: calc(100vh - 24px);
+    }
+
+    .modal-profile-aside {
+        padding: 12px;
+    }
+
+    .modal-profile-img {
+        max-height: 280px;
+    }
+
+    .modal-profile-content {
+        padding: 16px;
     }
 }
 

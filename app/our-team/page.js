@@ -177,22 +177,29 @@ export default function OurTeam() {
 
   if (dbMembers === null) {
     return (
-      <div className="team-page-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
-          <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3px solid #e2e8f0", borderTopColor: "var(--primary)", animation: "spin 1s linear infinite" }}></div>
-          <p style={{ color: "var(--text-muted)", fontWeight: "500" }}>Loading NSS Team Roster...</p>
+      <>
+        {/* India tricolor top bar (navbar breaker line) */}
+        <div style={{ height: 4, width: '100%', background: 'linear-gradient(90deg, #FF9933 0%, #ffffff 50%, #138808 100%)' }} />
+        <div className="team-page-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+            <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3px solid #e2e8f0", borderTopColor: "var(--primary)", animation: "spin 1s linear infinite" }}></div>
+            <p style={{ color: "var(--text-muted)", fontWeight: "500" }}>Loading NSS Team Roster...</p>
+          </div>
+          <style jsx global>{`
+            @keyframes spin {
+              to { transform: rotate(360deg); }
+            }
+          `}</style>
         </div>
-        <style jsx global>{`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-        `}</style>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="team-page-container">
+    <>
+      {/* India tricolor top bar (navbar breaker line) */}
+      <div style={{ height: 4, width: '100%', background: 'linear-gradient(90deg, #FF9933 0%, #ffffff 50%, #138808 100%)' }} />
+      <div className="team-page-container">
       {/* Dynamic Ambient Blur Circles */}
       <div className="bg-blur-circle bg-blur-1"></div>
       <div className="bg-blur-circle bg-blur-2"></div>
@@ -705,6 +712,7 @@ export default function OurTeam() {
         )}
       </AnimatePresence>
     </div>
+    </>
   );
 }
 
