@@ -1,9 +1,27 @@
-
 "use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaHome, FaLeaf, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
+import { FaHandshake, FaLeaf, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
+
+// Custom component to handle wing logos with fallback to React Icons
+function WingLogo({ src, alt, fallbackIcon: FallbackIcon, iconColor = "text-[var(--color-brand-blue)]" }) {
+  const [error, setError] = useState(false);
+  
+  if (error || !src) {
+    return <FallbackIcon className={`text-4xl ${iconColor}`} />;
+  }
+  
+  return (
+    <img 
+      src={src} 
+      alt={alt} 
+      className="w-full h-full object-contain p-2" 
+      onError={() => setError(true)} 
+    />
+  );
+}
 
 export default function Unit3Page() {
   // Animation variants for smooth staggered loading
@@ -29,6 +47,20 @@ export default function Unit3Page() {
           animate="show"
           className="relative max-w-5xl mx-auto z-10"
         >
+          {/* Unit Logo (using logo of unit 3 for unit 3) */}
+          <motion.div 
+            variants={itemVariants} 
+            className="flex justify-center mb-6"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          >
+            <img 
+              src="/units/unit-3.png" 
+              alt="NSS Unit 3 Logo" 
+              className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_0_15px_rgba(253,230,138,0.3)]"
+            />
+          </motion.div>
+
           <motion.div variants={itemVariants} className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
             <span className="text-[var(--color-primary)] font-semibold tracking-wider text-sm uppercase">Nurturing Nature & Society</span>
           </motion.div>
@@ -41,7 +73,7 @@ export default function Unit3Page() {
           
           <motion.div variants={itemVariants}>
             <p className="text-xl sm:text-2xl text-[var(--color-neutral-foundation)]/90 max-w-3xl mx-auto leading-relaxed font-light">
-              Nurturing nature and empowering communities. Unit 3 focuses on ecological conservation, sustainable living, and uplifting rural landscapes.
+              Fostering inclusivity and community sensitization. Unit 3 drives positive change through gender equality, mental health support, and public street theatre.
             </p>
           </motion.div>
         </motion.div>
@@ -61,7 +93,7 @@ export default function Unit3Page() {
         <div className="max-w-4xl mx-auto text-center relative bg-white/60 backdrop-blur-xl border border-white/80 p-12 sm:p-16 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <FaQuoteLeft className="absolute top-8 left-8 text-6xl text-[var(--color-neutral-foundation)]/50" />
           <blockquote className="relative z-10 text-2xl sm:text-3xl font-medium text-[var(--color-secondary-slate)] leading-snug">
-            "The earth is what we all have in common. To build a better future, we must plant the seeds of sustainability and community today."
+            "The best way to empower society is to foster inclusivity and speak up for change. Art, drama, and sensitization plant the seeds of community reflection today."
           </blockquote>
           <div className="mt-10 flex items-center justify-center gap-6">
             <div className="h-[2px] w-16 bg-gradient-to-r from-transparent to-[var(--color-primary)]"></div>
@@ -88,36 +120,40 @@ export default function Unit3Page() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
           
-          {/* Rural Development Wing Card */}
+          {/* Prerna Wing Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
           >
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-150 group-hover:rotate-12">
-              <FaHome className="text-9xl text-[var(--color-brand-blue)]" />
+              <FaHandshake className="text-9xl text-[var(--color-brand-blue)]" />
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-brand-blue)] to-[#1E303D] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaHome className="text-3xl text-white" />
+              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                <WingLogo 
+                  src="/wings/prerna.png" 
+                  alt="Prerna Wing Logo" 
+                  fallbackIcon={FaHandshake} 
+                />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Rural Development Wing
+                Prerna Wing
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                Focused on bridging the urban-rural divide. We work on infrastructure, agriculture, and educational initiatives to foster self-reliant and thriving villages.
+                Dedicated to empowering women, supporting differently-abled individuals, and promoting inclusivity, mental health awareness, and gender equality within society.
               </p>
               
-              <Link href="/wings/rural-development" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/prerna" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More 
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>
             </div>
           </motion.div>
 
-          {/* Environmental Wing Card */}
+          {/* Nukkad Wing Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
@@ -127,19 +163,24 @@ export default function Unit3Page() {
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[#8A5F3C] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaLeaf className="text-3xl text-white" />
+              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                <WingLogo 
+                  src="/wings/nukkad.png" 
+                  alt="Nukkad Wing Logo" 
+                  fallbackIcon={FaLeaf} 
+                  iconColor="text-[var(--color-primary)]"
+                />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Environmental Wing
+                Nukkad Wing
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                Dedicated to protecting our planet. From massive plantation drives to waste management campaigns, we strive to create a greener, cleaner tomorrow for all.
+                Spreading vital social messages through powerful street plays (Nukkad Nataks), performances, and public interactions to inspire community action and reflection.
               </p>
               
-              <Link href="/wings/environment" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/rural" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>

@@ -1,8 +1,27 @@
 "use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaHandshake, FaLightbulb, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
+import { FaBookOpen, FaPalette, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
+
+// Custom component to handle wing logos with fallback to React Icons
+function WingLogo({ src, alt, fallbackIcon: FallbackIcon, iconColor = "text-[var(--color-brand-blue)]" }) {
+  const [error, setError] = useState(false);
+  
+  if (error || !src) {
+    return <FallbackIcon className={`text-4xl ${iconColor}`} />;
+  }
+  
+  return (
+    <img 
+      src={src} 
+      alt={alt} 
+      className="w-full h-full object-contain p-2" 
+      onError={() => setError(true)} 
+    />
+  );
+}
 
 export default function Unit2Page() {
   // Animation variants for smooth staggered loading
@@ -28,6 +47,20 @@ export default function Unit2Page() {
           animate="show"
           className="relative max-w-5xl mx-auto z-10"
         >
+          {/* Unit Logo (using logo of unit 1 for unit 2) */}
+          <motion.div 
+            variants={itemVariants} 
+            className="flex justify-center mb-6"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          >
+            <img 
+              src="/units/unit-1.png" 
+              alt="NSS Unit 2 Logo" 
+              className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_0_15px_rgba(253,230,138,0.3)]"
+            />
+          </motion.div>
+
           <motion.div variants={itemVariants} className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
             <span className="text-[var(--color-primary)] font-semibold tracking-wider text-sm uppercase">Driving Social Change</span>
           </motion.div>
@@ -40,7 +73,7 @@ export default function Unit2Page() {
           
           <motion.div variants={itemVariants}>
             <p className="text-xl sm:text-2xl text-[var(--color-neutral-foundation)]/90 max-w-3xl mx-auto leading-relaxed font-light">
-              Driving social change through dedicated service. Building strong foundations through rural outreach, awareness, and community empowerment.
+              Fostering education, technological innovation, and creative storytelling. Blending knowledge dissemination with design to amplify the impact of social drives.
             </p>
           </motion.div>
         </motion.div>
@@ -60,7 +93,7 @@ export default function Unit2Page() {
         <div className="max-w-4xl mx-auto text-center relative bg-white/60 backdrop-blur-xl border border-white/80 p-12 sm:p-16 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <FaQuoteLeft className="absolute top-8 left-8 text-6xl text-[var(--color-neutral-foundation)]/50" />
           <blockquote className="relative z-10 text-2xl sm:text-3xl font-medium text-[var(--color-secondary-slate)] leading-snug">
-            "The best way to find yourself is to lose yourself in the service of others. Small acts, when multiplied by millions, can transform the world."
+            "The best way to find yourself is to lose yourself in the service of others. Teaching minds and design of communication are the cornerstones of community transformation."
           </blockquote>
           <div className="mt-10 flex items-center justify-center gap-6">
             <div className="h-[2px] w-16 bg-gradient-to-r from-transparent to-[var(--color-primary)]"></div>
@@ -87,58 +120,67 @@ export default function Unit2Page() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
           
-          {/* Prayatana Wing Card */}
+          {/* Teaching and Technical Wing Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
           >
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-150 group-hover:rotate-12">
-              <FaHandshake className="text-9xl text-[var(--color-brand-blue)]" />
+              <FaBookOpen className="text-9xl text-[var(--color-brand-blue)]" />
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-brand-blue)] to-[#1E303D] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaHandshake className="text-3xl text-white" />
+              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                <WingLogo 
+                  src="/wings/teaching.jpeg" 
+                  alt="Teaching & Tech Wing Logo" 
+                  fallbackIcon={FaBookOpen} 
+                />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Prayatana Wing
+                Teaching & Tech Wing
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                Dedicated to rural development and community welfare. Prayatana works closely with local villages to improve health, sanitation, and create sustainable livelihoods.
+                Committed to spreading education among underprivileged children and deploying technical solutions to address community challenges, blending pedagogy with innovative engineering.
               </p>
               
-              <Link href="/wings/prayatana" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/teaching" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More 
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>
             </div>
           </motion.div>
 
-          {/* Chetna Wing Card */}
+          {/* DnC and Social Media Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
           >
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-150 group-hover:-rotate-12">
-              <FaLightbulb className="text-9xl text-[var(--color-primary)]" />
+              <FaPalette className="text-9xl text-[var(--color-primary)]" />
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[#8A5F3C] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaLightbulb className="text-3xl text-white" />
+              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                <WingLogo 
+                  src="/wings/dnc.png" 
+                  alt="DnC & Social Media Logo" 
+                  fallbackIcon={FaPalette} 
+                  iconColor="text-[var(--color-primary)]"
+                />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Chetna Wing
+                DnC & Social Media
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                Focused on social awareness and empowerment. Chetna conducts vital campaigns on mental health, women's empowerment, and civic responsibilities to awaken the masses.
+                The creative voice of NSS, managing media communications, design campaigns, public relations, and documenting the impact of various drives to spread the message of social change.
               </p>
               
-              <Link href="/wings/chetna" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/dnc" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>
