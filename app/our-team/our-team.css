@@ -104,6 +104,8 @@
     font-family: var(--font-body);
     color: var(--text-dark);
     position: relative;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* Ambient Blur Circles */
@@ -116,6 +118,8 @@
     opacity: 0.12;
     z-index: -1;
     pointer-events: none;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .bg-blur-1 {
@@ -137,6 +141,8 @@
     align-items: center;
     gap: 40px;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     margin-bottom: 70px;
     background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(24px);
@@ -149,7 +155,8 @@
         0 20px 50px -12px rgba(0, 37, 109, 0.05),
         inset 0 1px 1px rgba(255, 255, 255, 0.6);
     position: relative;
-    overflow: hidden;
+    overflow: visible !important;
+    z-index: 50;
     transition: var(--transition-smooth);
 }
 
@@ -741,6 +748,8 @@
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(15, 23, 42, 0.6);
@@ -750,10 +759,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 16px;
+    box-sizing: border-box;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
+    overflow: hidden;
 }
 
 .modal-overlay.active {
@@ -766,12 +777,17 @@
     border-radius: var(--radius-lg);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     width: 100%;
-    max-width: 680px;
-    overflow: hidden;
+    max-width: 580px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
     transform: scale(0.9);
     opacity: 0;
     transition: var(--transition-spring);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 .modal-overlay.active .modal-card {
@@ -808,40 +824,54 @@
 .modal-body {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .modal-profile-aside {
-    flex: 1 1 240px;
+    flex: 1 1 200px;
     background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .modal-profile-img {
     width: 100%;
     height: 100%;
-    min-height: 280px;
+    min-height: 200px;
+    max-height: 320px;
     object-fit: cover;
     object-position: center top;
 }
 
 .modal-profile-content {
-    flex: 2 2 360px;
-    padding: 40px;
+    flex: 2 2 320px;
+    padding: 24px 28px;
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    word-break: break-word;
 }
 
 .modal-tag {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .modal-name {
     font-family: var(--font-headers);
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 800;
     color: var(--text-dark);
     margin-bottom: 2px;
@@ -849,10 +879,10 @@
 }
 
 .modal-role {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--navy);
-    margin-bottom: 20px;
+    margin-bottom: 14px;
     text-transform: uppercase;
     letter-spacing: 0.8px;
 }
@@ -861,23 +891,23 @@
     border: none;
     height: 1px;
     background-color: var(--border-color);
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 }
 
 .modal-section-title {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .modal-bio {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-dark);
-    line-height: 1.7;
-    margin-bottom: 24px;
+    line-height: 1.6;
+    margin-bottom: 18px;
     opacity: 0.9;
 }
 
@@ -1169,6 +1199,29 @@
 @media (max-width: 768px) {
     .team-page-container {
         padding: 24px 16px 60px 16px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .team-header-row {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 24px 20px;
+        gap: 16px;
+        margin-bottom: 36px;
+    }
+
+    .intro-section {
+        flex: 0 0 auto !important;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .year-selector-container {
+        flex: 0 0 auto !important;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .page-title {
@@ -1178,6 +1231,8 @@
     .intro-text {
         font-size: 14px;
         line-height: 1.5;
+        margin-top: 8px;
+        margin-bottom: 0;
     }
     
     .filter-controls {
@@ -1219,28 +1274,44 @@
         flex: auto !important;
     }
     
+    .modal-overlay {
+        padding: 12px;
+        box-sizing: border-box;
+        width: 100vw;
+        overflow: hidden;
+    }
+
     .modal-card {
-        max-width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
         border-radius: var(--radius-md);
         max-height: calc(100vh - 32px);
         overflow-y: auto;
+        overflow-x: hidden;
         display: flex;
         flex-direction: column;
+        box-sizing: border-box;
+        margin: 0;
     }
     
     .modal-body {
         flex-direction: column;
         width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
     
     .modal-profile-aside {
         flex: 0 0 auto;
         width: 100%;
+        max-width: 100%;
         background-color: #f1f5f9;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 16px;
+        padding: 12px;
+        box-sizing: border-box;
     }
     
     .modal-profile-img {
@@ -1248,14 +1319,32 @@
         max-width: 100%;
         height: auto;
         min-height: unset;
-        max-height: 340px;
+        max-height: 220px;
         object-fit: contain;
         object-position: center;
         border-radius: var(--radius-sm);
     }
     
     .modal-profile-content {
-        padding: 20px;
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+        padding: 16px 18px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        word-break: break-word;
+    }
+
+    .modal-contact-row {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .btn-modal-contact {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
     }
 }
 
@@ -1282,20 +1371,29 @@
         font-size: 11px;
     }
 
+    .modal-overlay {
+        padding: 8px;
+    }
+
     .modal-card {
+        width: 100% !important;
+        max-width: 100% !important;
         max-height: calc(100vh - 24px);
+        margin: 0;
     }
 
     .modal-profile-aside {
-        padding: 12px;
+        padding: 10px;
     }
 
     .modal-profile-img {
-        max-height: 280px;
+        max-height: 180px;
     }
 
     .modal-profile-content {
-        padding: 16px;
+        padding: 14px 14px;
+        width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -1304,12 +1402,14 @@
    ========================================================================== */
 .hierarchy-section {
     width: 100%;
+    max-width: 100%;
     margin: 40px auto 80px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     padding: 0 24px;
+    box-sizing: border-box;
 }
 
 .hierarchy-header-title {
@@ -1355,13 +1455,16 @@
 /* Node cards layout */
 .tree-node {
     background: var(--bg-white);
-    border: 2px solid var(--border-color);
+    border: 2.5px solid var(--navy);
+    outline: 2px solid rgba(0, 37, 109, 0.15);
+    outline-offset: 3px;
     border-radius: var(--radius-md);
     padding: 16px 20px;
     width: 240px;
+    margin-top: 34px;
     text-align: center;
     position: relative;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 16px rgba(0, 37, 109, 0.08);
     transition: var(--transition-spring);
     z-index: 5;
     display: flex;
@@ -1374,16 +1477,21 @@
     transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-lg);
     border-color: var(--primary);
+    outline-color: rgba(245, 158, 11, 0.3);
 }
 
 .tree-node.node-highlight {
     border-color: var(--navy);
     border-width: 2.5px;
+    outline: 2.5px solid rgba(0, 37, 109, 0.25);
+    outline-offset: 4px;
 }
 
 .tree-node.node-accent {
     border-color: var(--primary);
     border-width: 2.5px;
+    outline: 2.5px solid rgba(245, 158, 11, 0.25);
+    outline-offset: 4px;
 }
 
 /* Rounded top overlapping avatar */
@@ -1395,8 +1503,11 @@
     margin-top: -52px;
     margin-bottom: 12px;
     border: 3.5px solid var(--bg-white);
+    outline: 2px solid var(--navy);
     box-shadow: var(--shadow-md);
-    background-color: #f1f5f9;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 30;
     transition: var(--transition-smooth);
 }
 
@@ -1436,23 +1547,16 @@
 .tree-branch-row {
     display: flex;
     justify-content: center;
-    gap: 80px;
     position: relative;
     width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
     padding-top: 30px;
-    margin-bottom: 0;
 }
 
-/* Horizontal connecting bar of the row */
+/* Hide legacy global horizontal bar since columns now draw exact horizontal connections */
 .tree-branch-row::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 17%;
-    right: 17%;
-    height: 2px;
-    background-color: var(--navy);
-    z-index: 1;
+    display: none !important;
 }
 
 /* Branch columns */
@@ -1461,6 +1565,32 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    flex: 0 0 auto;
+    padding: 0 40px;
+}
+
+/* Horizontal connecting bar drawn by each column from its center to neighbor */
+.tree-branch-col::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--navy);
+    z-index: 1;
+}
+
+.tree-branch-col:first-child::after {
+    left: 50%;
+}
+
+.tree-branch-col:last-child::after {
+    right: 50%;
+}
+
+.tree-branch-col:only-child::after {
+    display: none;
 }
 
 /* Vertical line coming down from horizontal bar into the child */
@@ -1478,9 +1608,8 @@
 
 /* Responsive collapse of connectors */
 @media (max-width: 992px) {
-    .tree-branch-row::before {
-        left: 20%;
-        right: 20%;
+    .tree-branch-row {
+        max-width: 580px;
     }
 }
 
@@ -1493,17 +1622,17 @@
     .tree-branch-row {
         flex-direction: row;
         justify-content: center;
-        gap: 20px;
+        max-width: 100%;
         padding-top: 24px;
         margin-bottom: 0;
     }
 
-    .tree-branch-row::before {
-        display: block;
-        top: 0;
-        left: 23%;
-        right: 23%;
-        height: 2px;
+    .tree-branch-col {
+        padding: 0 16px;
+    }
+
+    .tree-branch-col::after {
+        top: -24px;
     }
 
     .tree-branch-col::before {
@@ -1515,9 +1644,16 @@
         height: 30px;
     }
 
+    .hierarchy-section {
+        padding: 0 10px;
+    }
+
     .tree-node {
-        width: 155px;
+        width: calc(50vw - 32px);
+        max-width: 155px;
+        margin-top: 26px;
         padding: 12px 10px;
+        box-sizing: border-box;
     }
 
     .node-avatar-wrapper {
@@ -1525,6 +1661,9 @@
         height: 56px;
         margin-top: -40px;
         margin-bottom: 8px;
+        position: relative;
+        z-index: 30;
+        background-color: #ffffff;
     }
 
     .node-role-tag {
@@ -1540,13 +1679,16 @@
 
 @media (max-width: 480px) {
     .tree-branch-row {
-        gap: 12px;
         padding-top: 20px;
+        max-width: 100%;
     }
 
-    .tree-branch-row::before {
-        left: 25%;
-        right: 25%;
+    .tree-branch-col {
+        padding: 0 8px;
+    }
+
+    .tree-branch-col::after {
+        top: -20px;
     }
 
     .tree-branch-col::before {
@@ -1554,9 +1696,27 @@
         height: 20px;
     }
 
+    .team-header-row {
+        padding: 20px 16px;
+        gap: 12px;
+    }
+
+    .intro-section {
+        flex: 0 0 auto !important;
+        width: 100%;
+    }
+
+    .year-selector-container {
+        flex: 0 0 auto !important;
+        width: 100%;
+    }
+
     .tree-node {
-        width: 140px;
+        width: calc(50vw - 22px);
+        max-width: 138px;
+        margin-top: 22px;
         padding: 10px 8px;
+        box-sizing: border-box;
     }
 
     .node-avatar-wrapper {
@@ -1565,6 +1725,9 @@
         margin-top: -34px;
         margin-bottom: 6px;
         border-width: 2.5px;
+        position: relative;
+        z-index: 30;
+        background-color: #ffffff;
     }
 
     .node-role-tag {
@@ -1582,7 +1745,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    z-index: 40; /* Ensure dropdown displays below navbar (z-50) but above flowchart rows */
+    z-index: 100; /* Ensure dropdown displays above flowchart rows and header */
     min-width: 180px;
     position: relative;
 }
@@ -1598,6 +1761,7 @@
 .custom-dropdown-container {
     position: relative;
     width: 100%;
+    z-index: 200;
 }
 
 .custom-dropdown-trigger {
@@ -1654,7 +1818,7 @@
     padding: 6px;
     margin: 0;
     list-style: none;
-    z-index: 100;
+    z-index: 999 !important;
 }
 
 .custom-dropdown-item {

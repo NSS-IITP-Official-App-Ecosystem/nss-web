@@ -457,6 +457,12 @@
     color: var(--primary);
 }
 
+.gensec-card-email {
+    word-break: break-all;
+    display: inline-block;
+    margin-top: 2px;
+}
+
 /* Interactive Google Maps Section */
 .faq-map-container {
     max-width: 1200px;
