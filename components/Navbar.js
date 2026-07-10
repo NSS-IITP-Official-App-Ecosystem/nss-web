@@ -178,7 +178,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <NavDrawer />
             <Link href="/" className="shrink-0 flex items-center gap-2 group">
-            <Image src='/nss iitp logo.png' width={48} height={48} alt='nss iit patna logo' />
+              <Image src='/nss iitp logo.png' width={48} height={48} alt='nss iit patna logo' />
               <span className="font-extrabold text-2xl text-brand-blue tracking-tight transition-colors duration-200 group-hover:text-brand-blue/80">
                 NSS IITP
               </span>
@@ -393,21 +393,21 @@ function NavDrawer() {
                   className="w-full flex flex-col gap-2.5"
                 >
                   <motion.div className="flex flex-row gap-4 justify-start items-center flex-wrap">
-                  {HIGH_LINKS.map((nav_item, index) => {
-                    const Icon = nav_item.icon;
-                    return (
-                      <Link
-                        key={index}
-                        href={nav_item.link}
-                        className={cn(
-                          "border border-gray-300 rounded-full flex items-center gap-1.5 text-secondary-slate hover:text-brand-blue font-medium transition-all py-1.5 px-3 hover:bg-slate-50 duration-200 active:scale-95"
-                        )}
-                      >
-                        {Icon && <Icon className="w-4 h-4 opacity-70" />}
-                        <span className="text-nowrap">{nav_item.text}</span>
-                      </Link>
-                    );
-                  })}
+                    {HIGH_LINKS.map((nav_item, index) => {
+                      const Icon = nav_item.icon;
+                      return (
+                        <Link
+                          key={index}
+                          href={nav_item.link}
+                          className={cn(
+                            "border border-gray-300 rounded-full flex items-center gap-1.5 text-secondary-slate hover:text-brand-blue font-medium transition-all py-1.5 px-3 hover:bg-slate-50 duration-200 active:scale-95"
+                          )}
+                        >
+                          {Icon && <Icon className="w-4 h-4 opacity-70" />}
+                          <span className="text-nowrap">{nav_item.text}</span>
+                        </Link>
+                      );
+                    })}
 
                   </motion.div>
                   {LINKS.map((nav_item, index) => {
