@@ -22,6 +22,7 @@ export default async function EventPage({ params }) {
                 details,
                 event_date,
                 resources,
+                collaborators,
                 event_media (
                     media_url,
                     caption,
@@ -41,12 +42,26 @@ export default async function EventPage({ params }) {
         if (!error && data) {
             const mediaUrls = data.event_media ? data.event_media.map(m => m.media_url) : [];
             const resolvedMedia = await resolveMediaUrls(mediaUrls);
+
+            // Resolve collaborators details if present
+            let resolvedCollaborators = [];
+            if (data.collaborators && data.collaborators.length > 0) {
+                const { data: collabData } = await supabase
+                    .from('collaborators')
+                    .select('id, name, logo_url, url')
+                    .in('id', data.collaborators);
+                if (collabData) {
+                    resolvedCollaborators = collabData;
+                }
+            }
+
             event = {
                 id: data.id,
                 title: data.title,
                 details: data.details,
                 date: data.event_date,
                 resources: data.resources || [],
+                collaborators: resolvedCollaborators,
                 images: resolvedMedia.filter(m => m.type === 'image').map(m => m.url),
                 media: resolvedMedia,
                 wings: data.event_wings ? data.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
@@ -112,6 +127,28 @@ export default async function EventPage({ params }) {
                     <p className="text-slate-600 text-base leading-relaxed whitespace-pre-line mt-4">
                         {event.details}
                     </p>
+
+                    {/* Collaborators row just below description */}
+                    {event.collaborators && event.collaborators.length > 0 && (
+                        <div className="flex flex-col gap-1.5 border-t border-slate-100 pt-5 mt-4 w-full text-left">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Collaborator / Partner</span>
+                            <div className="flex flex-wrap gap-4 items-center mt-1">
+                                {event.collaborators.map((collab, i) => (
+                                    <a
+                                        key={collab.id || i}
+                                        href={collab.url || "#"}
+                                        target={collab.url ? "_blank" : undefined}
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100/80 border border-slate-200/60 rounded-xl transition-all cursor-pointer shadow-2xs"
+                                        title={collab.name}
+                                    >
+                                        <img src={collab.logo_url} alt={collab.name} className="h-6 w-6 object-contain" />
+                                        <span className="text-xs font-bold text-slate-700">{collab.name}</span>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Resources */}
                     {event.resources && event.resources.length > 0 && (

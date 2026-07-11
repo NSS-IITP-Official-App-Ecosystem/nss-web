@@ -83,6 +83,8 @@ export default function RequestBloodClient({ initialActiveRequests, isIITPStuden
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const [isSignIn, setIsSignIn] = useState(true);
 
+  const tabsRef = useRef();
+
   // Search and Filter states
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBloodGroup, setSelectedBloodGroup] = useState("All");
@@ -266,8 +268,8 @@ export default function RequestBloodClient({ initialActiveRequests, isIITPStuden
 
             <p className="text-xl text-white text-center md:text-start">Every drop of blood you donate is a breath of life to someone in urgent need. NSS IIT Patna connects patient requirements with immediate volunteer donors seamlessly.</p>
             <div className="flex flex-wrap gap-8 mt-16 justify-center md:justify-start">
-              <motion.button className="px-4 py-2 rounded transition-all bg-white text-text text-lg"><Link href={'#active-blood-request'}>View Active Requests</Link></motion.button>
-              <motion.button className="px-4 py-2 rounded transition-all bg-rose-700 text-white text-lg hover:shadow-2xl hover:shadow-rose-500 hover:scale-105"><Link href={'#blood-request'}>Request Blood</Link></motion.button>
+              <motion.button className="px-4 py-2 rounded transition-all bg-white text-text text-lg" onClick={()=>{tabsRef.current.scrollIntoView(); setActiveTab('active-request')}}>View Active Requests</motion.button>
+              <motion.button className="px-4 py-2 rounded transition-all bg-rose-700 text-white text-lg hover:shadow-2xl hover:shadow-rose-500 hover:scale-105" onClick={()=>{tabsRef.current.scrollIntoView(); setActiveTab('blood-request')}}>Request Blood</motion.button>
             </div>
           </div>
 
@@ -296,7 +298,7 @@ export default function RequestBloodClient({ initialActiveRequests, isIITPStuden
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5 px-3 sm:px-8">
           {STATS_DATA.map((item, index) => {
             return (
-              <div key={index} className="rounded-2xl inset-shadow-2xl p-10 bg-white shadow-2xs flex flex-col justify-center items-center">
+              <div key={index} className="rounded-2xl inset-shadow-2xl p-10 bg-white/80 backdrop-blur-sm shadow-2xs flex flex-col justify-center items-center">
                 <div className="p-4 rounded w-fit aspect-square" style={{ background: `${item.themeColor}10` }}><item.icon className={`text-2xl`} style={{ color: item.themeColor }} /></div>
                 <h3 className="text-slate-800 mt-5 text-4xl"><AnimatedCounter value={item.count} /></h3>
                 <p className="text-center text-text font-semibold">{item.title}</p>
@@ -339,7 +341,7 @@ export default function RequestBloodClient({ initialActiveRequests, isIITPStuden
       )}
 
       <section className="my-16">
-        <div className="flex flex-nowrap overflow-x-auto bg-slate-100 text-text py-2 px-2 rounded-xl gap-4 w-fit m-auto shadow-sm">
+        <div ref={tabsRef} className="flex flex-nowrap overflow-x-auto bg-slate-100 text-text py-2 px-2 rounded-xl gap-4 w-fit m-auto shadow-sm">
           <div className={cn("text-lg font-sans text-text py-3 px-5 cursor-pointer rounded-xl", activeTab == 'active-request' && 'bg-white shadow-sm ')} onClick={() => setActiveTab('active-request')}>Active Requests</div>
           <div className={cn("text-lg font-sans text-text py-3 px-5 cursor-pointer rounded-xl", activeTab == 'blood-request' && 'bg-white shadow-sm ')} onClick={() => setActiveTab('blood-request')}>Request Blood</div>
         </div>

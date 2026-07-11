@@ -262,7 +262,7 @@ export default function HomeClient({
                                         <FaUsers />
                                     </div>
                                     <div className="text-left">
-                                        <span className="font-extrabold text-slate-800 block text-base leading-none">120+</span>
+                                        <span className="font-extrabold text-slate-800 block text-base leading-none">500+</span>
                                         <span className="text-[9px] text-slate-400 font-mono font-bold uppercase tracking-wider">Volunteers</span>
                                     </div>
                                 </div>

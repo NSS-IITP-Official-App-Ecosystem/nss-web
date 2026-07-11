@@ -1,5 +1,6 @@
 import { LuInstagram, LuLinkedin, LuYoutube } from "react-icons/lu";
 import Link from "next/link";
+import { IoLogoGooglePlaystore } from "react-icons/io5";
 
 export default function Footer() {
 
@@ -40,6 +41,7 @@ export default function Footer() {
                         <li><Link href="/events" className="hover:text-amber-500 transition-colors">Events Archive</Link></li>
                         <li><Link href="/awards" className="hover:text-amber-500 transition-colors">Awards &amp; Achievements</Link></li>
                         <li><Link href="/rules-and-policies" className="hover:text-amber-500 transition-colors">Volunteering Guidelines</Link></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.phad.chatapp" target="_blank" referrerPolicy="no-referrer" className="flex flex-row flex-nowrap gap-3 py-4 px-4 border-slate rounded-xl w-fit shadow-sm text-white bg-brand-blue"><IoLogoGooglePlaystore className="text-lg"/><span>Official NSS App</span></a></li>
                     </ul>
                 </div>
                 {/* Contact details */}
@@ -52,7 +54,7 @@ export default function Footer() {
                         </li>
                         <li className="flex items-start gap-2">
                             <span className="font-bold text-amber-500 uppercase text-[10px] mt-0.5">Address:</span>
-                            <span>NSS Office, Block 9, Indian Institute of Technology Patna, Bihta, Patna - 801106</span>
+                            <span>Room No. 306, Administration Building, IIT Patna Campus, Bihta, Patna, Bihar, PIN - 801106</span>
                         </li>
                     </ul>
                 </div>
