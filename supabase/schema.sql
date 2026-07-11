@@ -8,6 +8,7 @@
 drop trigger if exists on_auth_user_created on auth.users;
 
 -- Tables (dropping tables automatically drops any triggers/constraints on them)
+drop table if exists public.mega_events cascade;
 drop table if exists public.thanks cascade;
 drop table if exists public.suggestions cascade;
 drop table if exists public.collaborators cascade;
@@ -207,6 +208,7 @@ create table public.events (
     event_date timestamp with time zone,
     resources text[], -- Array of links/downloads
     tags text[] default array[]::text[], -- Array of tags/categories
+    collaborators uuid[] default array[]::uuid[], -- Array of collaborator references
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
@@ -218,6 +220,28 @@ create policy "Allow public read access on events" on public.events
     for select using (true);
 
 create policy "Allow admins to manage events" on public.events
+    for all using (public.is_admin(auth.uid()));
+
+
+-- 5.1 Mega Events Table
+create table public.mega_events (
+    id uuid default gen_random_uuid() primary key,
+    title text not null,
+    description text,
+    events uuid[] default array[]::uuid[], -- Array of event references
+    start_date timestamp with time zone,
+    end_date timestamp with time zone,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS for mega_events
+alter table public.mega_events enable row level security;
+
+create policy "Allow public read access on mega_events" on public.mega_events
+    for select using (true);
+
+create policy "Allow admins to manage mega_events" on public.mega_events
     for all using (public.is_admin(auth.uid()));
 
 
@@ -397,7 +421,9 @@ create table public.impacts (
     description text not null,
     count text not null,
     unit text not null,
-    created_at timestamp with time zone default timezone('utc'::text, now()) not null
+    tags text[] default array[]::text[], -- Array of tags
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
 -- Enable RLS for impacts
@@ -493,6 +519,10 @@ create trigger on_auth_user_created
 -- Audit Triggers
 create trigger audit_events_trigger
   after insert or update or delete on public.events
+  for each row execute procedure public.process_audit_log();
+
+create trigger audit_mega_events_trigger
+  after insert or update or delete on public.mega_events
   for each row execute procedure public.process_audit_log();
 
 create trigger audit_team_members_trigger

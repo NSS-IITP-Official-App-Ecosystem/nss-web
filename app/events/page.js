@@ -4,10 +4,16 @@ import EventsClient from "./EventsClient";
 
 export default async function EventsPage() {
   let formattedEvents = [];
+  let megaEventsWithEvents = [];
 
   try {
     const supabase = await createClient();
     console.log("Fetching events dynamically from Supabase on the server...");
+
+    // Fetch all collaborators
+    const { data: dbCollaborators } = await supabase
+      .from('collaborators')
+      .select('id, name, logo_url, url');
 
     // Fetch events + media folder + wing relationship
     const { data, error } = await supabase
@@ -65,18 +71,50 @@ export default async function EventsPage() {
                 : event.details
               : "No details provided.",
             extendedDesc: event.details || "No further details available.",
-            category: event.event_date && new Date(event.event_date) > new Date() ? "upcoming" : "past",
+            category: (event.event_date == null || (event.event_date && new Date(event.event_date) > new Date())) ? "upcoming" : "past",
             tag: tag,
             images: images,
             social: social,
             tags: event.tags || [],
+            collaborators: event.collaborators && dbCollaborators 
+              ? event.collaborators.map(cid => dbCollaborators.find(c => c.id === cid)).filter(Boolean)
+              : []
           };
         })
       );
+    }
+
+    // Fetch mega events
+    const { data: dbMegaEvents, error: megaError } = await supabase
+      .from('mega_events')
+      .select('*')
+      .order('start_date', { ascending: false });
+
+    if (!megaError && dbMegaEvents && formattedEvents.length > 0) {
+      // Show only 2026-2027 session mega events
+      const filteredMegaEvents = dbMegaEvents.filter(me => {
+        if (!me.start_date) return false;
+        const startDate = new Date(me.start_date);
+        return startDate >= new Date("2026-07-01") && startDate <= new Date("2027-06-30");
+      });
+
+      megaEventsWithEvents = filteredMegaEvents.map(me => {
+        const matchedEvents = me.events 
+          ? me.events.map(eid => formattedEvents.find(e => e.id === eid)).filter(Boolean)
+          : [];
+        return {
+          id: me.id,
+          title: me.title,
+          description: me.description,
+          start_date: me.start_date,
+          end_date: me.end_date,
+          events: matchedEvents
+        };
+      }).filter(me => me.events.length > 0);
     }
   } catch (err) {
     console.error("Error fetching events on server:", err.message);
   }
 
-  return <EventsClient initialEvents={formattedEvents} />;
+  return <EventsClient initialEvents={formattedEvents} megaEvents={megaEventsWithEvents} />;
 }

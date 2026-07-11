@@ -1,26 +1,53 @@
 "use client"
 import React, { useState, useRef } from 'react';
+import { ExpandableText } from '@/components/ExpandableText';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const ExpandableDescription = ({ text }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const isLongText = text && text.length > 140;
+const stats = [
+    { value: "65", label: "Dedicated Volunteers" },
+    { value: "300+", label: "Blood Donors" },
+    { value: "100+", label: "Families Counseled" },
+    { value: "3", label: "Core Initiatives" },
+];
 
-    if (!isLongText) {
-        return <p className="text-xs md:text-sm text-slate-500 font-normal leading-relaxed">{text}</p>;
+const initiatives = [
+    {
+        id: "blood",
+        title: "Blood Donation & Health Camps",
+        subtitle: "Healthcare Partnerships & Swabs",
+        description: "Life-saving blood donation drives in collaboration with Prathama Blood Centre, collecting 300+ units. We also host DKMS Stem Cell registry events swabbing 400+ potential donors.",
+        highlights: [
+            "300+ units collected under medical supervision.",
+            "Strategic collaboration with Prathama Blood Centre.",
+            "DKMS stem cell registration cheek swab drives.",
+            "Raising voluntary blood donation safety awareness."
+        ]
+    },
+    {
+        id: "care",
+        title: "Community Care Drives",
+        subtitle: "Hostel & Community Mobilization",
+        description: "Conducting extensive resource collection campaigns across student hostels and faculty residences, distributing essential items and sweets to campus security and support staff during Diwali.",
+        highlights: [
+            "Voluntary clothes and food collection campaigns.",
+            "Sweets and essentials distribution to campus workers.",
+            "Encouraging collective responsibility on campus.",
+            "Sourcing packages for rural neighborhood households."
+        ]
+    },
+    {
+        id: "advocacy",
+        title: "Social Awareness Advocacy",
+        subtitle: "Hygiene & Safety Empowerment",
+        description: "Interactive awareness campaigns on rabies prevention and menstrual hygiene management. Conducting 'Consent Matters' dialog sessions focusing on boundaries and mutual respect.",
+        highlights: [
+            "Menstrual hygiene sessions breaking social taboos.",
+            "Consent Matters discussions on safe relationships.",
+            "Rabies diagnostic prevention and safety talks.",
+            "Collaborative empowerment summits (Sneh AI Conclave)."
+        ]
     }
-
-    return (
-        <p className="text-xs md:text-sm text-slate-500 font-normal leading-relaxed">
-            {isExpanded ? text : `${text.slice(0, 140)}...`}
-            <button 
-                onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }} 
-                className="text-[#0a1128] font-bold bg-none border-none cursor-pointer p-0 ml-1.5 text-xs underline inline"
-            >
-                {isExpanded ? 'Show Less' : 'Show More'}
-            </button>
-        </p>
-    );
-};
+];
 
 const defaultCategories = [
     {
@@ -61,18 +88,10 @@ const defaultCategories = [
     }
 ];
 
-const stats = [
-    { value: "30+", label: "Awareness Rallies" },
-    { value: "850+", label: "Families Counseled" },
-    { value: "100%", label: "Rights Driven" },
-    { value: "45+", label: "Complaints Handled" },
-];
-
-export default function PrernaWingClient({ events }) {
-    const [selected, setSelected] = useState(null);
+export default function PrernaWingClient({ events = [] }) {
+    const [selectedImg, setSelectedImg] = useState(null);
     const scrollRefs = useRef([]);
 
-    // Determine the categories of events to display
     const displayCategories = events && events.length > 0 ? events : defaultCategories;
 
     const scrollByAmount = (ci, dir) => {
@@ -82,167 +101,195 @@ export default function PrernaWingClient({ events }) {
     };
 
     return (
-        <div className="min-h-screen text-slate-900 font-sans pb-32 bg-slate-50/50 selection:bg-amber-400/30 relative">
+        <div className="min-h-screen bg-[#FAF9F6] text-slate-800 font-sans pb-32 relative">
             {/* Fixed Viewport-Wide Background Watermark */}
             <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center opacity-[0.02] p-4">
                 <img src="/wings/prerna.png" alt="" className="w-full max-w-[90vw] md:max-w-[70vw] lg:max-w-[1000px] h-auto max-h-[80vh] object-contain" />
             </div>
 
-            {/* Official Premium Top Border Bar */}
-            <div className="w-full h-1.5 bg-gradient-to-r from-[#ff9933] via-slate-200 to-[#138808]" />
+            {/* Top Border Accent */}
+            <div className="w-full h-1.5 bg-gradient-to-r from-amber-500 via-orange-400 to-emerald-500" />
 
-            {/* Premium Deep Navy Hero with Asymmetrical Angled Cut */}
-            <div 
-                className="bg-gradient-to-br from-[#060b18] via-[#0f1b3a] to-[#040712] text-white pt-20 pb-44 px-4 text-center relative overflow-hidden"
-                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 88%, 0% 100%)' }}
-            >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent opacity-70 pointer-events-none" />
-                
+            {/* Premium Deep Hero Section */}
+            <header className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white pt-24 pb-48 px-4 text-center relative overflow-hidden">
+                {/* Glow Ring background shapes */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-12 left-12 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" />
+
                 <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
-                    {/* Circular Logo in Hero Section */}
-                    <div className="h-20 w-20 md:h-24 md:w-24 rounded-full overflow-hidden border-2 border-indigo-400 shadow-lg mb-6 flex-shrink-0 bg-white">
-                        <img src="/wings/WhatsApp Image 2026-07-08 at 11.57.41 (1).jpeg" alt="Prerna Wing Logo" className="h-full w-full object-cover" />
+                    {/* Floating Wing Badge Logo */}
+                    <div className="h-20 w-20 md:h-24 md:w-24 rounded-full overflow-hidden border-2 border-indigo-400 shadow-xl mb-6 bg-white shrink-0">
+                        <img src="/wings/prerna.png" alt="Prerna Wing Logo" className="h-full w-full object-cover" />
                     </div>
 
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-xs">
-                        <span className="w-1.5 h-1.5 bg-[#ff9933] rounded-full animate-pulse" />
-                        <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">
-                            Official Wing Portal
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-sm">
+                        <span className="text-slate-300 text-[10px] font-black uppercase tracking-widest leading-none">
+                            Awakening. Empowering. Transforming.
                         </span>
                     </div>
-                    
-                    <h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight mb-6 text-white drop-shadow-xs">
+
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-amber-200 to-amber-400 tracking-tight mb-6">
                         Prerna <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 font-light">Wing</span>
                     </h1>
-                    
-                    <p className="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base md:text-lg font-normal leading-relaxed opacity-90 tracking-wide">
+
+                    <p className="text-slate-300 max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed opacity-95 tracking-wide">
                         Empowering local communities through civil compliance, legal literacy, street performance advocacy, and clothing drives.
                     </p>
                 </div>
-            </div>
 
-            {/* Overlapping Glassmorphism Quote Container */}
-            <div className="max-w-3xl mx-auto px-4 -mt-20 relative z-20">
-                <div className="bg-white/80 backdrop-blur-xl border border-white shadow-xl rounded-3xl p-6 md:p-8 text-center relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ff9933] via-slate-400 to-[#138808]" />
-                    <span className="absolute -top-6 -left-2 text-[120px] text-slate-200/50 font-serif select-none pointer-events-none group-hover:scale-105 transition-transform duration-500 inline-block">“</span>
-                    <p className="text-base md:text-xl italic text-slate-800 leading-relaxed font-semibold relative z-10">
-                        {"\"Small acts of kindness, when multiplied by hundreds of volunteers, can transform the fabric of society. At Prerna, we strive to be the bridge between resources and those who need them most.\""}
+                {/* Hero Angled Border */}
+                <div className="absolute bottom-0 left-0 right-0 h-16 bg-[#FAF9F6]" style={{ clipPath: 'polygon(0 100%, 100% 100%, 100% 0)' }}></div>
+            </header>
+
+            {/* Overlapping Quote Banner */}
+            <div className="max-w-4xl mx-auto px-4 -mt-24 relative z-20">
+                <div className="bg-white/80 border border-slate-200/80 shadow-xl rounded-3xl p-6 md:p-8 text-center backdrop-blur-md relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-300 to-emerald-500" />
+                    <span className="absolute -top-6 -left-2 text-[120px] text-slate-200/40 font-serif select-none pointer-events-none">“</span>
+                    <p className="text-sm sm:text-base md:text-lg italic text-slate-800 leading-relaxed font-medium relative z-10">
+                        "Small acts of kindness, when multiplied by hundreds of volunteers, can transform the fabric of society. At Prerna, we strive to be the bridge between resources and those who need them most."
                     </p>
                 </div>
             </div>
 
-            {/* Impact Metrics */}
-            <div className="max-w-5xl mx-auto px-4 mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
-                {stats.map((stat, i) => (
-                    <div key={i} className="bg-white border border-slate-200/60 p-5 rounded-2xl shadow-2xs hover:shadow-xs transition-shadow duration-300 flex flex-col items-center justify-center text-center">
-                        <div className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-1">
-                            {stat.value}
+            {/* Official Magazine Statistics */}
+            <section className="max-w-5xl mx-auto px-4 mt-16 relative z-10">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {stats.map((stat, i) => (
+                        <div key={i} className="bg-white border border-slate-200/70 p-5 rounded-2xl shadow-2xs hover:shadow-xs transition-all duration-300 flex flex-col items-center justify-center text-center">
+                            <div className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-1">
+                                {stat.value}
+                            </div>
+                            <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                                {stat.label}
+                            </div>
                         </div>
-                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                            {stat.label}
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            </section>
 
-            {/* Gallery Section */}
-            <div className="max-w-6xl mx-auto px-4 mt-24 relative z-10">
-                <div className="space-y-20">
+            {/* Core Initiatives Cards Section */}
+            <section className="max-w-6xl mx-auto px-4 mt-24">
+                <div className="text-center mb-12">
+                    <span className="text-[10px] font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full">Core Prerna Focus</span>
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-950 mt-3 tracking-tight">Key Wing Initiatives</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {initiatives.map((item) => (
+                        <div key={item.id} className="bg-white border border-slate-200/70 p-6 sm:p-8 rounded-3xl shadow-3xs flex flex-col justify-between text-left h-full hover:shadow-2xs transition-all duration-300">
+                            <div>
+                                <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest leading-none">{item.subtitle}</span>
+                                <h3 className="text-lg font-black text-slate-950 mt-1.5 mb-3 uppercase leading-tight">{item.title}</h3>
+                                <p className="text-slate-600 text-xs leading-relaxed mb-6 font-normal">
+                                    {item.description}
+                                </p>
+                            </div>
+                            <div className="space-y-2.5 border-t border-slate-100 pt-5">
+                                {item.highlights.map((h, index) => (
+                                    <div key={index} className="flex items-start gap-2 text-[11px] font-semibold text-slate-700 leading-snug">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                                        <span>{h}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Event-Wise Photos Galleries */}
+            <section className="max-w-6xl mx-auto px-4 mt-24">
+                <div className="text-center mb-12">
+                    <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">Gallery Showcase</span>
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-950 mt-3 tracking-tight">On-Ground Action Snaps</h2>
+                </div>
+
+                <div className="space-y-16">
                     {displayCategories.map((cat, ci) => {
                         const catImages = cat.images || [];
                         if (catImages.length === 0) return null;
 
                         return (
-                            <div key={ci} className="border-t border-slate-200/70 pt-10 first:border-0 first:pt-0">
-                                {/* Section Header */}
-                                <div className="mb-8 max-w-3xl">
+                            <div key={ci} className="border-t border-slate-200/60 pt-12 first:border-0 first:pt-0 text-left">
+                                <div className="mb-6">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <h2 className="text-xl md:text-2xl font-black tracking-tight text-slate-900">
+                                        <h3 className="text-xl font-black text-slate-900 tracking-tight">
                                             {cat.title}
-                                        </h2>
-                                        <span className="text-xs font-bold px-2.5 py-0.5 bg-[#0a1128]/5 text-[#0a1128] rounded-full">
-                                            {catImages.length} Snaps
+                                        </h3>
+                                        <span className="text-[10px] font-bold px-2.5 py-0.5 bg-[#0a1128]/5 text-[#0a1128] rounded-md">
+                                            {catImages.length} Photos
                                         </span>
                                     </div>
-                                    <ExpandableDescription text={cat.description} />
+                                    <ExpandableText text={cat.description} />
                                 </div>
 
-                                {/* Horizontal Slider Layout */}
-                                <div className="relative px-4">
-                                    <button 
-                                        onClick={() => scrollByAmount(ci, -1)} 
-                                        className="absolute -left-2 top-[40%] z-10 w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center cursor-pointer text-slate-700 hover:bg-slate-50 transition-colors"
-                                    >
-                                        ◀
-                                    </button>
-                                    
-                                    <div 
-                                        ref={(el) => (scrollRefs.current[ci] = el)} 
+                                <div className="relative px-2">
+                                    {catImages.length > 1 && (
+                                        <>
+                                            <button
+                                                onClick={() => scrollByAmount(ci, -1)}
+                                                className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/80 border border-slate-200 shadow-sm flex items-center justify-center cursor-pointer text-slate-700 hover:bg-slate-50 transition-colors"
+                                            >
+                                                <ChevronLeft size={18} strokeWidth={2.5} />
+                                            </button>
+                                            <button
+                                                onClick={() => scrollByAmount(ci, 1)}
+                                                className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/80 border border-slate-200 shadow-sm flex items-center justify-center cursor-pointer text-slate-700 hover:bg-slate-50 transition-colors"
+                                            >
+                                                <ChevronRight size={18} strokeWidth={2.5} />
+                                            </button>
+                                        </>
+                                    )}
+
+                                    <div
+                                        ref={(el) => (scrollRefs.current[ci] = el)}
                                         style={{ scrollbarWidth: 'none' }}
                                         className="flex gap-4 overflow-x-auto scroll-smooth pb-3"
                                     >
                                         {catImages.map((imgUrl, ii) => (
                                             <div
                                                 key={ii}
-                                                onClick={() => setSelected(imgUrl)}
-                                                className="group bg-white border border-slate-200/60 shadow-xs rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1.5 flex-shrink-0 w-[290px] aspect-[4/3] relative"
+                                                onClick={() => setSelectedImg(imgUrl)}
+                                                className="group bg-white border border-slate-200/60 shadow-xs rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:shadow-2xs flex-shrink-0 w-[280px] aspect-[4/3] relative"
                                             >
-                                                <div className="w-full h-full bg-slate-900 flex items-center justify-center relative overflow-hidden">
-                                                    <img 
-                                                        src={imgUrl} 
-                                                        alt={`${cat.title} snap ${ii + 1}`} 
-                                                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-103"
-                                                    />
-                                                    <div className="absolute inset-0 bg-slate-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                                    <div className="absolute bottom-4 right-4 w-7 h-7 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 border border-white/20">
-                                                        <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                                        </svg>
-                                                    </div>
+                                                <img
+                                                    src={imgUrl}
+                                                    alt={`${cat.title} snap ${ii + 1}`}
+                                                    className="w-full h-full object-cover group-hover:scale-103 transition-all duration-500"
+                                                />
+                                                <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                    <span className="bg-white/20 backdrop-blur-md text-white border border-white/20 p-2 rounded-full text-xs font-bold">✕ Zoom</span>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    
-                                    <button 
-                                        onClick={() => scrollByAmount(ci, 1)} 
-                                        className="absolute -right-2 top-[40%] z-10 w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center cursor-pointer text-slate-700 hover:bg-slate-50 transition-colors"
-                                    >
-                                        ▶
-                                    </button>
                                 </div>
                             </div>
                         );
                     })}
                 </div>
-            </div>
+            </section>
 
-            {/* Immersive True-Center Big Image Modal Framework */}
-            {selected && (
+            {/* Immersive Photo Viewer Modal */}
+            {selectedImg && (
                 <div
-                    className="fixed inset-0 bg-slate-950/85 z-50 flex items-center justify-center p-4 md:p-6 backdrop-blur-md transition-opacity duration-300"
-                    onClick={() => setSelected(null)}
+                    className="fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-4 backdrop-blur-md"
+                    onClick={() => setSelectedImg(null)}
                 >
                     <div
-                        className="relative max-w-4xl w-full bg-transparent flex flex-col items-center justify-center transition-all transform scale-100 duration-300"
+                        className="relative max-w-4xl w-full flex flex-col items-center justify-center"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
-                            onClick={() => setSelected(null)}
-                            className="absolute -top-12 right-0 md:right-2 text-white/70 hover:text-white transition-colors text-xs font-semibold uppercase tracking-widest flex items-center gap-1.5 group bg-white/5 py-1.5 px-3 rounded-full border border-white/10 backdrop-blur-xs shadow-md"
-                            aria-label="Close Modal"
+                            onClick={() => setSelectedImg(null)}
+                            className="absolute -top-12 right-0 text-white/70 hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 bg-white/5 py-1.5 px-3 rounded-full border border-white/10 backdrop-blur-xs"
                         >
                             <span>Close</span>
-                            <span className="text-sm font-normal">✕</span>
+                            <span>✕</span>
                         </button>
-                        
-                        <div className="w-full bg-slate-900/40 rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.8)] max-h-[75vh] flex items-center justify-center">
-                            <img 
-                                src={selected} 
-                                alt="Selected expansion view" 
-                                className="w-full h-full max-h-[75vh] object-contain block select-none"
-                            />
+                        <div className="w-full bg-slate-900/40 rounded-3xl overflow-hidden border border-white/10 shadow-2xl max-h-[75vh] flex items-center justify-center">
+                            <img src={selectedImg} alt="Enlarged gallery view" className="w-full h-full max-h-[75vh] object-contain" />
                         </div>
                     </div>
                 </div>

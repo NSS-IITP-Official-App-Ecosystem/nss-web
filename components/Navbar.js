@@ -22,7 +22,8 @@ import {
   Image as ImageIcon,
   Handshake,
   Mail,
-  Sheet
+  Sheet,
+  Building
 } from 'lucide-react';
 import { cn } from './utils';
 
@@ -113,6 +114,10 @@ const LINKS = [
       {
         "text": "Gallery",
         "link": "/gallery"
+      },
+      {
+        "text": "Awards And Achievements",
+        "link": "/awards"
       }
     ]
   },
@@ -140,19 +145,14 @@ const LINKS = [
     ]
   },
   {
-    "text": "Awards And Achievements",
-    "link": "/awards",
-    "icon": Award,
-  },
-  {
     "text": "Contact Us",
     "link": "/faq",
     "icon": Mail,
   },
   {
-    "text": "Rules and Policies",
-    "link": "/rules-and-policies",
-    "icon": Sheet,
+    "text": "About US",
+    "link": "/about",
+    "icon": Building,
   }
 ];
 

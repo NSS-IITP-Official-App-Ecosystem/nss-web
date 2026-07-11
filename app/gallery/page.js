@@ -1,5 +1,4 @@
-import { Filters } from './filter'
-import { EventCard } from './event-card'
+import GalleryInteractive from './GalleryInteractive'
 import events_data from '@/data/events/events.json'
 import { Suspense } from 'react'
 import { createClient } from '@/utils/supabase/server'
@@ -19,8 +18,11 @@ export default async function GalleryPage({ searchParams }) {
 
     let dbEvents = [];
     let wings = [];
+    let dbMegaEvents = [];
+    let megaEventsWithEvents = [];
+    let isDbFallback = false;
 
-    // 1. Fetch wings and events from Supabase Server-side
+    // 1. Fetch wings, collaborators, mega_events and events from Supabase Server-side
     try {
         const supabase = await createClient();
         
@@ -34,8 +36,13 @@ export default async function GalleryPage({ searchParams }) {
             wings = dbWings;
         }
 
-        // Fetch events with media and wings
-        const { data, error } = await supabase
+        // Fetch all collaborators
+        const { data: dbCollaborators } = await supabase
+            .from('collaborators')
+            .select('id, name, logo_url, url');
+
+        // Fetch events with media, wings, and collaborators
+        const { data: eventsData, error: eventsError } = await supabase
             .from('events')
             .select(`
                 id,
@@ -44,6 +51,7 @@ export default async function GalleryPage({ searchParams }) {
                 event_date,
                 resources,
                 tags,
+                collaborators,
                 event_media (
                     media_url,
                     caption,
@@ -59,10 +67,10 @@ export default async function GalleryPage({ searchParams }) {
             `)
             .order('event_date', { ascending: false });
 
-        if (error) throw error;
+        if (eventsError) throw eventsError;
         
-        if (data) {
-            dbEvents = await Promise.all(data.map(async (e) => {
+        if (eventsData) {
+            dbEvents = await Promise.all(eventsData.map(async (e) => {
                 const mediaUrls = e.event_media ? e.event_media.map(m => m.media_url) : [];
                 const resolvedMedia = await resolveMediaUrls(mediaUrls);
                 return {
@@ -74,9 +82,22 @@ export default async function GalleryPage({ searchParams }) {
                     tags: e.tags || [],
                     images: resolvedMedia.filter(m => m.type === 'image').map(m => m.url),
                     media: resolvedMedia,
-                    wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
+                    wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : [],
+                    collaborators: e.collaborators && dbCollaborators 
+                        ? e.collaborators.map(cid => dbCollaborators.find(c => c.id === cid)).filter(Boolean)
+                        : []
                 };
             }));
+        }
+
+        // Fetch mega events
+        const { data: megaEventsData, error: megaError } = await supabase
+            .from('mega_events')
+            .select('*')
+            .order('start_date', { ascending: false });
+
+        if (!megaError && megaEventsData) {
+            dbMegaEvents = megaEventsData;
         }
     } catch (err) {
         console.error("Failed to fetch events from database, falling back to JSON:", err);
@@ -84,12 +105,14 @@ export default async function GalleryPage({ searchParams }) {
 
     // Fallback logic
     if (dbEvents.length === 0) {
+        isDbFallback = true;
         dbEvents = await Promise.all(events_data.map(async (e) => {
             const resolvedMedia = await resolveMediaUrls(e.images || []);
             return {
                 ...e,
                 images: resolvedMedia.filter(m => m.type === 'image').map(m => m.url),
-                media: resolvedMedia
+                media: resolvedMedia,
+                collaborators: []
             };
         }));
     }
@@ -112,20 +135,9 @@ export default async function GalleryPage({ searchParams }) {
         // Strictly show past events only
         if (eventDate > new Date()) return false;
         
-        // Date filters
-        // if (startDateParam) {
-        //     const startDate = new Date(startDateParam);
-        //     if (eventDate < startDate) return false;
-        // }
-        // if (endDateParam) {
-        //     const endDate = new Date(endDateParam);
-        //     endDate.setHours(23, 59, 59, 999);
-        //     if (eventDate > endDate) return false;
-        // }
-        
         //session filter
-        const currentSessionName = session || NSS_SESSION[0]['session'];
-        const getSession = NSS_SESSION.find((s)=>s.session == currentSessionName) || NSS_SESSION[0];
+        const currentSessionName = session || '2025-2026';
+        const getSession = NSS_SESSION.find((s)=>s.session == currentSessionName) || NSS_SESSION.find((s)=>s.session == '2025-2026');
         
         const startDate = new Date(getSession.start_date);
         if(eventDate < startDate) return false; // if before start date of session return false
@@ -147,57 +159,67 @@ export default async function GalleryPage({ searchParams }) {
         return true;
     });
 
-    // Filter Swachhata Hi Seva events for the spotlight section
-    const swachhataGalleryEvents = filteredEvents.filter(event => 
-        event.tags && event.tags.some(t => t.toLowerCase() === 'swachhata hi seva')
-    );
-    const mainGalleryEvents = filteredEvents.filter(event => 
-        !event.tags || !event.tags.some(t => t.toLowerCase() === 'swachhata hi seva')
-    );
+    // Map mega events from database using filteredEvents to respect all filters
+    if (dbMegaEvents && dbMegaEvents.length > 0 && filteredEvents.length > 0) {
+        megaEventsWithEvents = dbMegaEvents.map(me => {
+            const matchedEvents = me.events 
+                ? me.events.map(eid => filteredEvents.find(e => e.id === eid)).filter(Boolean)
+                : [];
+            return {
+                id: me.id,
+                title: me.title,
+                description: me.description,
+                start_date: me.start_date,
+                end_date: me.end_date,
+                events: matchedEvents
+            };
+        }).filter(me => me.events.length > 0);
+    }
+
+    // Group mega events if no data fetched from DB table AND we are using JSON fallback
+    if (megaEventsWithEvents.length === 0 && isDbFallback) {
+        const swachhataGalleryEvents = filteredEvents.filter(event => 
+            event.tags && event.tags.some(t => t.toLowerCase() === 'swachhata hi seva')
+        );
+        const sevaSankalpGalleryEvents = filteredEvents.filter(event => 
+            event.tags && event.tags.some(t => t.toLowerCase() === 'seva sankalp')
+        );
+        
+        if (swachhataGalleryEvents.length > 0) {
+            megaEventsWithEvents.push({
+                id: 'swachhata-fallback',
+                title: 'Swachhata Hi Seva Spotlight',
+                description: 'Special campaigns and drives under the nation-wide Swachhata Hi Seva cleanliness mission.',
+                start_date: '2025-09-17',
+                end_date: '2025-10-02',
+                events: swachhataGalleryEvents
+            });
+        }
+        if (sevaSankalpGalleryEvents.length > 0) {
+            megaEventsWithEvents.push({
+                id: 'seva-sankalp-fallback',
+                title: 'Seva Sankalp Spotlight',
+                description: 'Fostering empathy and social responsibility through grassroots actions and educational outreach.',
+                start_date: '2026-03-15',
+                end_date: '2026-04-20',
+                events: sevaSankalpGalleryEvents
+            });
+        }
+    }
+
+    // Filter main events (do not exclude mega_events events from all events)
+    const mainGalleryEvents = filteredEvents;
 
     return (
         <div className="bg-[#FAF9F6] min-h-screen text-slate-800 pb-20">
             <GalleryHero />
-            <Suspense fallback={<div className="text-center my-10 text-slate-500 font-semibold">Loading filters...</div>}>
-                <Filters wings={wings} />
+            <Suspense fallback={<div className="text-center my-10 text-slate-500 font-semibold">Loading gallery...</div>}>
+                <GalleryInteractive 
+                    wings={wings}
+                    megaEvents={megaEventsWithEvents}
+                    mainEvents={mainGalleryEvents}
+                />
             </Suspense>
-
-            {/* Swachhata Hi Seva Section */}
-            {swachhataGalleryEvents.length > 0 && (
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16">
-                    <div className="border-b border-slate-200 pb-5 mb-8">
-                        <h3 className="text-2xl font-black text-slate-800 flex items-center gap-2.5">
-                            <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                            Swachhata Hi Seva Spotlight
-                        </h3>
-                        <p className="text-slate-500 text-sm mt-1">Special campaigns and drives under the nation-wide Swachhata Hi Seva cleanliness mission.</p>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 justify-items-center">
-                        {swachhataGalleryEvents.map((item, index) => (
-                            <EventCard key={item.id || index} data={item} />
-                        ))}
-                    </div>
-                </section>
-            )}
-
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-                <div className="border-b border-slate-200 pb-5 mb-8">
-                    <h3 className="text-2xl font-black text-slate-800">All Gallery Events</h3>
-                    <p className="text-slate-500 text-sm mt-1">Browse photos and archives from various central and wing-level events.</p>
-                </div>
-                {mainGalleryEvents.length === 0 ? (
-                    <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center max-w-xl mx-auto shadow-sm">
-                        <p className="text-slate-400 text-lg font-bold">No events found matching your filters.</p>
-                        <p className="text-slate-500 text-sm mt-2">Try adjusting your date range or selecting a different wing.</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 justify-items-center">
-                        {mainGalleryEvents.map((item, index) => (
-                            <EventCard key={item.id || index} data={item} />
-                        ))}
-                    </div>
-                )}
-            </section>
         </div>
     )
 }

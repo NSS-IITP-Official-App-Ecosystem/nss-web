@@ -17,15 +17,7 @@
             }
         },
         {
-            "url": "/home_slider/blooddonation2019.jpeg",
-            "content": {
-                "update_text": "Chetna Health Cell",
-                "title": "Connecting Hearts, Saving Lives",
-                "action": {
-                    "text": "Register as Donor",
-                    "link": "/request-blood"
-                }
-            }
+            "url": "/home_slider/blooddonation2019.jpeg"
         }
     ]
 }
