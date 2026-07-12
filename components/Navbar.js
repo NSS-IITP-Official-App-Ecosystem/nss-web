@@ -65,7 +65,7 @@ const LINKS = [
         "link": "/wings/rural"
       },
       {
-        "text": "Environmental Wing",
+        "text": "Environmental",
         "link": "/wings/environmental"
       },
       {
@@ -73,7 +73,7 @@ const LINKS = [
         "link": "/wings/dnc"
       },
       {
-        "text": "Teaching Wing",
+        "text": "Teaching & Technical",
         "link": "/wings/teaching"
       }
     ]

@@ -80,10 +80,28 @@ export default function GalleryInteractive({
       </div>
 
       {/* All Gallery Events */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <div className="border-b border-slate-200 pb-5 mb-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 ">
+        <div className="border-b border-slate-200 pb-5 gap-y-5 mb-8 flex flex-row flex-wrap justify-between items-center">
+          <div>
           <h3 className="text-2xl font-black text-slate-800">All Gallery Events</h3>
           <p className="text-slate-500 text-sm mt-1">Browse photos and archives from various central and wing-level events.</p>
+          </div>
+           {/* Mega Campaign Link */}
+          <button
+            onClick={() => {
+              const element = document.getElementById("megaCampaigns");
+              if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100/80 text-amber-800 text-xs font-bold transition-all border border-amber-200/60 cursor-pointer shadow-sm md:ml-auto"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            </span>
+            Explore Mega Campaigns
+          </button>
         </div>
         {filteredMain.length === 0 ? (
           <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center max-w-xl mx-auto shadow-sm mb-12">
