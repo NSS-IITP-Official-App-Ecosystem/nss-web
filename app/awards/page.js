@@ -11,12 +11,72 @@ export default function AwardsPage() {
     const cleaned = String(path ?? '').trim();
     if (!cleaned) return '';
     const withoutLeadingSlash = cleaned.replace(/^\/+/, '');
-    if (withoutLeadingSlash.startsWith('events/')) return `/${withoutLeadingSlash}`;
-    if (withoutLeadingSlash.startsWith('awards/')) return `/awards/${withoutLeadingSlash.replace(/^awards\//, '')}`;
-    return `/awards/${withoutLeadingSlash.replace(/ ([AP]M)(\.[^.]+)$/u, '\u202F$1$2')}`;
+    let resolved = '';
+    if (withoutLeadingSlash.startsWith('events/') || withoutLeadingSlash.startsWith('assets/')) {
+      resolved = `/${withoutLeadingSlash}`;
+    } else if (withoutLeadingSlash.startsWith('awards/')) {
+      resolved = `/awards/${withoutLeadingSlash.replace(/^awards\//, '')}`;
+    } else {
+      resolved = `/awards/${withoutLeadingSlash.replace(/ ([AP]M)(\.[^.]+)$/u, '\u202F$1$2')}`;
+    }
+    return encodeURI(resolved);
   };
 
   // --- DATA ---
+  const nationalAchievements = [
+    {
+      title: "Viksit Bharat Young Leaders Dialogue (VBYLD)",
+      subtitle: "Qualified as Grand Finalist & Presented to the Prime Minister",
+      year: "Jan 2026",
+      description: "NSS volunteer Sneha Raj qualified as a grand finalist for the Viksit Bharat Young Leaders Dialogue (VBYLD) at Bharat Mandapam, New Delhi, where she had the honor of presenting her ideas for \"Viksit Bharat 2047\" directly to the Prime Minister.",
+      volunteers: [
+        { 
+          name: "Sneha Raj", 
+          roll: "2501ME51", 
+          role: "Grand Finalist",
+          img: awardImage("sneha vblyd.jpg"),
+          caption: "Sneha Raj representing NSS IIT Patna & Team Bihar at Viksit Bharat Young Leaders Dialogue (VBYLD)"
+        }
+      ]
+    },
+    {
+      title: "Budget Quest — Interacting with the PM on the 2026 Budget",
+      subtitle: "Qualified for Grand Finale & Interacted Directly with the PM",
+      year: "April 2026",
+      description: "Srishti Khargonkar and Anubhav Kumar qualified for the grand finale of Budget Quest (MY Bharat Scheme) and interacted directly online with Prime Minister Narendra Modi, sharing their analysis and recommendations on the 2026 Union Budget.",
+      volunteers: [
+        { 
+          name: "Srishti Khargonkar", 
+          roll: "2503ME13", 
+          role: "Grand Finalist",
+          img: awardImage("shrishti.jpg"),
+          caption: "Srishti Khargonkar interacting online with PM Narendra Modi on the 2026 Union Budget during Budget Quest"
+        },
+        { 
+          name: "Anubhav Kumar", 
+          roll: "2501AI05", 
+          role: "Grand Finalist",
+          img: awardImage("anubhav.jpg"),
+          caption: "Anubhav Kumar interacting online with PM Narendra Modi on the 2026 Union Budget during Budget Quest"
+        }
+      ]
+    }
+  ];
+
+  let globalNationalMediaIndex = 0;
+  const structuredNationalAchievements = nationalAchievements.map(item => ({
+    ...item,
+    volunteers: item.volunteers.map(v => ({
+      ...v,
+      globalIndex: globalNationalMediaIndex++
+    }))
+  }));
+
+  const nationalMediaList = structuredNationalAchievements.flatMap(item => item.volunteers.map(v => ({
+    img: v.img,
+    caption: v.caption
+  })));
+
   const officialPrizePhotos = [
     { img: awardImage("IMG_2017 (1) copy.JPG"), caption: "Core Official receiving Best Leadership Award" },
     { img: awardImage("IMG_2022 (2) copy 2.JPG"), caption: "Sub-Coordinator felicitated" },
@@ -94,12 +154,13 @@ export default function AwardsPage() {
     if (type === 'officials') listLength = officials.length;
     if (type === 'winners') listLength = flatWinnersList.length;
     if (type === 'official-prizes') listLength = officialPrizePhotos.length;
+    if (type === 'national') listLength = nationalMediaList.length;
 
     setModalData({
       type,
       idx: (idx + dir + listLength) % listLength
     });
-  }, [modalData, flatWinnersList.length]);
+  }, [modalData, flatWinnersList.length, nationalMediaList.length]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -125,6 +186,7 @@ export default function AwardsPage() {
     if (type === 'officials') return { src: officials[idx]?.img, txt: `${officials[idx]?.name} — ${officials[idx]?.role} (${officials[idx]?.wing})`, len: officials.length };
     if (type === 'winners') return { src: flatWinnersList[idx]?.img, txt: `${flatWinnersList[idx]?.name} (${flatWinnersList[idx]?.wingName}) - ${flatWinnersList[idx]?.rank || ''}`, len: flatWinnersList.length };
     if (type === 'official-prizes') return { src: officialPrizePhotos[idx]?.img, txt: officialPrizePhotos[idx]?.caption, len: officialPrizePhotos.length };
+    if (type === 'national') return { src: nationalMediaList[idx]?.img, txt: nationalMediaList[idx]?.caption, len: nationalMediaList.length };
     return null;
   };
 
@@ -134,22 +196,128 @@ export default function AwardsPage() {
     <div className="bg-neutral-50 min-h-screen pb-24">
 
       {/* ── 1. Hero Header ── */}
-      <div className="bg-gradient-to-r from-blue-950 to-slate-900 text-white py-16 px-4 text-center shadow-md relative overflow-hidden">
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-full mb-4 backdrop-blur-sm">
-            <FaAward className="text-4xl text-amber-400 animate-pulse" />
+      <div className="relative overflow-hidden bg-slate-950 text-white py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-900 shadow-2xl">
+        {/* Shimmering Ambient Glow Backgrounds */}
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[60%] rounded-full bg-blue-500/10 blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[60%] rounded-full bg-amber-500/10 blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20 pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto relative z-10 text-center">
+          {/* Glassmorphic Badge container */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-inner hover:bg-white/10 hover:border-white/20 transition-all duration-300 group cursor-default">
+            <FaAward className="text-amber-400 text-lg group-hover:scale-125 transition-transform duration-300" />
+            <span className="text-xs font-bold uppercase tracking-widest text-slate-300">NSS IIT Patna Excellence</span>
           </div>
-          <h1 className="text-4xl md:text-5xl text-amber-400 font-extrabold tracking-tight mb-4">
+
+          {/* Title with Gradient Text */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-6 bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-300 bg-clip-text text-transparent drop-shadow-sm leading-[1.15]">
             Awards & Achievements
           </h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-            Honoring the dedication, leadership, and selfless service of our volunteers at NSS IIT Patna during the Annual Closing Ceremony.
+
+          {/* Description */}
+          <p className="text-base sm:text-lg md:text-xl text-slate-300/90 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+            Honoring the outstanding dedication, leadership, and selfless community service of our volunteers at the Annual Closing Ceremony.
           </p>
+
+          {/* Stats Bar */}
+          <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mt-8 border-t border-white/10 pt-8">
+            <div className="flex flex-col items-center p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 hover:-translate-y-0.5 cursor-default">
+              <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">4</span>
+              <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">National Finalists</span>
+            </div>
+            <div className="flex flex-col items-center p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 hover:-translate-y-0.5 cursor-default">
+              <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">17</span>
+              <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Core Officials</span>
+            </div>
+            <div className="flex flex-col items-center p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 hover:-translate-y-0.5 cursor-default">
+              <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">15+</span>
+              <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Star Performers</span>
+            </div>
+          </div>
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12)_0%,transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-24">
+
+        {/* ── National Recognition & Achievements ── */}
+        <section className="relative">
+          <div className="flex items-center gap-3 border-b border-gray-200 pb-4 mb-8">
+            <FaTrophy className="text-3xl text-amber-500 animate-pulse" />
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-800">National Recognition & Achievements</h2>
+              <p className="text-sm text-slate-500">NSS IIT Patna volunteers representing our unit and state at prestigious national forums.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {structuredNationalAchievements.map((achievement, idx) => (
+              <div
+                key={idx}
+                className="bg-white border-2 border-amber-100 hover:border-amber-200 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  {/* Badges */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-xs font-bold uppercase tracking-wider">
+                      <FaAward className="text-sm" /> National Honor
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-xs font-bold uppercase tracking-wider font-mono">
+                      {achievement.year}
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 leading-tight">
+                    {achievement.title}
+                  </h3>
+                  
+                  <h4 className="text-sm font-semibold text-blue-700 mb-4 font-mono uppercase tracking-wide">
+                    {achievement.subtitle}
+                  </h4>
+                  
+                  <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                    {achievement.description}
+                  </p>
+                </div>
+
+                <div className="border-t border-slate-100 pt-6 mt-4">
+                  <h5 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Honored Volunteers</h5>
+                  <div className={`grid gap-6 ${achievement.volunteers.length === 1 ? 'grid-cols-1 max-w-[260px] mx-auto' : 'grid-cols-2'}`}>
+                    {achievement.volunteers.map((vol) => (
+                      <div
+                        key={vol.globalIndex}
+                        className="bg-slate-50 border border-slate-200/60 rounded-2xl p-4 flex flex-col items-center text-center shadow-xs group hover:shadow-md transition-all duration-300"
+                      >
+                        {/* Avatar Image Frame (Larger & Clearer Rectangular Card) */}
+                        <div
+                          onClick={() => openModal('national', vol.globalIndex)}
+                          className="w-full aspect-[4/5] mb-4 rounded-2xl bg-slate-200 overflow-hidden relative cursor-zoom-in border border-slate-100 shadow-inner flex items-center justify-center"
+                        >
+                          <FaUserAlt className="absolute text-slate-400 text-4xl opacity-30" />
+                          <img
+                            src={vol.img}
+                            alt={vol.name}
+                            className="w-full h-full object-cover relative z-10 transition-transform duration-500 group-hover:scale-105"
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                          />
+                          <div className="absolute inset-0 z-20 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white text-xs font-semibold">
+                            View Full Photo
+                          </div>
+                        </div>
+
+                        <h4 className="font-extrabold text-sm sm:text-base text-slate-800 line-clamp-1">{vol.name}</h4>
+                        <p className="text-[10px] font-semibold text-slate-550 font-mono mb-2 bg-slate-200/50 px-2 py-0.5 rounded-md inline-block">{vol.roll}</p>
+                        
+                        <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full border border-blue-100">
+                          {vol.role}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* ── 2. Officials Receiving Prizes Section ── */}
         <section>
