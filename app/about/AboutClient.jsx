@@ -78,7 +78,7 @@ export default function AboutClient() {
     },
     {
       icon: Palette,
-      name: "Designer Creation (DNC)",
+      name: "Design and Curation (DNC)",
       desc: "Bringing creative awareness campaigns, flyers, street art, and visual storytelling to social causes.",
       link: "/wings/dnc"
     }
@@ -228,7 +228,7 @@ export default function AboutClient() {
                 <text x="185" y="78" textAnchor="start" className="text-[7.5px] font-mono fill-slate-200 font-bold uppercase tracking-wider">Prerna</text>
                 <text x="155" y="174" textAnchor="start" className="text-[7.5px] font-mono fill-slate-200 font-bold uppercase tracking-wider">Rural Dev</text>
                 <text x="45" y="174" textAnchor="end" className="text-[7.5px] font-mono fill-slate-200 font-bold uppercase tracking-wider">Environment</text>
-                <text x="15" y="78" textAnchor="end" className="text-[7.5px] font-mono fill-slate-200 font-bold uppercase tracking-wider">Creative</text>
+                <text x="15" y="78" textAnchor="end" className="text-[7.5px] font-mono fill-slate-200 font-bold uppercase tracking-wider">Design</text>
 
                 {/* Pulsating corner nodes */}
                 <circle cx="100" cy="35" r="3" fill="#f59e0b" className="animate-pulse" />

@@ -69,7 +69,7 @@ const LINKS = [
         "link": "/wings/environmental"
       },
       {
-        "text": "Designer Creation (DNC)",
+        "text": "Design and Curation (DNC)",
         "link": "/wings/dnc"
       },
       {
