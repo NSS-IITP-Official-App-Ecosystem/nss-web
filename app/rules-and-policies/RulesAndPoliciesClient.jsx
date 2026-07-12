@@ -75,26 +75,25 @@ export default function RulesAndPoliciesClient() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-4 text-center">
-                    <div className="text-2xl font-extrabold text-[#00256d]">120 Hours</div>
-                    <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-1">Mandatory Hours</div>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-4 text-center">
+                <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-4 text-center max-w-md mx-auto">
+                  <div className="text-2xl font-extrabold text-[#00256d]">120 Hours</div>
+                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-1">Mandatory Hours</div>
+                </div>
+                {/* <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-4 text-center">
                     <div className="text-2xl font-extrabold text-amber-600">40 Hours</div>
                     <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-1">Max Other Activities</div>
-                  </div>
-                </div>
+                  </div> */}
+
 
                 <ul className="space-y-3.5 text-slate-600 font-normal leading-relaxed text-sm md:text-base">
                   <li className="flex items-start gap-2.5">
                     <ChevronRight className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                     <span>Every volunteer must complete <strong>120 mandatory hours</strong> in order to pass this course in the first 2 semesters or it will be extended to coming semesters until completed or before first 4 semester which ever is early.</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
+                  {/* <li className="flex items-start gap-2.5">
                     <ChevronRight className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                     <span>A maximum of <strong>40 hours</strong> from other activities (such as blood donation, cloth donation, orientation, special events, guest lectures, etc.) will be counted toward your total hours.</span>
-                  </li>
+                  </li> */}
                   <li className="flex items-start gap-2.5">
                     <ChevronRight className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                     <span>In case any volunteer fails to complete the criteria, he/she will receive an 'F' or unsatisfactory grade in the course and will have to repeat/register next year.</span>
@@ -215,8 +214,8 @@ export default function RulesAndPoliciesClient() {
                 Visit our <strong>Think-Thank</strong> portal to submit your anonymous feedback, suggest new ideas, or thank fellow volunteers.
               </p>
             </div>
-            <Link 
-              href="/think-thank" 
+            <Link
+              href="/think-thank"
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#00256d] hover:bg-[#001c54] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all duration-300 shrink-0 cursor-pointer"
             >
               Go to Think-Thank

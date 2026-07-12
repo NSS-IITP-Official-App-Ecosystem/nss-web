@@ -1,8 +1,27 @@
 "use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaBookOpen, FaPalette, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
+import { FaHome, FaLeaf, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
+
+// Custom component to handle wing logos with fallback to React Icons
+function WingLogo({ src, alt, fallbackIcon: FallbackIcon, iconColor = "text-[var(--color-brand-blue)]" }) {
+  const [error, setError] = useState(false);
+  
+  if (error || !src) {
+    return <FallbackIcon className={`text-4xl ${iconColor}`} />;
+  }
+  
+  return (
+    <img 
+      src={src} 
+      alt={alt} 
+      className="w-full h-full object-contain p-2" 
+      onError={() => setError(true)} 
+    />
+  );
+}
 
 export default function Unit1Page() {
   // Animation variants for smooth staggered loading
@@ -28,24 +47,36 @@ export default function Unit1Page() {
           animate="show"
           className="relative max-w-5xl mx-auto z-10"
         >
+          {/* Unit Logo (using logo of unit 2 for unit 1) */}
+          <motion.div 
+            variants={itemVariants} 
+            className="flex justify-center mb-6"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          >
+            <img 
+              src="/units/unit-2.png" 
+              alt="NSS Unit 1 Logo" 
+              className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_0_15px_rgba(253,230,138,0.3)]"
+            />
+          </motion.div>
+
           <motion.div variants={itemVariants} className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
             <span className="text-[var(--color-primary)] font-semibold tracking-wider text-sm uppercase">Welcome to the core</span>
           </motion.div>
           
           <motion.div variants={itemVariants}>
-           <h1 
-  className="text-6xl sm:text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] via-[#FDE68A] to-[var(--color-primary)] mb-8 tracking-tighter"
-  style={{ WebkitTransform: 'translateZ(0)' }}
->
-  NSS Unit 1
-</h1>
-
-
+            <h1 
+              className="text-6xl sm:text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] via-[#FDE68A] to-[var(--color-primary)] mb-8 tracking-tighter"
+              style={{ WebkitTransform: 'translateZ(0)' }}
+            >
+              NSS Unit 1
+            </h1>
           </motion.div>
           
           <motion.div variants={itemVariants}>
             <p className="text-xl sm:text-2xl text-[var(--color-neutral-foundation)]/90 max-w-3xl mx-auto leading-relaxed font-light">
-              Empowering minds through education and innovation. Building strong foundational skills and creative problem-solving within the community.
+              Empowering minds through sustainable growth and rural outreach. Protecting our natural environment while building self-reliant communities.
             </p>
           </motion.div>
         </motion.div>
@@ -65,7 +96,7 @@ export default function Unit1Page() {
         <div className="max-w-4xl mx-auto text-center relative bg-white/60 backdrop-blur-xl border border-white/80 p-12 sm:p-16 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <FaQuoteLeft className="absolute top-8 left-8 text-6xl text-[var(--color-neutral-foundation)]/50" />
           <blockquote className="relative z-10 text-2xl sm:text-3xl font-medium text-[var(--color-secondary-slate)] leading-snug">
-            "Education is the most powerful weapon which you can use to change the world. Design is the silent ambassador of your brand."
+            "The best way to find yourself is to lose yourself in the service of others. Protecting our environment and uplifting our rural communities forms the bedrock of our service."
           </blockquote>
           <div className="mt-10 flex items-center justify-center gap-6">
             <div className="h-[2px] w-16 bg-gradient-to-r from-transparent to-[var(--color-primary)]"></div>
@@ -92,58 +123,67 @@ export default function Unit1Page() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
           
-          {/* Teaching Wing Card */}
+          {/* Rural Development Wing Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
           >
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-150 group-hover:rotate-12">
-              <FaBookOpen className="text-9xl text-[var(--color-brand-blue)]" />
+              <FaHome className="text-9xl text-[var(--color-brand-blue)]" />
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-brand-blue)] to-[#1E303D] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaBookOpen className="text-3xl text-white" />
+              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                <WingLogo 
+                  src="/wings/rural.png" 
+                  alt="Rural Development Wing Logo" 
+                  fallbackIcon={FaHome} 
+                />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Teaching Wing
+                Rural Development Wing
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                Dedicated to providing quality education to the underprivileged. We conduct regular classes, mentorship programs, and academic workshops to nurture the next generation of thinkers.
+                Focuses on rural outreach, village development, and community welfare, bridging the urban-rural divide through education, sanitation, and sustainable infrastructure projects.
               </p>
               
-              <Link href="/wings/teaching" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/rural" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-brand-blue)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More 
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>
             </div>
           </motion.div>
 
-          {/* Design Wing Card */}
+          {/* Environmental Wing Card */}
           <motion.div 
             whileHover={{ y: -15 }}
             className="group relative rounded-[2rem] bg-white border border-[var(--color-neutral-foundation)]/50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_30px_60px_rgba(35,58,68,0.15)] transition-all duration-500"
           >
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-150 group-hover:-rotate-12">
-              <FaPalette className="text-9xl text-[var(--color-primary)]" />
+              <FaLeaf className="text-9xl text-[var(--color-primary)]" />
             </div>
 
             <div className="p-12 relative z-10 h-full flex flex-col">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[#8A5F3C] flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <FaPalette className="text-3xl text-white" />
+              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                <WingLogo 
+                  src="/wings/env.png" 
+                  alt="Environmental Wing Logo" 
+                  fallbackIcon={FaLeaf} 
+                  iconColor="text-[var(--color-primary)]"
+                />
               </div>
               
               <h3 className="text-4xl font-extrabold text-[var(--color-brand-blue)] mb-6 group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                Design Wing
+                Environmental Wing
               </h3>
               
               <p className="text-[var(--color-secondary-slate)] text-lg mb-10 leading-relaxed flex-grow">
-                The creative powerhouse of Unit 1. From visual communications to UI/UX, we design impactful media that amplifies the voice and mission of NSS initiatives.
+                Dedicated to ecological conservation, waste management campaigns, green plantation drives, and creating awareness about sustainability and clean environment.
               </p>
               
-              <Link href="/wings/design" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
+              <Link href="/wings/environmental" className="inline-flex items-center gap-3 font-bold text-white bg-[var(--color-brand-blue)] hover:bg-[var(--color-primary)] px-8 py-4 rounded-xl transition-all duration-300 w-fit shadow-md hover:shadow-xl group/link">
                 Discover More
                 <FaArrowRight className="transform group-hover/link:translate-x-2 transition-transform duration-300" />
               </Link>

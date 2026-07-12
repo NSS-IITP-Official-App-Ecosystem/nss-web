@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
 import HomeClient from './HomeClient';
 import { resolveEventThumbnail } from '@/components/server-utils';
+import { resolveImageUrl } from '@/utils/imageUrl';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,7 +21,7 @@ export const metadata = {
 export default async function HomePage() {
     let units = [];
     let events = [];
-    let upcomingEvents  = [];
+    let upcomingEvents = [];
     let testimonials = [];
     let impacts = [];
     let collaborators = [];
@@ -34,12 +35,12 @@ export default async function HomePage() {
             .from('units')
             .select('number, motive, thumbnail_url')
             .order('number');
-        
+
         if (!unitsErr && dbUnits) {
             units = dbUnits.map(u => ({
                 title: `Unit ${u.number}`,
                 subTitle: u.motive || "Service Unit",
-                thumbnail: resolveImageUrl(u.thumbnail_url, "/units/chetna_final.jpg"),
+                thumbnail: resolveImageUrl(u.thumbnail_url, "/placeholder.svg"),
                 action: {
                     text: "Know More",
                     url: `/units/unit-${u.number}`
@@ -159,7 +160,7 @@ export default async function HomePage() {
         console.error("Supabase fetch events error:", err);
     }
 
-     try {
+    try {
         const supabase = await createClient();
 
         // 5. Fetch Events (Limit 4 for Timeline)
@@ -222,16 +223,6 @@ export default async function HomePage() {
             desc: i.desc,
             count: i.count,
             unit: i.unit
-        }));
-    }
-    if (events.length === 0) {
-        events = events_data.items.map(e => ({
-            id: e.id || "static-event",
-            title: e.title,
-            details: e.details,
-            date: e.date,
-            thumbnail: resolveImageUrl(e.thumbnail, "/units/chetna_final.jpg"),
-            wings: e.wings || []
         }));
     }
 

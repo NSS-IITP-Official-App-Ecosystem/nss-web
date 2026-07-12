@@ -50,7 +50,7 @@ export function EventCard({ data }) {
                 </div>
 
                 {/* Date stamp */}
-                <div className="flex items-center gap-2 text-slate-400 text-xs font-mono font-semibold pt-3 border-t border-slate-100">
+                <div className="flex items-center gap-2 text-slate-400 text-xs font-mono font-semibold pt-3 border-t border-slate-100 mt-auto">
                     <FaCalendarAlt className="text-slate-400 text-sm" />
                     <span>{data.date ? new Date(data.date).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : "To be decided"}</span>
                 </div>

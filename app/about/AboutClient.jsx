@@ -88,7 +88,7 @@ export default function AboutClient() {
     { value: "500+", label: "Active Volunteers" },
     { value: "80+", label: "Annual Events" },
     { value: "10,000+", label: "Service Hours Logged" },
-    { value: "5+", label: "Adopted Villages" }
+    { value: "4+", label: "Adopted Villages" }
   ];
 
   const journeySteps = [
@@ -118,7 +118,7 @@ export default function AboutClient() {
     },
     {
       title: "5. Graduation & Certificate",
-      desc: "Upon completing the mandatory 80 service hours, volunteers graduate from the scheme, receiving their official NSS certificate.",
+      desc: "Upon completing the mandatory 120 service hours, volunteers graduate from the scheme, receiving their official NSS certificate.",
       icon: Award,
       badge: "Certificate"
     }

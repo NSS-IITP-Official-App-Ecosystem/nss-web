@@ -6,7 +6,7 @@
             "url": "/home_slider/1.png"
         },
         {
-            "url": "/home_slider/SWACHHATA_HI_SEVA.jpeg",
+            "url": "/home_slider/raghopur school.jpeg",
             "content": {
                 "update_text": "Swachh Bharat Abhiyan",
                 "title": "Drive Environmental & Social Sustainability",
@@ -17,15 +17,10 @@
             }
         },
         {
-            "url": "/home_slider/blooddonation2019.jpeg",
-            "content": {
-                "update_text": "Chetna Health Cell",
-                "title": "Connecting Hearts, Saving Lives",
-                "action": {
-                    "text": "Register as Donor",
-                    "link": "/request-blood"
-                }
-            }
+            "url": "/home_slider/nss closing.jpeg"
+        },
+        {
+            "url": "/home_slider/nukkad.jpg"
         }
     ]
 }
