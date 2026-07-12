@@ -1,6 +1,7 @@
 import { LuInstagram, LuLinkedin, LuYoutube } from "react-icons/lu";
 import Link from "next/link";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
+import Image from 'next/image'
 
 export default function Footer() {
 
@@ -11,15 +12,7 @@ export default function Footer() {
                 {/* About emblem widget */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                        <svg viewBox="0 0 100 100" className="w-10 h-10" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="46" fill="#0f172a" stroke="#f59e0b" strokeWidth="3" />
-                            <circle cx="50" cy="50" r="26" fill="#ef4444" />
-                            <g stroke="#f59e0b" strokeWidth="2">
-                                <line x1="50" y1="24" x2="50" y2="76" />
-                                <line x1="24" y1="50" x2="76" y2="50" />
-                            </g>
-                            <circle cx="50" cy="50" r="8" fill="#f59e0b" />
-                        </svg>
+                        <Image src={'/nss iitp logo.png'} height={48} width={48} alt="nss iitp logo" />
                         <div>
                             <h3 className="text-white font-black text-sm tracking-wider">NSS IIT PATNA</h3>
                             <p className="text-amber-500 text-[10px] font-bold uppercase">National Service Scheme</p>
@@ -41,7 +34,7 @@ export default function Footer() {
                         <li><Link href="/events" className="hover:text-amber-500 transition-colors">Events Archive</Link></li>
                         <li><Link href="/awards" className="hover:text-amber-500 transition-colors">Awards &amp; Achievements</Link></li>
                         <li><Link href="/rules-and-policies" className="hover:text-amber-500 transition-colors">Volunteering Guidelines</Link></li>
-                        <li><a href="https://play.google.com/store/apps/details?id=com.phad.chatapp" target="_blank" referrerPolicy="no-referrer" className="flex flex-row flex-nowrap gap-3 py-4 px-4 border-slate rounded-xl w-fit shadow-sm text-white bg-brand-blue"><IoLogoGooglePlaystore className="text-lg"/><span>Official NSS App</span></a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.phad.chatapp" target="_blank" referrerPolicy="no-referrer" className="flex flex-row flex-nowrap gap-3 py-4 px-4 border-slate rounded-xl w-fit shadow-sm text-white bg-brand-blue"><IoLogoGooglePlaystore className="text-lg" /><span>Official NSS App</span></a></li>
                     </ul>
                 </div>
                 {/* Contact details */}

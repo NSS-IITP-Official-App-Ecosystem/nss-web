@@ -58,7 +58,7 @@ export default function GalleryCarousel({
   if (!events || events.length === 0) return null;
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-24 relative">
+    <section id="megaCampaigns" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-24 relative">
       {/* Header Info Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900/5 via-white/80 to-slate-900/[0.02] p-6 sm:p-8 mb-10 border border-slate-200/70 backdrop-blur-md shadow-xs">
         {/* Colorful Glow */}

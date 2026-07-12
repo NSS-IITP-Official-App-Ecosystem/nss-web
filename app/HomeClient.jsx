@@ -130,6 +130,7 @@ export default function HomeClient({
                                         fill
                                         priority={i === 0}
                                         className={cn("object-cover block w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
+                                        unoptimized
                                     />
                                 </motion.div>
 
