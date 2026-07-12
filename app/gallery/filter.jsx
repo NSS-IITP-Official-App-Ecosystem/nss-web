@@ -31,7 +31,7 @@ export function Filters({ wings = [], searchQuery = "", onSearchChange = () => {
         setEndDate(searchParams.get('end-date') || '');
         setSession(searchParams.get("session") || "2025-2026");
         setSelectedWing(searchParams.get('wing') || 'All');
-        if (innerWidth < 640) setIsMobileDevice(true);
+        if (innerWidth < 768) setIsMobileDevice(true);
     }, [searchParams]);
 
     const handleSubmit = (e) => {

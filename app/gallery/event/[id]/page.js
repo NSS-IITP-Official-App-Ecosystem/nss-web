@@ -182,9 +182,11 @@ export default async function EventPage({ params }) {
                 </div>
 
                 {event.media && event.media.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
+                    <div className="columns-1 sm:columns-2 md:columns-3 gap-6 sm:gap-8 [column-fill:_balance] box-border">
                         {event.media.map((item, i) => (
-                            <ImageCard key={i} src={item.url} type={item.type} title={event.title} index={i} />
+                            <div key={i} className="break-inside-avoid mb-6 sm:mb-8">
+                                <ImageCard src={item.url} type={item.type} title={event.title} index={i} />
+                            </div>
                         ))}
                     </div>
                 ) : (

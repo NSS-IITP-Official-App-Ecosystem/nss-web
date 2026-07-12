@@ -1,11 +1,10 @@
 {
     "items": [
-        {
+          {
             "title": "Unit 1",
-            "subTitle": "Education & Awareness | ज्ञान से परिवर्तन",
+            "subTitle": "Environment & Sustainability | प्रकृति से प्रगति",
             "details": "",
             "thumbnail": "/units/unit-1.png",
-            "colorCode": "",
             "action": {
                 "text": "Know More",
                 "url": "/units/unit-1"
@@ -13,9 +12,10 @@
         },
         {
             "title": "Unit 2",
-            "subTitle": "Environment & Sustainability | प्रकृति से प्रगति",
+            "subTitle": "Education & Awareness | ज्ञान से परिवर्तन",
             "details": "",
             "thumbnail": "/units/unit-2.png",
+            "colorCode": "",
             "action": {
                 "text": "Know More",
                 "url": "/units/unit-2"
