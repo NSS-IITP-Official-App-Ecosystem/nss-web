@@ -351,11 +351,12 @@ export default function FAQPage() {
 
         <div className="faq-contact-card">
           <div className="faq-contact-icon-box">
-            <PhoneCall className="w-6 h-6" />
+            <Users className="w-6 h-6" />
           </div>
           <div className="faq-contact-info">
             <h4>General Secretary</h4>
-            <a href="mailto:nss_gen_sec@iitp.ac.in">nss_gen_sec@iitp.ac.in</a>
+            <p>For core leadership, institutional collaborations & urgent coordination.</p>
+            <a href="mailto:nss_gen_sec@iitp.ac.in" className="gensec-card-email font-mono">nss_gen_sec@iitp.ac.in</a>
           </div>
         </div>
       </section>
