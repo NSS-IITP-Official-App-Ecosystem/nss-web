@@ -150,7 +150,7 @@ const LINKS = [
     "icon": Mail,
   },
   {
-    "text": "About US",
+    "text": "About Us",
     "link": "/about",
     "icon": Building,
   }
@@ -158,6 +158,7 @@ const LINKS = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -169,6 +170,34 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Global same-page link click interceptor for scrolling to top
+  useEffect(() => {
+    const handleAnchorClick = (e) => {
+      const anchor = e.target.closest('a');
+      if (!anchor || !anchor.href) return;
+      try {
+        const url = new URL(anchor.href);
+        if (
+          url.origin === window.location.origin &&
+          url.pathname === window.location.pathname &&
+          !url.hash
+        ) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } catch (err) {}
+    };
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, []);
+
+  const handleSamePageScroll = (e, href) => {
+    if (pathname === href) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className={cn("top-0 z-50 sticky transition-all duration-300 shadow-sm border-b border-slate-100")}>
       {/* Glassmorphism background container - prevents creating containing block for fixed drawer */}
@@ -177,7 +206,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center gap-3">
             <NavDrawer />
-            <Link href="/" className="shrink-0 flex items-center gap-2 group">
+            <Link href="/" onClick={(e) => handleSamePageScroll(e, "/")} className="shrink-0 flex items-center gap-2 group">
               <Image src='/nss iitp logo.png' width={48} height={48} alt='nss iit patna logo' />
               <span className="font-extrabold text-2xl text-brand-blue tracking-tight transition-colors duration-200 group-hover:text-brand-blue/80">
                 NSS IITP
@@ -192,6 +221,7 @@ export default function Navbar() {
                 <Link
                   key={index}
                   href={nav_item.link}
+                  onClick={(e) => handleSamePageScroll(e, nav_item.link)}
                   className={cn(
                     "flex items-center gap-1.5 text-secondary-slate hover:text-brand-blue font-medium transition-all py-1.5 px-3 rounded-lg hover:bg-slate-50 duration-200 active:scale-95"
                   )}
@@ -247,6 +277,14 @@ function NavDrawer() {
   const [mobileSelectedIndex, setMobileSelectedIndex] = useState(-1);
   const [isNavDrawerOpen, setIsNavDrawerOpen] = useState(false);
   const pathName = usePathname();
+
+  const handleSamePageScroll = (e, href) => {
+    if (pathName === href) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsNavDrawerOpen(false);
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -321,14 +359,16 @@ function NavDrawer() {
                       <motion.div
                         key={index}
                         variants={navItemVariants}
-                        onClick={() => {
-                          if (nav_item.link === "#") {
-                            setSelectedIndex(index);
-                          }
-                        }}
                       >
                         <Link
                           href={nav_item.link}
+                          onClick={(e) => {
+                            if (nav_item.link === "#") {
+                              setSelectedIndex(index);
+                            } else {
+                              handleSamePageScroll(e, nav_item.link);
+                            }
+                          }}
                           className={cn(
                             "flex items-center justify-between py-3 px-4 rounded-xl font-semibold transition-all duration-200 cursor-pointer border border-transparent",
                             isSelected
@@ -366,6 +406,7 @@ function NavDrawer() {
                           <motion.div key={sub_item.text + index} variants={navItemVariants}>
                             <Link
                               href={sub_item.link}
+                              onClick={(e) => handleSamePageScroll(e, sub_item.link)}
                               className="group flex items-center justify-between p-3 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-100 transition-all duration-200"
                             >
                               <span className="text-secondary-slate group-hover:text-brand-blue font-medium text-sm transition-transform duration-200 group-hover:translate-x-0.5">
@@ -399,6 +440,7 @@ function NavDrawer() {
                         <Link
                           key={index}
                           href={nav_item.link}
+                          onClick={(e) => handleSamePageScroll(e, nav_item.link)}
                           className={cn(
                             "border border-gray-300 rounded-full flex items-center gap-1.5 text-secondary-slate hover:text-brand-blue font-medium transition-all py-1.5 px-3 hover:bg-slate-50 duration-200 active:scale-95"
                           )}
@@ -416,9 +458,11 @@ function NavDrawer() {
                     return (
                       <motion.div key={index} variants={navItemVariants} className="flex flex-col">
                         <Link
-                          onClick={() => {
+                          onClick={(e) => {
                             if (nav_item.link === "#") {
                               setMobileSelectedIndex(isExpanded ? -1 : index);
+                            } else {
+                              handleSamePageScroll(e, nav_item.link);
                             }
                           }}
                           href={nav_item.link}
@@ -451,6 +495,7 @@ function NavDrawer() {
                                 <Link
                                   key={subIndex}
                                   href={sub_item.link}
+                                  onClick={(e) => handleSamePageScroll(e, sub_item.link)}
                                   className="flex items-center gap-2 py-2 px-3 text-secondary-slate hover:text-brand-blue hover:bg-slate-50/80 rounded-lg text-sm font-medium transition-all duration-200 active:scale-98"
                                 >
                                   <ArrowRight className="w-3.5 h-3.5 opacity-40 shrink-0" />
