@@ -367,7 +367,7 @@ export default function OurTeam() {
                 </div>
               </div>
               {/* General Secretary 2 */}
-              <div className="tree-branch-col">
+              {selectedYear === '2025-26' && <div className="tree-branch-col">
                 <div className="tree-node" onClick={() => activeGenSecs[1] && setSelectedMember(activeGenSecs[1])}>
                   <div className="node-avatar-wrapper">
                     <img src={activeGenSecs[1]?.image || "/placeholder.svg"} alt="General Secretary" className="node-avatar" />
@@ -375,7 +375,7 @@ export default function OurTeam() {
                   <span className="node-role-tag">General Secretary</span>
                   <h4 className="node-admin-name">{activeGenSecs[1]?.name || "To Be Decided"}</h4>
                 </div>
-              </div>
+              </div>}
             </div>
           </motion.div>
 
