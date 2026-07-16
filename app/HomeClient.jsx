@@ -18,13 +18,16 @@ import {
     FaInfoCircle,
     FaLeaf,
     FaGraduationCap,
-    FaArrowLeft
+    FaArrowLeft,
+    FaDownload,
+    FaBookOpen
 } from 'react-icons/fa';
 import * as Icons from 'react-icons/pi';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import EmblaCarousel from '@/components/EmblaCarousel';
 import Testimonial, { TestimonialItem } from '@/components/testimonial';
 import { cn } from '@/components/utils';
+import DearFlipPdf from '@/components/DearFlip';
 
 const EMBLA_OPTIONS = { loop: true };
 
@@ -45,6 +48,7 @@ export default function HomeClient({
 }) {
     const [activeSlide, setActiveSlide] = useState(0);
     const [slideForwarded, setSlideForwarded] = useState(true);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     // Auto-scroll slider interval (matches 6.5s progress line)
     useEffect(() => {
@@ -63,6 +67,31 @@ export default function HomeClient({
     const handlePrevSlide = () => {
         setSlideForwarded(false);
         setActiveSlide(prev => (prev === 0 ? sliderData.items.length - 1 : prev - 1));
+    };
+
+    const handleDownload = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (isDownloading) return;
+        setIsDownloading(true);
+        try {
+            const response = await fetch('/SAMVEDNA.pdf');
+            if (!response.ok) throw new Error('Download failed');
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'SAMVEDNA.pdf';
+            a.onclick = (event) => event.stopPropagation();
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Download error:', error);
+        } finally {
+            setIsDownloading(false);
+        }
     };
 
     // Parallax Slide Animation Variants
@@ -343,6 +372,78 @@ export default function HomeClient({
                                     <video controls={true} src={'/nss highlights.mp4'} />
                                 </div>
                             </motion.div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            {/* 2.5. SAMVEDNA MAGAZINE SECTION WITH LIGHT THEMED INTERACTIVE FLIPBOOK */}
+            <section className="py-24 relative overflow-hidden bg-white border-b border-slate-200/60 text-slate-800">
+                {/* Glowing background accent circles (very soft light glow) */}
+                <div className="absolute top-1/4 left-[10%] w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+                        {/* Text and Actions Left Column */}
+                        <div className="lg:col-span-5 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-200 bg-amber-50/60 text-amber-700 font-extrabold text-xs uppercase tracking-widest font-mono shadow-xs">
+                                <FaBookOpen className="text-sm" /> Annual Publication (2025-26)
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-800 tracking-tight leading-tight font-sans">
+                                SAMVEDNA <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent font-sans font-black">Magazine</span>
+                            </h2>
+                            <p className="text-slate-600 text-base leading-relaxed font-light max-w-lg">
+                                Explore the pages of <b>Samvedna</b>, the official annual newsletter of NSS IIT Patna.
+                                Witness the achievements of our cells, read personal testimonials of student volunteers,
+                                and discover how technological innovation combines with community service to drive social change.
+                            </p>
+
+                            {/* Features list */}
+                            <div className="space-y-3.5 w-full max-w-sm pt-2 text-left">
+                                <div className="flex items-center gap-3">
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-5 h-5 rounded-full bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center text-xs flex-shrink-0 font-bold">
+                                        ✓
+                                    </div>
+                                    <span className="text-slate-600 text-sm font-light">Comprehensive coverage of all wings</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-5 h-5 rounded-full bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center text-xs flex-shrink-0 font-bold">
+                                        ✓
+                                    </div>
+                                    <span className="text-slate-600 text-sm font-light">Volunteer diaries & stories of change</span>
+                                </div>
+                            </div>
+
+                            {/* Download Action Button */}
+                            <div className="pt-4 flex flex-wrap gap-4 justify-center lg:justify-start w-full">
+                                <button
+                                    onClick={handleDownload}
+                                    disabled={isDownloading}
+                                    className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 disabled:bg-amber-400 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-98 cursor-pointer disabled:cursor-not-allowed text-xs font-sans"
+                                >
+                                    {isDownloading ? (
+                                        <>
+                                            <div className="w-3 h-3 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                                            Downloading...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FaDownload className="text-xs" /> Download PDF Magazine
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Interactive Flipbook Right Column */}
+                        <div className="lg:col-span-7 w-full flex justify-center">
+                            <div className="w-full max-w-2xl border border-slate-200/80 bg-[#FAF9F6] p-2.5 rounded-2xl shadow-lg relative">
+                                <DearFlipPdf source={'/SAMVEDNA.pdf'} />
+                            </div>
                         </div>
 
                     </div>
