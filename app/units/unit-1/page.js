@@ -55,7 +55,7 @@ export default function Unit1Page() {
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
           >
             <img 
-              src="/units/unit-2.png" 
+              src="/units/unit-1.png" 
               alt="NSS Unit 1 Logo" 
               className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_0_15px_rgba(253,230,138,0.3)]"
             />
