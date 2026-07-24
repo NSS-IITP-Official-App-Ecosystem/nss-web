@@ -11,7 +11,8 @@ import {
   ChevronRight,
   Sparkles,
   HeartHandshake,
-  ArrowRight
+  ArrowRight,
+  PlayIcon
 } from "lucide-react";
 
 export default function RulesAndPoliciesClient() {
@@ -88,7 +89,7 @@ export default function RulesAndPoliciesClient() {
                 <ul className="space-y-3.5 text-slate-600 font-normal leading-relaxed text-sm md:text-base">
                   <li className="flex items-start gap-2.5">
                     <ChevronRight className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                    <span>Every volunteer must complete <strong>120 mandatory hours</strong> in order to pass this course in the first 2 semesters or it will be extended to coming semesters until completed or before first 4 semester which ever is early.</span>
+                    <span>Every volunteer must complete <strong>120 mandatory hours</strong> in order to pass this course in the first 2 semesters.</span>
                   </li>
                   {/* <li className="flex items-start gap-2.5">
                     <ChevronRight className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
@@ -118,7 +119,7 @@ export default function RulesAndPoliciesClient() {
                 <ul className="space-y-3.5 text-slate-600 font-normal leading-relaxed text-sm md:text-base">
                   <li className="flex items-start gap-2.5">
                     <ChevronRight className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>Strict actions will be taken against volunteers who are found violating institutional discipline, using inappropriate language, or misbehaving with coordinators.</span>
+                    <span>Strict actions will be taken against volunteers who are found violating institutional discipline, using inappropriate language, or misbehaving with coordinators or sub-coordinators.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <ChevronRight className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
@@ -146,8 +147,8 @@ export default function RulesAndPoliciesClient() {
             <div className="space-y-2">
               <h3 className="text-lg font-extrabold text-[#00256d]">3. Communication Channel</h3>
               <p className="text-slate-600 text-sm leading-relaxed font-normal">
-                WhatsApp groups are the primary medium for day-to-day coordination. It is the responsibility of the volunteer to stay updated on notifications and react/respond in a timely manner. Important administrative guidelines, camp venues, and rosters will be pinned by core members.
-              </p>
+Our official NSS app serves as the primary platform for daily coordination. We expect all volunteers to check the app regularly and respond to notifications in a timely manner. Additionally, we can utilize WhatsApp groups as a secondary channel for connecting with our team.</p>
+<a href="https://play.google.com/store/apps/details?id=com.phad.chatapp" target="_blank"  referrerPolicy="no-referrer" className="flex flex-row gap-3 py-3 px-6 bg-brand-blue/80 text-white border-brand-blue border rounded-2xl max-w-fit text-sm items-center hover:shadow hover:scale-105 hover:bg-brand-blue shadow-brand-blue/50 transition-all mt-5"><PlayIcon/> Download NSS App</a>
             </div>
           </div>
 
@@ -192,7 +193,7 @@ export default function RulesAndPoliciesClient() {
                 {[
                   "Engage in activities which harm the reputation of NSS or Institute.",
                   "Hurt anyone Physically or Emotionally.",
-                  "NSS IIT Patna is a voluntary youth organisation. Whenever you bear the badge of NSS while working inside or outside the campus, One should not favour any Political, Regional or cultural view."
+                  "favour any Political, Regional or cultural view whenever you bear the badge of NSS while working inside or outside the campus."
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 items-start text-slate-600 text-sm md:text-base">
                     <XCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />

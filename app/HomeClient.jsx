@@ -395,9 +395,7 @@ export default function HomeClient({
                                 SAMVEDNA <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent font-sans font-black">Magazine</span>
                             </h2>
                             <p className="text-slate-600 text-base leading-relaxed font-light max-w-lg">
-                                Explore the pages of <b>Samvedna</b>, the official annual newsletter of NSS IIT Patna.
-                                Witness the achievements of our cells, read personal testimonials of student volunteers,
-                                and discover how technological innovation combines with community service to drive social change.
+                               Explore the pages of <strong>Samvedna</strong>, the official annual magazine of NSS IIT Patna, and experience a year of service, impact, and inspiration. Discover the initiatives undertaken by our various units and wings, celebrate their achievements, and read heartfelt testimonials from our student volunteers. Witness how the spirit of selfless service, strengthened by innovation and teamwork, is creating meaningful and lasting social change.
                             </p>
 
                             {/* Features list */}

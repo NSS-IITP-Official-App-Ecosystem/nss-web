@@ -3,19 +3,20 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { createClient } from '@/utils/supabase/client';
-import { 
-    FaUser, 
-    FaEnvelope, 
-    FaBuilding, 
-    FaBook, 
-    FaCommentAlt, 
-    FaSpinner, 
-    FaCheckCircle, 
-    FaExclamationCircle 
+import {
+    FaUser,
+    FaEnvelope,
+    FaBuilding,
+    FaBook,
+    FaCommentAlt,
+    FaSpinner,
+    FaCheckCircle,
+    FaExclamationCircle
 } from 'react-icons/fa';
+import { Turnstile } from '@marsidev/react-turnstile'
+import { handleCollaborationSubmit } from '../action';
 
 export default function CollaborateForm() {
-    const supabase = createClient();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -28,6 +29,8 @@ export default function CollaborateForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [requestToken, setRequestToken] = useState(null);
+    const [requestKey, setRequestKey] = useState(0);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,12 +46,13 @@ export default function CollaborateForm() {
         if (!email.trim() || !email.includes('@')) return "Please enter a valid email address.";
         if (!organization.trim()) return "Please enter your organization name.";
         if (!message.trim()) return "Please enter your proposal message.";
+        if (!requestToken) return "Please complete bot verification first.";
         return null;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         const validationError = validateForm();
         if (validationError) {
             setError(validationError);
@@ -59,19 +63,12 @@ export default function CollaborateForm() {
         setError(null);
         setSuccess(null);
 
-        try {
-            const { error: insertError } = await supabase
-                .from('collaborate_requests')
-                .insert({
-                    name: formData.name.trim(),
-                    email: formData.email.trim(),
-                    organization: formData.organization.trim(),
-                    subject: formData.subject.trim() || 'General Partnership',
-                    message: formData.message.trim(),
-                    status: 'pending'
-                });
+        const { error : err } = await handleCollaborationSubmit({ ...formData, requestToken });
 
-            if (insertError) throw insertError;
+        if (err) {
+            console.error("Collaboration submit error:", err);
+            setError(err || "Failed to submit request. Please check your connection and try again.");
+        } else {
 
             setSuccess("Your collaboration proposal has been submitted successfully! Our team will review it and get back to you shortly.");
             setFormData({
@@ -81,12 +78,12 @@ export default function CollaborateForm() {
                 subject: '',
                 message: ''
             });
-        } catch (err) {
-            console.error("Collaboration submit error:", err);
-            setError(err.message || "Failed to submit request. Please check your connection and try again.");
-        } finally {
-            setLoading(false);
+            setRequestToken(null);
+            setRequestKey(key => key + 1);
         }
+
+        setLoading(false);
+
     };
 
     // Form animation transitions
@@ -96,7 +93,7 @@ export default function CollaborateForm() {
     };
 
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -108,7 +105,7 @@ export default function CollaborateForm() {
             </p>
 
             {error && (
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="mb-5 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 flex items-center gap-3 text-sm"
@@ -119,7 +116,7 @@ export default function CollaborateForm() {
             )}
 
             {success && (
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="mb-5 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center gap-3 text-sm"
@@ -129,8 +126,8 @@ export default function CollaborateForm() {
                 </motion.div>
             )}
 
-            <motion.form 
-                onSubmit={handleSubmit} 
+            <motion.form
+                onSubmit={handleSubmit}
                 className="space-y-4 text-slate-700"
                 initial="hidden"
                 animate="show"
@@ -230,6 +227,17 @@ export default function CollaborateForm() {
                         required
                     />
                 </motion.div>
+
+                {/* Turnstile Widget */}
+                <div className="flex justify-center my-2">
+                    <Turnstile
+                        key={requestKey}
+                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                        onSuccess={(token) => setRequestToken(token)}
+                        onExpire={() => setRequestToken(null)}
+                        onError={() => setRequestToken(null)}
+                    />
+                </div>
 
                 {/* Submit button */}
                 <motion.div variants={inputContainerVariants} className="pt-2">

@@ -87,7 +87,7 @@ export default function EventsClient({ initialEvents, megaEvents = [] }) {
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-800">
 
       {/* 1. Hero Section */}
-      <section className="relative bg-slate-950 text-white py-20 md:py-28 overflow-hidden">
+      <section className="relative bg-slate-900 text-white py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-blue-900/30 blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
@@ -98,7 +98,7 @@ export default function EventsClient({ initialEvents, megaEvents = [] }) {
               <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
               Not Me But You
             </span>
-            <h2 className="text-4xl sm:text-5xl font-black tracking-tight leading-tight mb-6">
+            <h2 className="text-4xl sm:text-5xl text-white tracking-tight leading-tight mb-6">
               Our Impact in Action:<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-500">
                 Service That Shapes Lives

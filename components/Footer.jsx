@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Mail, MapPin } from "lucide-react";
 import { FaYoutube, FaInstagram } from "react-icons/fa";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
+import { FaFacebook, FaTwitter } from "react-icons/fa6";
 
 export default function Footer() {
     const pathname = usePathname();
@@ -40,7 +41,7 @@ export default function Footer() {
                         </div>
 
                         {/* Social / Contact Links List */}
-                        <div className="w-full space-y-2.5 my-6 border-t border-white/15 pt-6 text-sm font-medium text-white/85">
+                        <div className="w-full my-6 border-t border-white/15 pt-6 text-sm font-medium text-white/85 flex flex-wrap gap-y-3 gap-x-5">
                             <a href="mailto:nss@iitp.ac.in" className="group flex items-center gap-3.5 py-2 px-3.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] hover:text-amber-300 hover:translate-x-1 border border-white/5 hover:border-amber-400/30 transition-all duration-200">
                                 <Mail className="w-4 h-4 shrink-0 text-amber-400 group-hover:scale-110 transition-transform" />
                                 <span>nss@iitp.ac.in</span>
@@ -51,7 +52,15 @@ export default function Footer() {
                             </a>
                             <a href="https://www.youtube.com/@nssiitpatna3209" target="_blank" rel="noreferrer" className="group flex items-center gap-3.5 py-2 px-3.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] hover:text-amber-300 hover:translate-x-1 border border-white/5 hover:border-amber-400/30 transition-all duration-200">
                                 <FaYoutube className="w-4 h-4 shrink-0 text-red-500 group-hover:scale-110 transition-transform" />
-                                <span>NSS IITP</span>
+                                <span>@nssiitpatna3209</span>
+                            </a>
+                            <a href="https://www.facebook.com/nss.iitp" target="_blank" rel="noreferrer" className="group flex items-center gap-3.5 py-2 px-3.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] hover:text-amber-300 hover:translate-x-1 border border-white/5 hover:border-amber-400/30 transition-all duration-200">
+                                <FaFacebook className="w-4 h-4 shrink-0 text-blue-500 group-hover:scale-110 transition-transform" />
+                                <span>nss.iitp</span>
+                            </a>
+                            <a href="https://www.twitter.com/nss_iitp" target="_blank" rel="noreferrer" className="group flex items-center gap-3.5 py-2 px-3.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] hover:text-amber-300 hover:translate-x-1 border border-white/5 hover:border-amber-400/30 transition-all duration-200">
+                                <FaTwitter className="w-4 h-4 shrink-0 text-blue-300 group-hover:scale-110 transition-transform" />
+                                <span>nss_iitp</span>
                             </a>
                         </div>
 
