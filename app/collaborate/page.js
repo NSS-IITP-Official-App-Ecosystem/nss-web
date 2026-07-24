@@ -28,8 +28,9 @@ export default async function CollaboratePage() {
         const { data: teamMembers, error: teamError } = await supabase
             .from('team_members')
             .select('name, email, image_url, role')
+            .eq('academic_year', '2026-27')
             .ilike('role', '%General Secretary%')
-            .eq('academic_year', '2026-27');
+            .order("sort_order", {ascending: false})
 
         if (!teamError && teamMembers) {
             gensecProfiles = teamMembers;

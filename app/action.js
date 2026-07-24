@@ -9,29 +9,38 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // --- VALIDATION SCHEMAS ---
 
 const SignUpSchema = z.object({
-  fullname: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be under 100 characters").trim(),
-  email: z.string().email("Invalid email format").endsWith("@iitp.ac.in", "Only IIT Patna student emails (@iitp.ac.in) are allowed"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  token: z.string().min(1, "Human verification is required")
+    fullname: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be under 100 characters").trim(),
+    email: z.string().email("Invalid email format").endsWith("@iitp.ac.in", "Only IIT Patna student emails (@iitp.ac.in) are allowed"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    token: z.string().min(1, "Human verification is required")
 });
 
 const SignInSchema = z.object({
-  email: z.string().email("Invalid email format").endsWith("@iitp.ac.in", "Only IIT Patna student emails (@iitp.ac.in) are allowed"),
-  password: z.string().min(1, "Password cannot be empty"),
-  token: z.string().min(1, "Human verification is required")
+    email: z.string().email("Invalid email format").endsWith("@iitp.ac.in", "Only IIT Patna student emails (@iitp.ac.in) are allowed"),
+    password: z.string().min(1, "Password cannot be empty"),
+    token: z.string().min(1, "Human verification is required")
 });
 
 const BloodRequestSchema = z.object({
-  patientName: z.string().min(2, "Patient name must be at least 2 characters").max(100, "Patient name must be under 100 characters"),
-  bloodGroupForm: z.enum(['A+', 'A-', 'AB+', 'AB-', 'O+', 'O-'], {
-    errorMap: () => ({ message: "Invalid blood group selected" })
-  }),
-  units: z.preprocess((val) => Number(val), z.number().int().min(1, "At least 1 unit is required").max(20, "Units cannot exceed 20")),
-  hospital: z.string().min(3, "Hospital name and location must be at least 3 characters").max(200),
-  contact: z.string().min(10, "Contact number must be at least 10 digits").max(15, "Contact number must be under 15 characters").regex(/^\+?[0-9\s\-]+$/, "Invalid contact number format"),
-  reason: z.string().min(10, "Please provide a valid medical reason (min 10 characters)").max(500),
-  neededBy: z.string().refine((val) => !isNaN(Date.parse(val)), "Invalid needed by date"),
-  requestToken: z.string().min(1, "Human verification is required")
+    patientName: z.string().min(2, "Patient name must be at least 2 characters").max(100, "Patient name must be under 100 characters"),
+    bloodGroupForm: z.enum(['A+', 'A-', 'AB+', 'AB-', 'O+', 'O-'], {
+        errorMap: () => ({ message: "Invalid blood group selected" })
+    }),
+    units: z.preprocess((val) => Number(val), z.number().int().min(1, "At least 1 unit is required").max(20, "Units cannot exceed 20")),
+    hospital: z.string().min(3, "Hospital name and location must be at least 3 characters").max(200),
+    contact: z.string().min(10, "Contact number must be at least 10 digits").max(15, "Contact number must be under 15 characters").regex(/^\+?[0-9\s\-]+$/, "Invalid contact number format"),
+    reason: z.string().min(10, "Please provide a valid medical reason (min 10 characters)").max(500),
+    neededBy: z.string().refine((val) => !isNaN(Date.parse(val)), "Invalid needed by date"),
+    requestToken: z.string().min(1, "Human verification is required")
+});
+
+const CollaborationSchema = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be under 100 characters"),
+    email: z.string().email("Invalid email format"),
+    organization: z.string().min(2, "Organization name must be at least 2 characters").max(200, "Organization name must be under 200 characters"),
+    subject: z.string().min(10, "Please provide a clear subject (Reason in one phrase)").max(100),
+    message: z.string().min(20, "Please write a message in details.").max(2000),
+    requestToken: z.string().min(1, "Human verification is required")
 });
 
 // --- HELPER FUNCTIONS ---
@@ -142,11 +151,12 @@ export async function handleRequestBloodSubmit(data) {
         const { data: gensecMembers, error: gensecError } = await supabase
             .from('team_members')
             .select('email')
+            .eq("session", "2026-27")
             .ilike('role', '%General Secretary%');
 
         if (!gensecError && gensecMembers && gensecMembers.length > 0) {
             const recipientEmails = gensecMembers.map(m => m.email).filter(Boolean);
-            
+
             if (recipientEmails.length > 0) {
                 await resend.emails.send({
                     from: 'NSS Blood Buddy <onboarding@resend.dev>',
@@ -221,15 +231,15 @@ export async function handleSignUp(data) {
 
     // Check if email confirmation is required or if signed in automatically
     if (signUpData?.user && signUpData?.session === null) {
-        return { 
+        return {
             success: 'Registration successful! Please check your email inbox to verify your account.',
             session: null
         };
     }
 
-    return { 
+    return {
         success: 'Account created and signed in successfully!',
-        session: signUpData.session 
+        session: signUpData.session
     };
 }
 
@@ -256,8 +266,40 @@ export async function handleSignIn(data) {
         return { error: signInError.message || 'Invalid email or password.' };
     }
 
-    return { 
+    return {
         success: 'Successfully signed in!',
-        session: signInData.session 
+        session: signInData.session
     };
+}
+
+export async function handleCollaborationSubmit(data) {
+    const validation = CollaborationSchema.safeParse(data);
+    if(!validation.success) {
+        return { error : validation.error.issues[0]?.message || "Invalid form input"};
+    }
+
+    const { requestToken } = validation.data;
+
+    const turnstileVerification = await VerifyTrunstile(requestToken);
+    if (!turnstileVerification) {
+        return { error: "Turnstile verification failed. Please try again." };
+    }
+
+    const validatedData = validation.data;
+    const supabase = await createClient();
+
+    const { data: insertData, error: insertError } = await supabase.from("collaborate_requests").insert({
+        name: validatedData.name,
+        email : validatedData.email,
+        organization : validatedData.organization,
+        subject : validatedData.subject,
+        message : validatedData.message,
+        status : 'pending'
+    });
+
+    if (insertError) {
+        return { error: insertError.message  };
+    }
+
+    return { success : true, data : insertData};
 }
