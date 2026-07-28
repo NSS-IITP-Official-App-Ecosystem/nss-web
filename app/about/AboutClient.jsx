@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { 
-  HeartHandshake, 
-  Users, 
-  Sparkles, 
-  ArrowRight, 
+import {
+  HeartHandshake,
+  Users,
+  Sparkles,
+  ArrowRight,
   ChevronRight,
   Target,
   GraduationCap,
@@ -19,7 +19,15 @@ import {
   Award
 } from "lucide-react";
 
+import { useEffect } from "react";
+
 export default function AboutClient() {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+    }
+  }, []);
   const objectives = [
     {
       icon: Target,
@@ -126,7 +134,7 @@ export default function AboutClient() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-slate-800 pb-20 relative overflow-hidden font-sans">
-      
+
       {/* Decorative Dot Matrix Grid Background */}
       <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-25 z-0 pointer-events-none" />
 
@@ -147,7 +155,7 @@ export default function AboutClient() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:32px_32px] opacity-70 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-          
+
           {/* Left Column: Title & Text */}
           <div className="lg:col-span-6 text-center lg:text-left space-y-6">
             <motion.div
@@ -159,7 +167,7 @@ export default function AboutClient() {
               <Sparkles className="animate-pulse w-3.5 h-3.5" />
               Not Me, But You
             </motion.div>
-            
+
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none text-white uppercase">
               About <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-100 bg-clip-text text-transparent font-sans">NSS IIT Patna</span>
             </h1>
@@ -172,7 +180,7 @@ export default function AboutClient() {
           {/* Right Column: Custom Generative Radial Service Compass with Expanded ViewBox for Label Visibility */}
           <div className="lg:col-span-6 flex justify-center items-center relative min-h-[380px] sm:min-h-[440px]">
             <div className="relative w-full max-w-[420px] aspect-square flex items-center justify-center">
-              
+
               {/* Rotating Faint Outer Celestial Rings */}
               <motion.div
                 animate={{ rotate: 360 }}
@@ -251,7 +259,7 @@ export default function AboutClient() {
 
       {/* Motto & Philosophy Section */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 mt-16 relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -293,13 +301,13 @@ export default function AboutClient() {
           {/* Subtle glow orb behind the certificate layout */}
           <div className="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
           <div className="absolute -bottom-12 -right-12 w-48 h-48 rounded-full bg-blue-500/5 blur-3xl pointer-events-none" />
-          
+
           <div className="inline-flex p-3 bg-amber-500/10 text-amber-600 rounded-2xl border border-amber-500/20">
             <FileText className="w-6 h-6" />
           </div>
 
           <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">The NSS Pledge</h2>
-          
+
           <p className="text-slate-700 italic font-serif text-base sm:text-lg md:text-xl max-w-4xl mx-auto leading-relaxed">
             "I solemnly pledge that I will serve my motherland India and her people with dedication, empathy, and respect. I will volunteer my time and energy to uplift the weaker sections of society, bridge community gaps, and dedicate myself to community welfare without any bias of caste, creed, gender, or religion. In every action, I will honor our guiding motto: Not Me, But You."
           </p>
@@ -376,8 +384,8 @@ export default function AboutClient() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-slate-100">
-                  <Link 
-                    href={wing.link} 
+                  <Link
+                    href={wing.link}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00256d] hover:text-amber-500 transition-colors group"
                   >
                     Explore Wing
@@ -414,9 +422,8 @@ export default function AboutClient() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`relative flex flex-col sm:flex-row items-start ${
-                    isEven ? "sm:flex-row-reverse" : ""
-                  } gap-6 sm:gap-12`}
+                  className={`relative flex flex-col sm:flex-row items-start ${isEven ? "sm:flex-row-reverse" : ""
+                    } gap-6 sm:gap-12`}
                 >
                   {/* Timeline Circle Center */}
                   <div className="absolute left-4 sm:left-1/2 top-2 w-9 h-9 rounded-full bg-white border-2 border-[#00256d] flex items-center justify-center -translate-x-1/2 z-10 shadow-xs">
@@ -471,15 +478,15 @@ export default function AboutClient() {
           Whether you are a student volunteer ready to log hours, a community leader looking to partner, or an organization wishing to collaborate, there is a place for you in NSS.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <Link 
-            href="/collaborate" 
+          <Link
+            href="/collaborate"
             className="inline-flex items-center justify-center gap-2 bg-[#00256d] hover:bg-[#001d54] text-white font-bold px-6 py-3.5 rounded-2xl shadow-md transition-all duration-300 hover:scale-105 group text-sm"
           >
             Collaborate With Us
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
-          <Link 
-            href="/our-team" 
+          <Link
+            href="/our-team"
             className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-[#00256d] border border-slate-200 font-bold px-6 py-3.5 rounded-2xl shadow-xs transition-all duration-300 hover:scale-105 text-sm"
           >
             Meet the Team
