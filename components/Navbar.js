@@ -139,6 +139,10 @@ const LINKS = [
         "link": "/rules-and-policies"
       },
       {
+        "text": "Advisory Team",
+        "link": "/advisory-team"
+      },
+      {
         "text": "Our Team",
         "link": "/our-team"
       }
