@@ -28,6 +28,8 @@ import EmblaCarousel from '@/components/EmblaCarousel';
 import Testimonial, { TestimonialItem } from '@/components/testimonial';
 import { cn } from '@/components/utils';
 import DearFlipPdf from '@/components/DearFlip';
+import Script from 'next/script';
+import BeholdWidget from '@behold/react';
 
 const EMBLA_OPTIONS = { loop: true };
 
@@ -395,7 +397,7 @@ export default function HomeClient({
                                 SAMVEDNA <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent font-sans font-black">Magazine</span>
                             </h2>
                             <p className="text-slate-600 text-base leading-relaxed font-light max-w-lg">
-                               Explore the pages of <strong>Samvedna</strong>, the official annual magazine of NSS IIT Patna, and experience a year of service, impact, and inspiration. Discover the initiatives undertaken by our various units and wings, celebrate their achievements, and read heartfelt testimonials from our student volunteers. Witness how the spirit of selfless service, strengthened by innovation and teamwork, is creating meaningful and lasting social change.
+                                Explore the pages of <strong>Samvedna</strong>, the official annual magazine of NSS IIT Patna, and experience a year of service, impact, and inspiration. Discover the initiatives undertaken by our various units and wings, celebrate their achievements, and read heartfelt testimonials from our student volunteers. Witness how the spirit of selfless service, strengthened by innovation and teamwork, is creating meaningful and lasting social change.
                             </p>
 
                             {/* Features list */}
@@ -445,6 +447,96 @@ export default function HomeClient({
                         </div>
 
                     </div>
+                </div>
+            </section>
+
+            {/* instagram posts section */}
+            <section className="relative py-24 overflow-hidden">
+
+                {/* Background gradient */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/40 to-fuchsia-50/30 pointer-events-none" />
+
+                {/* Decorative blobs */}
+                <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-pink-300/20 blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-fuchsia-300/20 blur-3xl pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-rose-200/15 blur-3xl pointer-events-none" />
+
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    {/* Section header */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-14"
+                    >
+                        {/* Instagram badge */}
+                        <div className="inline-flex items-center gap-2.5 mb-4 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-pink-200/60 shadow-sm">
+                            <span className="relative flex h-2.5 w-2.5">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75" />
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-pink-500 to-fuchsia-500" />
+                            </span>
+                            <span className="text-[11px] font-bold uppercase tracking-widest bg-gradient-to-r from-pink-600 to-fuchsia-600 bg-clip-text text-transparent font-mono">
+                                Updates from NSS IITP
+                            </span>
+                        </div>
+
+                        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-800 mt-1 font-sans">
+                            Follow Our{' '}
+                            <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-600 bg-clip-text text-transparent">
+                                Journey
+                            </span>
+                        </h2>
+                        <p className="mt-3 text-slate-500 text-sm max-w-md mx-auto leading-relaxed">
+                            Stay connected with our latest activities, events, and community moments — straight from our Instagram feed.
+                        </p>
+
+                        {/* Decorative divider */}
+                        <div className="mt-6 flex items-center justify-center gap-3">
+                            <div className="h-px w-16 bg-gradient-to-r from-transparent to-pink-300" />
+                            <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-pink-400 to-fuchsia-500" />
+                            <div className="h-px w-16 bg-gradient-to-l from-transparent to-fuchsia-300" />
+                        </div>
+                    </motion.div>
+
+                    {/* Widget container */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 32 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7, delay: 0.15 }}
+                        className="relative rounded-3xl overflow-hidden bg-white/60 backdrop-blur-md border border-white/80 shadow-xl shadow-pink-100/40 p-4 sm:p-6"
+                    >
+                        {/* Subtle top-edge glow */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-pink-400/60 to-transparent" />
+
+                        <BeholdWidget feedId='Dp6V5Qvb1ofrvHmE0mWW' />
+
+                        {/* Subtle bottom-edge glow */}
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-fuchsia-400/40 to-transparent" />
+                    </motion.div>
+
+                    {/* Follow CTA */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        className="mt-8 text-center"
+                    >
+                        <a
+                            href="https://www.instagram.com/nss.iitp/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 shadow-md shadow-pink-200 hover:shadow-lg hover:shadow-pink-300/50 transition-all duration-300 hover:-translate-y-0.5"
+                        >
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                            Follow @nss.iitp
+                        </a>
+                    </motion.div>
                 </div>
             </section>
 
