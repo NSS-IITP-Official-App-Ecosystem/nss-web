@@ -24,6 +24,7 @@ export default async function RequestBloodPage() {
     .from("team_members")
     .select("name, email, image_url, role")
     .eq('academic_year', '2026-27')
+    .eq('category', 'secretary')
     .ilike("role", "%General Secretary%")
     .order("sort_order", {ascending : false});
 
