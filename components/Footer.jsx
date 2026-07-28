@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Mail, MapPin } from "lucide-react";
 import { FaYoutube, FaInstagram } from "react-icons/fa";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
-import { FaFacebook, FaTwitter } from "react-icons/fa6";
+import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa6";
 
 export default function Footer() {
     const pathname = usePathname();
@@ -61,6 +61,10 @@ export default function Footer() {
                             <a href="https://www.twitter.com/nss_iitp" target="_blank" rel="noreferrer" className="group flex items-center gap-3.5 py-2 px-3.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] hover:text-amber-300 hover:translate-x-1 border border-white/5 hover:border-amber-400/30 transition-all duration-200">
                                 <FaTwitter className="w-4 h-4 shrink-0 text-blue-300 group-hover:scale-110 transition-transform" />
                                 <span>nss_iitp</span>
+                            </a>
+                            <a href="https://www.linkedin.com/company/nssiitp" target="_blank" rel="noreferrer" className="group flex items-center gap-3.5 py-2 px-3.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] hover:text-amber-300 hover:translate-x-1 border border-white/5 hover:border-amber-400/30 transition-all duration-200">
+                                <FaLinkedin className="w-4 h-4 shrink-0 text-blue-800 group-hover:scale-110 transition-transform" />
+                                <span>nssiitp</span>
                             </a>
                         </div>
 
