@@ -8,7 +8,8 @@ import {
   FaEnvelope,
   FaLinkedinIn,
   FaMagnifyingGlass,
-  FaCircleInfo
+  FaCircleInfo,
+  FaPhone
 } from 'react-icons/fa6';
 import './our-team.css';
 
@@ -118,7 +119,8 @@ export default function OurTeam() {
           bio: m.bio,
           category: m.category,
           linkedin: m.linkedin_url || "https://linkedin.com",
-          github: m.github_url || "https://github.com"
+          github: m.github_url || "https://github.com",
+          phone_number : m.phone_number || ''
         };
       });
   }, [selectedYear, dbMembers]);
@@ -715,6 +717,11 @@ export default function OurTeam() {
                           {selectedMember.linkedin && (
                             <a href={selectedMember.linkedin} target="_blank" rel="noopener noreferrer" className="btn-modal-contact secondary">
                               <FaLinkedinIn /> LinkedIn
+                            </a>
+                          )}
+                          {selectedMember.phone_number && (
+                            <a href={`tel:${selectedMember.phone_number}`} target="_blank" rel="noopener noreferrer" className="btn-modal-contact secondary">
+                              <FaPhone /> Phone
                             </a>
                           )}
                         </div>
