@@ -331,7 +331,6 @@ export default function RequestBloodClient({ initialActiveRequests, isIITPStuden
                     <h5 className="font-bold text-slate-800 text-sm truncate">{profile.name}</h5>
                     <p className="text-xs text-rose-600 font-semibold">{profile.role || "General Secretary"}</p>
                     <p className="text-xs text-slate-500 mt-1 font-light">{profile.email}</p>
-                    {profile.phone_number && <p className="text-xs text-slate-500 font-light">{profile.phone_number}</p>}
                   </div>
                 </div>
               ))}

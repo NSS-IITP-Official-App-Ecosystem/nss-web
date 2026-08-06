@@ -133,10 +133,13 @@ export default function HomeClient({
         <div className="bg-[#FAF9F6] min-h-screen text-slate-800 pb-20 overflow-x-hidden">
 
             {/* 1. HERO SLIDER SECTION WITH DETAILED PARALLAX & PROGRESS LINES */}
-            <section className="relative w-full overflow-hidden bg-[#020914]" style={{ height: '620px' }}>
+            <section className="relative w-full overflow-hidden bg-[#020914] h-[380px] xs:h-[450px] sm:h-[540px] lg:h-[620px]">
                 <AnimatePresence initial={false} custom={slideForwarded}>
                     {sliderData.items.map((item, i) => {
                         if (activeSlide !== i) return null;
+
+                        const desktopUrl = resolveImageUrl(item.url, "/home_slider/nss_home.jpg");
+                        const mobileUrl = resolveImageUrl(item.mobile_url || item.url.replace('/home_slider/', '/home_slider/mobile/'), desktopUrl);
 
                         return (
                             <motion.div
@@ -155,12 +158,23 @@ export default function HomeClient({
                                     transition={{ duration: 6.5, ease: "easeOut" }}
                                     className="absolute inset-0 w-full h-full"
                                 >
+                                    {/* Desktop Image */}
                                     <Image
-                                        src={resolveImageUrl(item.url, "/home_slider/nss_home.jpg")}
+                                        src={desktopUrl}
                                         alt="Hero slide image"
                                         fill
                                         priority={i === 0}
-                                        className={cn("object-cover block w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
+                                        className={cn("hidden sm:block object-cover w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
+                                        unoptimized
+                                        loading='eager'
+                                    />
+                                    {/* Mobile Device Specific Image */}
+                                    <Image
+                                        src={mobileUrl}
+                                        alt="Hero slide image mobile"
+                                        fill
+                                        priority={i === 0}
+                                        className={cn("block sm:hidden object-cover w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
                                         unoptimized
                                         loading='eager'
                                     />
@@ -176,7 +190,7 @@ export default function HomeClient({
                                                 variants={{
                                                     show: { transition: { staggerChildren: 0.12 } }
                                                 }}
-                                                className="max-w-xl border rounded-[2.5rem] p-8 sm:p-12 text-left shadow-2xl space-y-4"
+                                                className="max-w-xl border rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-12 text-left shadow-2xl space-y-3 sm:space-y-4 bg-black/30 sm:bg-transparent backdrop-blur-xs sm:backdrop-blur-none"
                                             >
                                                 {item.content.update_text && (
                                                     <motion.span
@@ -184,7 +198,7 @@ export default function HomeClient({
                                                             hidden: { opacity: 0, y: 15 },
                                                             show: { opacity: 1, y: 0 }
                                                         }}
-                                                        className="inline-block px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/35 text-amber-400 font-extrabold text-xs uppercase tracking-widest font-mono shadow-xs"
+                                                        className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-amber-500/15 border border-amber-400/35 text-amber-400 font-extrabold text-[10px] sm:text-xs uppercase tracking-widest font-mono shadow-xs"
                                                     >
                                                         {item.content.update_text}
                                                     </motion.span>
@@ -195,7 +209,7 @@ export default function HomeClient({
                                                         hidden: { opacity: 0, y: 20 },
                                                         show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 150 } }
                                                     }}
-                                                    className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight uppercase font-sans tracking-tight"
+                                                    className="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight uppercase font-sans tracking-tight"
                                                 >
                                                     {item.content.title}
                                                 </motion.h3>
@@ -206,13 +220,13 @@ export default function HomeClient({
                                                             hidden: { opacity: 0, y: 15 },
                                                             show: { opacity: 1, y: 0 }
                                                         }}
-                                                        className="pt-4"
+                                                        className="pt-2 sm:pt-4"
                                                     >
                                                         <Link href={item.content.action.link}>
                                                             <motion.button
                                                                 whileHover={{ scale: 1.02 }}
                                                                 whileTap={{ scale: 0.98 }}
-                                                                className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-2xl transition-all shadow-md cursor-pointer text-sm font-sans flex items-center gap-2 group"
+                                                                className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-xl sm:rounded-2xl transition-all shadow-md cursor-pointer text-xs sm:text-sm font-sans flex items-center gap-2 group"
                                                             >
                                                                 {item.content.action.text}
                                                                 <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
@@ -230,7 +244,7 @@ export default function HomeClient({
                 </AnimatePresence>
 
                 {/* Bottom Progress Lines Indicators */}
-                <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-4 z-40">
+                <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex justify-center gap-2 sm:gap-4 z-40">
                     {sliderData.items.map((_, i) => (
                         <button
                             key={i}
@@ -238,7 +252,7 @@ export default function HomeClient({
                                 setSlideForwarded(i > activeSlide);
                                 setActiveSlide(i);
                             }}
-                            className="w-16 h-1 bg-white/20 rounded-full cursor-pointer relative overflow-hidden"
+                            className="w-10 sm:w-16 h-1 bg-white/20 rounded-full cursor-pointer relative overflow-hidden"
                             aria-label={`Go to slide ${i + 1}`}
                         >
                             {activeSlide === i && (
@@ -257,14 +271,14 @@ export default function HomeClient({
                 {/* Slide Nav Controls with custom glass hover effects */}
                 <button
                     onClick={handlePrevSlide}
-                    className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white bg-white/5 hover:bg-amber-500 border border-white/10 hover:border-amber-400 rounded-full z-40 transition-all cursor-pointer backdrop-blur-md hover:scale-105"
+                    className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center text-white bg-white/10 sm:bg-white/5 hover:bg-amber-500 border border-white/10 hover:border-amber-400 rounded-full z-40 transition-all cursor-pointer backdrop-blur-md hover:scale-105 text-xs sm:text-base"
                     aria-label="Previous slide"
                 >
                     <FaChevronLeft />
                 </button>
                 <button
                     onClick={handleNextSlide}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white bg-white/5 hover:bg-amber-500 border border-white/10 hover:border-amber-400 rounded-full z-40 transition-all cursor-pointer backdrop-blur-md hover:scale-105"
+                    className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center text-white bg-white/10 sm:bg-white/5 hover:bg-amber-500 border border-white/10 hover:border-amber-400 rounded-full z-40 transition-all cursor-pointer backdrop-blur-md hover:scale-105 text-xs sm:text-base"
                     aria-label="Next slide"
                 >
                     <FaChevronRight />

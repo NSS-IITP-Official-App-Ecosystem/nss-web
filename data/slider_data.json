@@ -1,12 +1,14 @@
 {
-    "items_count": 3,
+    "items_count": 4,
     "active": 0,
     "items": [
         {
-            "url": "/home_slider/1.png"
+            "url": "/home_slider/1.png",
+            "mobile_url": "/home_slider/mobile/1.png"
         },
         {
             "url": "/home_slider/raghopur school.jpeg",
+            "mobile_url": "/home_slider/mobile/raghopur school.jpeg",
             "content": {
                 "update_text": "Swachh Bharat Abhiyan",
                 "title": "Drive Environmental & Social Sustainability",
@@ -17,10 +19,12 @@
             }
         },
         {
-            "url": "/home_slider/nss closing.jpeg"
+            "url": "/home_slider/nss closing.jpeg",
+            "mobile_url": "/home_slider/mobile/nss closing.jpeg"
         },
         {
-            "url": "/home_slider/nukkad.jpg"
+            "url": "/home_slider/nukkad.jpg",
+            "mobile_url": "/home_slider/mobile/nukkad.jpg"
         }
     ]
 }
