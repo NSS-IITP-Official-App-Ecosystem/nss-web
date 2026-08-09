@@ -1466,7 +1466,7 @@
 .tree-line-v {
     width: 2px;
     height: 40px;
-    background-color: var(--navy);
+    background-color: transparent !important;
     position: relative;
 }
 
@@ -1595,7 +1595,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: var(--navy);
+    background-color: transparent !important;
     z-index: 1;
 }
 
@@ -1619,7 +1619,7 @@
     left: 50%;
     width: 2px;
     height: 30px;
-    background-color: var(--navy);
+    background-color: transparent !important;
     transform: translateX(-50%);
     z-index: 1;
 }
