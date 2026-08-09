@@ -62,7 +62,7 @@ export default function OurTeam() {
   const activeLeadershipTree = useMemo(() => {
     if (!dbMembers) return [];
     return dbMembers
-      .filter(m => m.category === 'admin' && m.academic_year === selectedYear && !m.role.toLowerCase().includes('director') && !m.role.toLowerCase().includes('security') && !m.role.toLowerCase().includes('program officer') && !m.role.toLowerCase().includes('po'))
+      .filter(m => m.category === 'admin' && m.academic_year === selectedYear && !m.role.toLowerCase().includes('director') && !m.role.toLowerCase().includes('security') && !m.role.toLowerCase().includes('program officer') && !m.role.toLowerCase().includes('programme officer') && !m.role.toLowerCase().includes('po'))
       .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
       .map(m => ({
         id: m.id,
@@ -81,7 +81,7 @@ export default function OurTeam() {
   const programOfficers = useMemo(() => {
     if (!dbMembers) return [];
     return dbMembers
-      .filter(m => m.academic_year === selectedYear && (m.role.toLowerCase().includes('program officer') || m.role.toLowerCase().includes('po')))
+      .filter(m => m.academic_year === selectedYear && (m.role.toLowerCase().includes('program officer') || m.role.toLowerCase().includes('programme officer') || m.role.toLowerCase().includes('po')))
       .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
       .map(m => ({
         id: m.id,
@@ -301,7 +301,7 @@ export default function OurTeam() {
         <section className="hierarchy-section">
           <div className="tree-container">
 
-            {/* Tier 2: Academic Dean UG */}
+            {/* Tier 2: Associate Dean Academics, UG */}
             <motion.div
               className="tree-tier"
               initial={{ opacity: 0, y: 20 }}
@@ -311,9 +311,9 @@ export default function OurTeam() {
             >
               <div className="tree-node node-highlight" onClick={() => activeLeadershipTree[0] && setSelectedMember(activeLeadershipTree[0])}>
                 <div className="node-avatar-wrapper">
-                  <img src={activeLeadershipTree[0]?.image || "/placeholder.svg"} alt={activeLeadershipTree[0]?.name || "Academic Dean UG"} className="node-avatar" />
+                  <img src={activeLeadershipTree[0]?.image || "/placeholder.svg"} alt={activeLeadershipTree[0]?.name || "Associate Dean Academics, UG"} className="node-avatar" />
                 </div>
-                <span className="node-role-tag">Academic Dean UG</span>
+                <span className="node-role-tag">Associate Dean Academics, UG</span>
                 <h4 className="node-admin-name">{activeLeadershipTree[0]?.name || "To Be Decided"}</h4>
               </div>
             </motion.div>
@@ -339,7 +339,7 @@ export default function OurTeam() {
 
             <div className="tree-line-v"></div>
 
-            {/* Tier 3.5: Program Officers */}
+            {/* Tier 3.5: Programme Officers */}
             {programOfficers.length > 0 && (
               <>
                 <motion.div
@@ -354,9 +354,9 @@ export default function OurTeam() {
                       <div className="tree-branch-col" key={po.id || idx}>
                         <div className="tree-node" onClick={() => setSelectedMember(po)}>
                           <div className="node-avatar-wrapper">
-                            <img src={po?.image || "/placeholder.svg"} alt={po?.name || "Program Officer"} className="node-avatar" />
+                            <img src={po?.image || "/placeholder.svg"} alt={po?.name || "Programme Officer"} className="node-avatar" />
                           </div>
-                          <span className="node-role-tag">{po?.role || "Program Officer"}</span>
+                          <span className="node-role-tag">{po?.role?.replace(/Program Officer/gi, 'Programme Officer') || "Programme Officer"}</span>
                           <h4 className="node-admin-name">{po?.name || "To Be Decided"}</h4>
                         </div>
                       </div>
