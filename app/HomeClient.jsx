@@ -139,8 +139,6 @@ export default function HomeClient({
                         if (activeSlide !== i) return null;
 
                         const desktopUrl = resolveImageUrl(item.url, "/home_slider/nss_home.jpg");
-                        const mobileUrl = resolveImageUrl(item.mobile_url || item.url.replace('/home_slider/', '/home_slider/mobile/'), desktopUrl);
-
                         return (
                             <motion.div
                                 key={i}
@@ -164,12 +162,12 @@ export default function HomeClient({
                                         alt="Hero slide image"
                                         fill
                                         priority={i === 0}
-                                        className={cn("hidden sm:block object-cover w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
+                                        className={cn("object-cover w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
                                         unoptimized
                                         loading='eager'
                                     />
                                     {/* Mobile Device Specific Image */}
-                                    <Image
+                                    {/* <Image
                                         src={mobileUrl}
                                         alt="Hero slide image mobile"
                                         fill
@@ -177,7 +175,7 @@ export default function HomeClient({
                                         className={cn("block sm:hidden object-cover w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
                                         unoptimized
                                         loading='eager'
-                                    />
+                                    /> */}
                                 </motion.div>
 
                                 {/* Staggered Text Caption Box */}
