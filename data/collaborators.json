@@ -1,20 +1,32 @@
 {
-    "items" : [
+    "items": [
         {
-            "title" : "",
-            "logo" : "/collaborators/CLP.png"
+            "title": "Being Helper Foundation",
+            "logo": "/collaborators/being_helper.png"
         },
         {
-            "title" : "",
-            "logo" : "/collaborators/lccwa.png"
+            "title": "DKMS Foundation",
+            "logo": "/collaborators/dkms.png"
         },
         {
-            "title" : "",
-            "logo" : "/collaborators/udaan.png"
+            "title": "Prathama Blood Centre",
+            "logo": "/collaborators/prathama.png"
         },
         {
-            "title" : "",
-            "logo" : "/collaborators/vidya.png"
+            "title": "Anwesha",
+            "logo": "/collaborators/anwesha.png"
+        },
+        {
+            "title": "Babban Kumar Seva Samiti",
+            "logo": "/collaborators/babban_kumar.png"
+        },
+        {
+            "title": "Bihta Primary Health Centre (PHC)",
+            "logo": "/collaborators/bihta_phc.png"
+        },
+        {
+            "title": "Bihar State AIDS Control Society",
+            "logo": "/collaborators/bsacs.png"
         }
     ]
 }

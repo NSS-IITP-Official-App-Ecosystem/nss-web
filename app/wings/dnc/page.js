@@ -1,37 +1,65 @@
-"use client"
 import React from 'react';
+import { createClient } from "@/utils/supabase/server";
+import { resolveMediaUrls } from "@/components/server-utils";
+import DncWingClient from "./DncWingClient";
 
-export default function MinimalDNCWing() {
-    return (
-        <div className="min-h-screen text-white font-sans flex items-center justify-center bg-gradient-to-tr from-[#050515] via-[#0a0a24] to-[#02020a] px-4">
+export const dynamic = 'force-dynamic';
 
-            {/* Core Content Container */}
-            <div className="max-w-3xl mx-auto text-center py-20">
+export default async function DncWingPage() {
+    let dbEvents = [];
+    try {
+        const supabase = await createClient();
+        const { data: allEvents, error } = await supabase
+            .from('events')
+            .select(`
+                id,
+                title,
+                details,
+                event_date,
+                event_media (
+                    media_url
+                ),
+                event_wings (
+                    wings (
+                        slug
+                    )
+                )
+            `)
+            .order('event_date', { ascending: false });
 
-                {/* Small Sub-Badge */}
-                <span className="text-[#ff9933] text-xs font-bold uppercase tracking-widest block mb-4">
-                    National Service Scheme • IIT Patna
-                </span>
+        if (!error && allEvents) {
+            // Filter events belonging to 'dnc' and session '2025-2026'
+            const wingEvents = allEvents.filter(e => 
+                e.event_wings?.some(ew => ew.wings?.slug === 'dnc')
+            );
 
-                {/* Stunning Main Heading */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-white via-gray-200 to-[#ff9933] bg-clip-text text-transparent leading-tight">
-                    Designer Creation &amp; Media Wing
-                </h1>
+            dbEvents = await Promise.all(wingEvents.map(async (e) => {
+                const eventDate = new Date(e.event_date);
+                const isInSession = eventDate >= new Date('2025-07-01') && eventDate <= new Date('2026-06-30');
+                if (!isInSession) return null;
 
-                {/* Aesthetic Theme Divider */}
-                <div className="w-16 h-1 bg-gradient-to-r from-[#ff9933] to-[#138808] mx-auto my-6 rounded-full" />
+                const mediaUrls = e.event_media ? e.event_media.map(m => m.media_url) : [];
+                const resolvedMedia = await resolveMediaUrls(mediaUrls);
+                
+                // Limit to 6 images, no videos
+                const images = resolvedMedia
+                    .filter(m => m.type === 'image')
+                    .map(m => m.url)
+                    .slice(0, 6);
 
-                {/* Contextual Accent Quote */}
-                <p className="text-base md:text-lg italic text-gray-300 font-medium mb-6 max-w-xl mx-auto leading-relaxed">
-                    "Creativity is contagious, pass it on."
-                </p>
+                return {
+                    title: e.title,
+                    description: e.details,
+                    images: images
+                };
+            }));
+            
+            // Remove null entries from out-of-session events
+            dbEvents = dbEvents.filter(Boolean);
+        }
+    } catch (err) {
+        console.error("Failed to fetch DNC wing events from database:", err);
+    }
 
-                {/* Core Elegant Description */}
-                <p className="text-sm sm:text-base md:text-lg text-gray-400 font-normal leading-relaxed max-w-2xl mx-auto border-t border-white/5 pt-6">
-                    The <span className="text-white font-medium">Designer Creation (DNC) Wing</span> serves as the official creative engine and media spine of NSS. Tasked with complete multimedia and design responsibilities, our students translate raw on-field service actions into visually stunning narratives. From high-fidelity event photography and cinematic impact documentaries to modern graphic architectures and frontend interface designs, DNC captures the soul of every single initiative to amplify social awareness globally.
-                </p>
-
-            </div>
-        </div>
-    );
+    return <DncWingClient events={dbEvents} />;
 }

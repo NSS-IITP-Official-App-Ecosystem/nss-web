@@ -4,25 +4,30 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { 
-    FaArrowRight, 
-    FaChevronLeft, 
-    FaChevronRight, 
-    FaQuoteLeft, 
-    FaUsers, 
-    FaAward, 
-    FaCalendarAlt, 
-    FaHeartbeat, 
-    FaHandshake, 
+import { resolveImageUrl } from '@/utils/imageUrl';
+import {
+    FaArrowRight,
+    FaChevronLeft,
+    FaChevronRight,
+    FaQuoteLeft,
+    FaUsers,
+    FaAward,
+    FaCalendarAlt,
+    FaHeartbeat,
+    FaHandshake,
     FaInfoCircle,
     FaLeaf,
-    FaGraduationCap
+    FaGraduationCap,
+    FaArrowLeft,
+    FaDownload,
+    FaBookOpen
 } from 'react-icons/fa';
 import * as Icons from 'react-icons/pi';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import EmblaCarousel from '@/components/EmblaCarousel';
 import Testimonial, { TestimonialItem } from '@/components/testimonial';
 import { cn } from '@/components/utils';
+import DearFlipPdf from '@/components/DearFlip';
 
 const EMBLA_OPTIONS = { loop: true };
 
@@ -36,12 +41,14 @@ export default function HomeClient({
     sliderData = {},
     unitsData = [],
     eventsData = [],
+    upcomingEventsData = [],
     testimonialsData = [],
     impactsData = [],
     collaboratorsData = []
 }) {
     const [activeSlide, setActiveSlide] = useState(0);
     const [slideForwarded, setSlideForwarded] = useState(true);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     // Auto-scroll slider interval (matches 6.5s progress line)
     useEffect(() => {
@@ -60,6 +67,31 @@ export default function HomeClient({
     const handlePrevSlide = () => {
         setSlideForwarded(false);
         setActiveSlide(prev => (prev === 0 ? sliderData.items.length - 1 : prev - 1));
+    };
+
+    const handleDownload = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (isDownloading) return;
+        setIsDownloading(true);
+        try {
+            const response = await fetch('/SAMVEDNA.pdf');
+            if (!response.ok) throw new Error('Download failed');
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'SAMVEDNA.pdf';
+            a.onclick = (event) => event.stopPropagation();
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Download error:', error);
+        } finally {
+            setIsDownloading(false);
+        }
     };
 
     // Parallax Slide Animation Variants
@@ -97,7 +129,7 @@ export default function HomeClient({
 
     return (
         <div className="bg-[#FAF9F6] min-h-screen text-slate-800 pb-20 overflow-x-hidden">
-            
+
             {/* 1. HERO SLIDER SECTION WITH DETAILED PARALLAX & PROGRESS LINES */}
             <section className="relative w-full overflow-hidden bg-[#020914]" style={{ height: '620px' }}>
                 <AnimatePresence initial={false} custom={slideForwarded}>
@@ -115,18 +147,20 @@ export default function HomeClient({
                                 className="absolute top-0 left-0 w-full h-full overflow-hidden"
                             >
                                 {/* Zooming Slide Image */}
-                                <motion.div 
+                                <motion.div
                                     initial={{ scale: 1.08 }}
                                     animate={{ scale: 1 }}
                                     transition={{ duration: 6.5, ease: "easeOut" }}
                                     className="absolute inset-0 w-full h-full"
                                 >
-                                    <Image 
-                                        src={item.url}
-                                        alt="Hero slide image" 
+                                    <Image
+                                        src={resolveImageUrl(item.url, "/home_slider/nss_home.jpg")}
+                                        alt="Hero slide image"
                                         fill
                                         priority={i === 0}
                                         className={cn("object-cover block w-full h-full", item.content ? "brightness-[0.38]" : "brightness-100")}
+                                        unoptimized
+                                        loading='eager'
                                     />
                                 </motion.div>
 
@@ -134,7 +168,7 @@ export default function HomeClient({
                                 {item.content && (
                                     <div className="absolute inset-0 flex items-center">
                                         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                                            <motion.div 
+                                            <motion.div
                                                 initial="hidden"
                                                 animate="show"
                                                 variants={{
@@ -143,7 +177,7 @@ export default function HomeClient({
                                                 className="max-w-xl border rounded-[2.5rem] p-8 sm:p-12 text-left shadow-2xl space-y-4"
                                             >
                                                 {item.content.update_text && (
-                                                    <motion.span 
+                                                    <motion.span
                                                         variants={{
                                                             hidden: { opacity: 0, y: 15 },
                                                             show: { opacity: 1, y: 0 }
@@ -153,8 +187,8 @@ export default function HomeClient({
                                                         {item.content.update_text}
                                                     </motion.span>
                                                 )}
-                                                
-                                                <motion.h3 
+
+                                                <motion.h3
                                                     variants={{
                                                         hidden: { opacity: 0, y: 20 },
                                                         show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 150 } }
@@ -163,9 +197,9 @@ export default function HomeClient({
                                                 >
                                                     {item.content.title}
                                                 </motion.h3>
-                                                
+
                                                 {item.content.action && (
-                                                    <motion.div 
+                                                    <motion.div
                                                         variants={{
                                                             hidden: { opacity: 0, y: 15 },
                                                             show: { opacity: 1, y: 0 }
@@ -173,12 +207,12 @@ export default function HomeClient({
                                                         className="pt-4"
                                                     >
                                                         <Link href={item.content.action.link}>
-                                                            <motion.button 
+                                                            <motion.button
                                                                 whileHover={{ scale: 1.02 }}
                                                                 whileTap={{ scale: 0.98 }}
                                                                 className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-2xl transition-all shadow-md cursor-pointer text-sm font-sans flex items-center gap-2 group"
                                                             >
-                                                                {item.content.action.text} 
+                                                                {item.content.action.text}
                                                                 <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
                                                             </motion.button>
                                                         </Link>
@@ -219,27 +253,27 @@ export default function HomeClient({
                 </div>
 
                 {/* Slide Nav Controls with custom glass hover effects */}
-                <button 
-                    onClick={handlePrevSlide} 
+                <button
+                    onClick={handlePrevSlide}
                     className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white bg-white/5 hover:bg-amber-500 border border-white/10 hover:border-amber-400 rounded-full z-40 transition-all cursor-pointer backdrop-blur-md hover:scale-105"
                     aria-label="Previous slide"
                 >
                     <FaChevronLeft />
                 </button>
-                <button 
-                    onClick={handleNextSlide} 
+                <button
+                    onClick={handleNextSlide}
                     className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white bg-white/5 hover:bg-amber-500 border border-white/10 hover:border-amber-400 rounded-full z-40 transition-all cursor-pointer backdrop-blur-md hover:scale-105"
                     aria-label="Next slide"
                 >
                     <FaChevronRight />
-                </button>    
+                </button>
             </section>
 
             {/* 2. ABOUT NSS SECTION WITH FLOATING ICONS & DEVICE VIDEO FRAME */}
             <section className="py-24 relative overflow-hidden bg-white border-b border-slate-200/60">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                        
+
                         {/* Text Left Column */}
                         <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-100 bg-amber-50/50 text-amber-600 font-extrabold text-xs uppercase tracking-widest font-mono">
@@ -251,25 +285,49 @@ export default function HomeClient({
                             <p className="text-slate-600 text-base leading-relaxed font-light">
                                 The National Service Scheme at IIT Patna is a vibrant student-run cell dedicated to driving community development and positive societal changes. Led by administrative advisors, core secretary panels, and active student volunteers, we apply technological ingenuity and empathetic outreach to bridge social gaps in our local community.
                             </p>
-                            
+
                             {/* Detailed Pillars Grid */}
                             <div className="grid grid-cols-2 gap-4 pt-2">
                                 <div className="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center text-base">
+                                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center text-base flex-shrink-0">
                                         <FaUsers />
                                     </div>
                                     <div className="text-left">
-                                        <span className="font-extrabold text-slate-800 block text-base leading-none">120+</span>
+                                        <span className="font-extrabold text-slate-800 block text-base leading-none">500+</span>
                                         <span className="text-[9px] text-slate-400 font-mono font-bold uppercase tracking-wider">Volunteers</span>
                                     </div>
                                 </div>
                                 <div className="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base">
+                                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base flex-shrink-0">
                                         <FaAward />
                                     </div>
                                     <div className="text-left">
-                                        <span className="font-extrabold text-slate-800 block text-base leading-none">7 Cells</span>
+                                        <span className="font-extrabold text-slate-800 block text-base leading-none">6 Cells</span>
                                         <span className="text-[9px] text-slate-400 font-mono font-bold uppercase tracking-wider">Service Wings</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Beautiful Motto Card */}
+                            <div className="relative overflow-hidden p-6 rounded-3xl border border-amber-100 bg-gradient-to-br from-amber-50/60 to-orange-50/30 shadow-md shadow-amber-500/5 hover:shadow-xl hover:border-amber-200 transition-all duration-300 group hover:-translate-y-1">
+                                {/* Decorative Quote Watermark */}
+                                <div className="absolute right-4 bottom-0 translate-y-6 opacity-[0.04] text-slate-900 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
+                                    <FaQuoteLeft className="text-9xl" />
+                                </div>
+                                <div className="flex gap-4 items-start relative z-10">
+                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-lg flex-shrink-0 shadow-lg shadow-amber-500/30 group-hover:rotate-3 transition-transform">
+                                        <FaQuoteLeft />
+                                    </div>
+                                    <div className="text-left space-y-1.5">
+                                        <span className="text-[10px] text-amber-600 font-mono font-extrabold uppercase tracking-widest block">
+                                            The NSS Motto
+                                        </span>
+                                        <h4 className="text-xl font-black text-slate-800 leading-tight">
+                                            Not Me But You
+                                        </h4>
+                                        <p className="text-slate-600 text-sm leading-relaxed font-light">
+                                            This reflects the essence of democratic living and upholds the need for selfless service. It underlines the belief that the welfare of an individual is ultimately dependent on the welfare of the society as a whole.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +337,7 @@ export default function HomeClient({
                         <div className="lg:col-span-6 flex justify-center w-full relative">
                             {/* Background glowing gradients */}
                             <div className="absolute inset-0 w-80 h-80 bg-gradient-to-tr from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl -top-10 -left-10 pointer-events-none" />
-                            
+
                             {/* Floating icons */}
                             <motion.div animate={floatTransition(0)} className="absolute -top-6 -right-4 w-12 h-12 rounded-2xl bg-white border border-slate-100 shadow-md text-blue-500 flex items-center justify-center text-lg z-20">
                                 <FaHandshake />
@@ -295,7 +353,7 @@ export default function HomeClient({
                             </motion.div>
 
                             {/* Main tablet wrapper */}
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true, margin: "-100px" }}
@@ -303,16 +361,89 @@ export default function HomeClient({
                                 className="relative w-full max-w-lg p-3 rounded-[2.2rem] bg-slate-900 shadow-2xl border border-slate-200/10 overflow-hidden"
                             >
                                 <div className="relative aspect-video w-full rounded-[1.6rem] overflow-hidden bg-black">
-                                    <iframe 
+                                    {/* <iframe
                                         className="w-full h-full"
-                                        src="https://www.youtube.com/embed/EngW7tLk6R8" 
-                                        title="NSS IIT Patna Promotional Video" 
-                                        frameBorder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        src="https://www.youtube.com/embed/EngW7tLk6R8"
+                                        title="NSS IIT Patna Promotional Video"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
-                                    />
+                                    /> */}
+                                    <video controls={true} src={'/nss highlights.mp4'} />
                                 </div>
                             </motion.div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            {/* 2.5. SAMVEDNA MAGAZINE SECTION WITH LIGHT THEMED INTERACTIVE FLIPBOOK */}
+            <section className="py-24 relative overflow-hidden bg-white border-b border-slate-200/60 text-slate-800">
+                {/* Glowing background accent circles (very soft light glow) */}
+                <div className="absolute top-1/4 left-[10%] w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+                        {/* Text and Actions Left Column */}
+                        <div className="lg:col-span-5 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-200 bg-amber-50/60 text-amber-700 font-extrabold text-xs uppercase tracking-widest font-mono shadow-xs">
+                                <FaBookOpen className="text-sm" /> Annual Publication (2025-26)
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-800 tracking-tight leading-tight font-sans">
+                                SAMVEDNA <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent font-sans font-black">Magazine</span>
+                            </h2>
+                            <p className="text-slate-600 text-base leading-relaxed font-light max-w-lg">
+                                Explore the pages of <b>Samvedna</b>, the official annual newsletter of NSS IIT Patna.
+                                Witness the achievements of our cells, read personal testimonials of student volunteers,
+                                and discover how technological innovation combines with community service to drive social change.
+                            </p>
+
+                            {/* Features list */}
+                            <div className="space-y-3.5 w-full max-w-sm pt-2 text-left">
+                                <div className="flex items-center gap-3">
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-5 h-5 rounded-full bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center text-xs flex-shrink-0 font-bold">
+                                        ✓
+                                    </div>
+                                    <span className="text-slate-600 text-sm font-light">Comprehensive coverage of all wings</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-5 h-5 rounded-full bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center text-xs flex-shrink-0 font-bold">
+                                        ✓
+                                    </div>
+                                    <span className="text-slate-600 text-sm font-light">Volunteer diaries & stories of change</span>
+                                </div>
+                            </div>
+
+                            {/* Download Action Button */}
+                            <div className="pt-4 flex flex-wrap gap-4 justify-center lg:justify-start w-full">
+                                <button
+                                    onClick={handleDownload}
+                                    disabled={isDownloading}
+                                    className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 disabled:bg-amber-400 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-98 cursor-pointer disabled:cursor-not-allowed text-xs font-sans"
+                                >
+                                    {isDownloading ? (
+                                        <>
+                                            <div className="w-3 h-3 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                                            Downloading...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FaDownload className="text-xs" /> Download PDF Magazine
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Interactive Flipbook Right Column */}
+                        <div className="lg:col-span-7 w-full flex justify-center">
+                            <div className="w-full max-w-2xl border border-slate-200/80 bg-[#FAF9F6] p-2.5 rounded-2xl shadow-lg relative">
+                                <DearFlipPdf source={'/SAMVEDNA.pdf'} />
+                            </div>
                         </div>
 
                     </div>
@@ -345,7 +476,7 @@ export default function HomeClient({
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: i * 0.15 }}
-                                whileHover={{ 
+                                whileHover={{
                                     y: -8,
                                     scale: 1.03
                                 }}
@@ -356,12 +487,12 @@ export default function HomeClient({
                             >
                                 <div>
                                     {/* Thumbnail containing zoom loop */}
-                                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-100 mb-4 shadow-inner group">
-                                        <Image 
-                                            src={item.thumbnail}
+                                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl mb-4  group">
+                                        <Image
+                                            src={resolveImageUrl(item.thumbnail, "/units/chetna_final.jpg")}
                                             alt={item.title}
                                             fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            className="object-contain group-hover:scale-105 transition-transform duration-500"
                                             sizes="(max-width: 768px) 300px, 350px"
                                         />
                                     </div>
@@ -386,6 +517,71 @@ export default function HomeClient({
                 </div>
             </section>
 
+            {/* 4. UPCOMING EVENTS SECTION WITH GRADIENT TRACK LINE & SLIDE ENTRIES */}
+            <section className="py-24 bg-gray-100/50 border-t border-b border-slate-200/60" id="upcoming-events">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-20 max-w-xl mx-auto">
+                        <span className="text-xs font-bold uppercase tracking-widest text-brand-blue font-mono">NSS Events</span>
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mt-2 font-sans tracking-tight">Upcoming Event Timeline</h2>
+                        <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">
+                            Trace Upcoming Events By NSS
+                        </p>
+                    </div>
+
+                    {/* Timeline Path Container */}
+                    <div className="relative mt-12 pl-8 sm:pl-0">
+                        {/* Gradient Line Path */}
+                        {upcomingEventsData.length > 0 && <div className="absolute top-0 bottom-0 left-[26px] sm:left-1/2 w-0.5 bg-gradient-to-b from-amber-400 via-indigo-500 to-rose-500 -translate-x-1/2 pointer-events-none" />
+                        }
+                        {upcomingEventsData.length > 0 ? upcomingEventsData.map((item, i) => {
+                            const isOdd = i % 2 !== 0;
+                            return (
+                                <div key={i} className="relative mb-16 flex flex-col sm:flex-row items-center justify-center w-full">
+
+                                    {/* Left Card Element */}
+                                    <div className="w-full sm:w-1/2 flex justify-start sm:justify-end pl-12 sm:pl-0 sm:pr-10">
+                                        {!isOdd ? (
+                                            <EventTimelineCard item={item} slideFromLeft={true} />
+                                        ) : (
+                                            <div className="hidden sm:block w-full" />
+                                        )}
+                                    </div>
+
+                                    {/* Pulsing Concentric Node */}
+                                    <div className="absolute left-[26px] sm:left-1/2 w-10 h-10 rounded-full border-4 border-[#FAF9F6] bg-white -translate-x-1/2 z-20 flex items-center justify-center shadow-md">
+                                        {/* Outer ping pulse */}
+                                        <div className="w-10 h-10 rounded-full bg-indigo-500/20 absolute animate-ping pointer-events-none" />
+                                        <div className="w-4 h-4 rounded-full bg-indigo-600" />
+                                    </div>
+
+                                    {/* Right Card Element */}
+                                    <div className="w-full sm:w-1/2 flex justify-start pl-12 sm:pl-10">
+                                        {isOdd ? (
+                                            <EventTimelineCard item={item} slideFromLeft={false} />
+                                        ) : (
+                                            <div className="hidden sm:block w-full" />
+                                        )}
+                                    </div>
+
+                                </div>
+                            );
+                        }) :
+                            <div className='text-center max-w-xl border border-border rounded-xl bg-white p-6 m-auto'>
+                                There is Currently No Upcoming Event
+                            </div>
+                        }
+                    </div>
+
+                    <div className="text-center mt-12 flex flex-row gap-5 justify-center">
+                        <Link href="/events">
+                            <button className="bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg transition-all active:scale-98 cursor-pointer text-sm font-sans flex items-center gap-2 mx-auto group">
+                                View Upcoming Events <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
             {/* 4. RECENT EVENTS SECTION WITH GRADIENT TRACK LINE & SLIDE ENTRIES */}
             <section className="py-24 bg-slate-100/50 border-t border-b border-slate-200/60" id="events">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -406,7 +602,7 @@ export default function HomeClient({
                             const isOdd = i % 2 !== 0;
                             return (
                                 <div key={i} className="relative mb-16 flex flex-col sm:flex-row items-center justify-center w-full">
-                                    
+
                                     {/* Left Card Element */}
                                     <div className="w-full sm:w-1/2 flex justify-start sm:justify-end pl-12 sm:pl-0 sm:pr-10">
                                         {!isOdd ? (
@@ -436,6 +632,15 @@ export default function HomeClient({
                             );
                         })}
                     </div>
+
+                    <div className="text-center mt-12 flex flex-row gap-5 justify-center">
+                        <Link href="/gallery">
+                            <button className="bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg transition-all active:scale-98 cursor-pointer text-sm font-sans flex items-center gap-2 mx-auto group">
+                                View Event Gallery <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </Link>
+
+                    </div>
                 </div>
             </section>
 
@@ -452,18 +657,18 @@ export default function HomeClient({
                 <div className="mt-8 max-w-4xl mx-auto relative">
                     {/* Double quote background watermark */}
                     <FaQuoteLeft className="absolute -top-12 -left-10 text-slate-200/40 text-7xl select-none pointer-events-none hidden md:block" />
-                    
+
                     <Testimonial>
                         {testimonialsData.map((item, i) => (
-                            <TestimonialItem 
-                                className="testimonial-slide flex-shrink-0 w-full" 
-                                key={i} 
+                            <TestimonialItem
+                                className="testimonial-slide flex-shrink-0 w-full"
+                                key={i}
                                 data={{
                                     img: item.img || '/testimonial/person-1.jpg',
                                     text: item.text,
                                     name: item.name,
                                     position: item.position
-                                }} 
+                                }}
                             />
                         ))}
                     </Testimonial>
@@ -474,7 +679,7 @@ export default function HomeClient({
             <section className="py-24 text-white bg-brand-blue md:w-[92%] mx-auto rounded-[3.2rem] shadow-2xl relative overflow-hidden px-6 sm:px-12" id="impact">
                 {/* Glow layout */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,158,11,0.08),_transparent)] pointer-events-none" />
-                
+
                 <div className="text-center mb-20 max-w-xl mx-auto relative z-10">
                     <span className="text-xs font-bold uppercase tracking-widest text-amber-400 font-mono">NSS Outcomes</span>
                     <h2 className="text-3xl sm:text-4xl font-black text-white mt-2 font-sans">The Impact We Created</h2>
@@ -483,10 +688,10 @@ export default function HomeClient({
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center items-stretch relative z-10">
                     {impactsData.map((item, i) => (
-                        <div 
-                            key={i} 
+                        <div
+                            key={i}
                             className="bg-white/5 border border-white/10 rounded-[2rem] p-6 flex flex-col justify-between w-full max-w-[250px] aspect-square shadow-lg backdrop-blur-md text-left hover:border-amber-400/30 transition-all duration-300"
                         >
                             <div>
@@ -519,10 +724,10 @@ export default function HomeClient({
                 </div>
 
                 <div className="my-8">
-                    <EmblaCarousel 
-                        CarouselElement={CollaborateElement} 
-                        options={EMBLA_OPTIONS} 
-                        slides={[...collaboratorsData, ...collaboratorsData]} 
+                    <EmblaCarousel
+                        CarouselElement={CollaborateElement}
+                        options={EMBLA_OPTIONS}
+                        slides={[...collaboratorsData, ...collaboratorsData]}
                     />
                 </div>
 
@@ -537,9 +742,9 @@ export default function HomeClient({
 
             {/* 8. PREMIUM CTA ACTION CARDS */}
             <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 border-t border-slate-200/60 pt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-                
+
                 {/* CTA Card 1: Blood Request */}
-                <motion.div 
+                <motion.div
                     whileHover={{ y: -6, scale: 1.01 }}
                     className="bg-gradient-to-br from-rose-500 to-rose-600 rounded-[2.2rem] p-8 text-white shadow-lg flex flex-col justify-between"
                 >
@@ -562,7 +767,7 @@ export default function HomeClient({
                 </motion.div>
 
                 {/* CTA Card 2: Collaborate */}
-                <motion.div 
+                <motion.div
                     whileHover={{ y: -6, scale: 1.01 }}
                     className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-[2.2rem] p-8 text-white shadow-lg flex flex-col justify-between"
                 >
@@ -585,7 +790,7 @@ export default function HomeClient({
                 </motion.div>
 
                 {/* CTA Card 3: Think-Thank */}
-                <motion.div 
+                <motion.div
                     whileHover={{ y: -6, scale: 1.01 }}
                     className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-[2.2rem] p-8 text-white shadow-lg flex flex-col justify-between"
                 >
@@ -616,13 +821,13 @@ export default function HomeClient({
 function EventTimelineCard({ item, slideFromLeft }) {
     return (
         <motion.div
-            initial={{ 
-                opacity: 0, 
+            initial={{
+                opacity: 0,
                 x: slideFromLeft ? -45 : 45,
                 scale: 0.97
             }}
-            whileInView={{ 
-                opacity: 1, 
+            whileInView={{
+                opacity: 1,
                 x: 0,
                 scale: 1
             }}
@@ -633,15 +838,15 @@ function EventTimelineCard({ item, slideFromLeft }) {
         >
             {/* Hover-zoom frame wrapper */}
             <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-100 mb-4 group">
-                <Image 
-                    src={item.thumbnail}
-                    alt={item.title}
+                <Image
+                    src={resolveImageUrl(item.thumbnail, "/units/chetna_final.jpg")}
+                    alt={item.title || "Event thumbnail"}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 300px, 350px"
                 />
             </div>
-            
+
             <div className="px-2 pb-2">
                 <div className="flex flex-wrap items-center gap-1.5">
                     <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-md border border-amber-200 bg-amber-50 text-amber-700 font-mono">
@@ -654,7 +859,7 @@ function EventTimelineCard({ item, slideFromLeft }) {
                     ))}
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-800 mt-3 leading-tight font-sans">{item.title}</h3>
+                <h3 className="text-lg font-bold text-slate-800 mt-3 leading-tight font-sans"><Link href={`/gallery/event/${item.id}`}>{item.title}</Link></h3>
                 <p className="text-slate-500 text-xs mt-2 leading-relaxed line-clamp-3">
                     {item.details}
                 </p>
@@ -669,8 +874,8 @@ function CollaborateElement(props) {
     return (
         <div className="flex flex-col items-center justify-center bg-white border border-slate-200/60 rounded-3xl p-6 aspect-square w-full max-w-[155px] shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 select-none group">
             <div className="relative w-full h-14 flex items-center justify-center">
-                <Image 
-                    src={data.logo}
+                <Image
+                    src={resolveImageUrl(data.logo, "/placeholder.svg")}
                     alt={data.name || "Collaborator Logo"}
                     width={100}
                     height={60}

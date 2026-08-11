@@ -1,5 +1,9 @@
 import { createClient } from '@/utils/supabase/server';
 import HomeClient from './HomeClient';
+import { resolveEventThumbnail } from '@/components/server-utils';
+import { resolveImageUrl } from '@/utils/imageUrl';
+
+export const dynamic = 'force-dynamic';
 
 // Static JSON Fallbacks for offline resilience
 import slider_data from '@/data/slider_data.json';
@@ -17,6 +21,7 @@ export const metadata = {
 export default async function HomePage() {
     let units = [];
     let events = [];
+    let upcomingEvents = [];
     let testimonials = [];
     let impacts = [];
     let collaborators = [];
@@ -30,12 +35,12 @@ export default async function HomePage() {
             .from('units')
             .select('number, motive, thumbnail_url')
             .order('number');
-        
+
         if (!unitsErr && dbUnits) {
             units = dbUnits.map(u => ({
                 title: `Unit ${u.number}`,
                 subTitle: u.motive || "Service Unit",
-                thumbnail: u.thumbnail_url || "/units/chetna_final.jpg",
+                thumbnail: resolveImageUrl(u.thumbnail_url, "/placeholder.svg"),
                 action: {
                     text: "Know More",
                     url: `/units/unit-${u.number}`
@@ -60,7 +65,7 @@ export default async function HomePage() {
                 name: t.name,
                 position: t.position,
                 text: t.text,
-                img: t.img_url || '/testimonial/person-1.jpg'
+                img: resolveImageUrl(t.img_url, '/testimonial/person-1.jpg')
             }));
         }
     } catch (err) {
@@ -79,7 +84,7 @@ export default async function HomePage() {
         if (!collabsErr && dbCollaborators) {
             collaborators = dbCollaborators.map(c => ({
                 name: c.name,
-                logo: c.logo_url,
+                logo: resolveImageUrl(c.logo_url, '/placeholder.svg'),
                 url: c.url
             }));
         }
@@ -130,28 +135,75 @@ export default async function HomePage() {
                     )
                 )
             `)
+            .lte('event_date', new Date().toISOString())
             .order('event_date', { ascending: false })
             .limit(4);
 
         if (!eventsErr && dbEvents) {
-            events = dbEvents.map(e => {
-                const thumb = e.event_media?.find(m => m.is_thumbnail) || e.event_media?.[0];
+            events = await Promise.all(dbEvents.map(async (e) => {
+                const thumbnail = await resolveEventThumbnail(e.event_media || []);
                 return {
                     id: e.id,
                     title: e.title,
                     details: e.details,
-                    date: new Date(e.event_date).toLocaleDateString('en-US', {
+                    date: e.event_date ? new Date(e.event_date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric'
-                    }),
-                    thumbnail: thumb ? thumb.media_url : "/units/chetna_final.jpg",
+                    }) : "To be decided",
+                    thumbnail,
                     wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
                 };
-            });
+            }));
         }
     } catch (err) {
         console.error("Supabase fetch events error:", err);
+    }
+
+    try {
+        const supabase = await createClient();
+
+        // 5. Fetch Events (Limit 4 for Timeline)
+        const { data: dbUpcomingEvents, error: upcomingEventsErr } = await supabase
+            .from('events')
+            .select(`
+                id,
+                title,
+                details,
+                event_date,
+                event_media (
+                    media_url,
+                    is_thumbnail
+                ),
+                event_wings (
+                    wings (
+                        name
+                    )
+                )
+            `)
+            .or(`event_date.gte.${new Date().toISOString()},event_date.is.null`)
+            .order('event_date', { ascending: false, nullsFirst: true })
+            .limit(4);
+
+        if (!upcomingEventsErr && dbUpcomingEvents) {
+            upcomingEvents = await Promise.all(dbUpcomingEvents.map(async (e) => {
+                const thumbnail = await resolveEventThumbnail(e.event_media || []);
+                return {
+                    id: e.id,
+                    title: e.title,
+                    details: e.details,
+                    date: e.event_date ? new Date(e.event_date).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }) : "To be decided",
+                    thumbnail,
+                    wings: e.event_wings ? e.event_wings.map(ew => ew.wings?.name).filter(Boolean) : []
+                };
+            }));
+        }
+    } catch (err) {
+        console.error("Supabase fetch upcoming events error:", err);
     }
 
     // Resilience mapping to static JSON if database returns empty
@@ -173,22 +225,13 @@ export default async function HomePage() {
             unit: i.unit
         }));
     }
-    if (events.length === 0) {
-        events = events_data.items.map(e => ({
-            id: e.id || "static-event",
-            title: e.title,
-            details: e.details,
-            date: e.date,
-            thumbnail: e.thumbnail,
-            wings: e.wings || []
-        }));
-    }
 
     return (
         <HomeClient
             sliderData={slider_data}
             unitsData={units}
             eventsData={events}
+            upcomingEventsData={upcomingEvents}
             testimonialsData={testimonials}
             impactsData={impacts}
             collaboratorsData={collaborators}

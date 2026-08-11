@@ -1,0 +1,622 @@
+﻿NATIONAL SERVICE SCHEME
+INDIAN INSTITUTE OF TECHNOLOGY PATNA
+
+
+NSS IIT Patna
+Annual Magazine  ·  2025-26
+FIRST EDITION  ·  A YEAR OF SERVICE, STORIES & IMPACT
+“Not Me, But You”
+
+
+Inside This Issue
+01   Leadership & Team
+Messages from the PIC, Advisory Team, NSS GenSec, Executive Team, Sub-Coordinators, and App Dev Team
+02   About Us
+Introduction to NSS IIT Patna, our six wings, NSS by the Numbers, and NSS as a Course
+03   Wing-Wise Detailed Reports
+Deep dives into every wing’s flagship events, teaching initiatives, and special programmes
+04   Mega Events
+Swachhata Hi Seva, Sneh AI, and the Anwesha Donation Drive
+05   Seva Sankalp (Closing Mega Event)
+Our largest community outreach festival — civic sense, DKMS, Talent Hunt, and more
+06   Tech Initiatives
+The NSS-IITP Official App, Schedule Maker, and the revamped website
+07   Achievements Section
+National recognition at VBYLD and Budget Quest
+08   Board of Director Meet
+Annual Report Overview for NSS 2025-2026
+
+
+01  Leadership & Team
+
+
+Words from the PIC — Dr. Somnath Pradhan
+It gives me immense pride and joy to present the second edition of Samvedna — the annual magazine of NSS IIT Patna. This year has been truly extraordinary. The dedication, empathy, and tireless effort that our volunteers have poured into every initiative reaffirm my belief that the engineers of IIT Patna are not just building careers — they are building a better society.
+From regular school teaching in the villages of government schools in the surrounding areas of IIT Patna, to the monumental Seva Sankalp festival that touched hundreds of lives in a single week, our team has demonstrated that service is not a side activity — it is a calling. The adoption of technology through the NSS App, the scale of the DKMS WBC Marker collection drive, the Talent Hunt Scholarship Examination for 500+ rural students, the partnership with the Being Helper Foundation — each of these speaks to a unit that thinks big and executes with heart.
+To every volunteer who gave their weekends, their late nights, and their genuine care to this mission: you have made NSS IIT Patna proud. Keep serving. Keep growing.
+“Not Me, But You — this is not just a motto. It is the principle that defines who you are.”
+— Dr. Somnath Pradhan, Professor in Charge, NSS IIT Patna
+	
+
+The Advisory Team (4th Year)
+The Advisory Team provides strategic guidance, institutional memory, and mentorship to the entire unit. Their experience has been invaluable in shaping the vision and direction of NSS IIT Patna's 2025-26 journey.
+Name
+	Role
+	Year
+	Ade Balakrishna
+	Advisory Member
+	4th Year
+	Podli Ruby Veronica
+	Advisory Member
+	4th Year
+	Rabi Kumar Shaw
+	Advisory Member
+	4th Year
+	Ayushman Singh
+	Advisory Member
+	4th Year
+	Sudhanshu Shekhar
+	Advisory Member
+	4th Year
+	Rishav Shivare
+	Advisory Member
+	4th Year
+	
+
+From the NSS GenSec — Dinker Anand & Mahipal Maddu
+When we took on the responsibility of leading NSS IIT Patna as General Secretaries, we made a quiet promise to ourselves — that this year would not just be about events, but about impact. Looking back at 2025-26, we can say with full confidence: we kept that promise.
+This year, 384 volunteers gave their time, energy, and genuine care to over a hundred initiatives across six wings. We taught in village schools, collected stem cell markers for blood cancer patients, conducted the biggest Talent Hunt Examination in our history with 500+ students across five schools, and wrapped up the year with Seva Sankalp — a festival of service that brought the entire campus together.
+What makes us most proud is not any single event, but the culture we built together — a culture where showing up matters, where a volunteer in Teaching and Technical Wing stays back after class to check if a student understood, where a Prayatna volunteer walks hostel to hostel for a donation drive without being asked twice. That culture is NSS IIT Patna.
+To the Advisory Team, our incredible wing secretaries, sub-coordinators, and every volunteer: this magazine is a tribute to you. To whoever is reading this in the years ahead — the bar has been set. We hope you exceed it.
+“Service is not what we do on weekends. It is who we are.”
+— Dinker Anand & Mahipal Maddu, General Secretaries, NSS IIT Patna 2025-26
+	
+
+The Executive Team — Team of Secretaries
+Our wing secretaries are the backbone of NSS IIT Patna — each one responsible for planning, coordinating, and executing the activities of their wing across the full academic year.
+Name
+	Role
+	Wing
+	Mahipal Maddu
+	Secretary
+	Chetna Wing
+	Anil Kumawat
+	Secretary
+	Design and Curation Wing
+	Dinker Anand
+	Secretary
+	Environmental Wing
+	Sai Vardhan
+	Secretary
+	Prayatna Wing
+	Aditi Kashyap
+	Secretary
+	Prayatna Wing
+	Uday Aditya
+	Secretary
+	Prayatna Wing
+	Eshan Bhaskar
+	Secretary
+	Teaching & Technical Wing
+	Ankesh Kumar
+	Secretary
+	Teaching & Technical Wing
+	
+
+Team of Sub-Coordinators
+Sub-Coordinators are the on-ground engines of NSS IIT Patna — managing event logistics, volunteer coordination, and day-to-day wing operations.
+Teaching & Technical Wing
+Name
+	Tanishk Raj
+	Anish Kumar
+	Khushi Sarawagi 
+	Anshika Garg
+	Amit Kumar Meena
+	Srishti Singh
+	Design & Curation Wing
+Name
+	Parnava Maitra
+	Shankhadeep Das
+	Aayan Tejani
+	Ayush Sen
+	Environmental Wing
+Name
+	Shivam Kumar
+	Samiksha
+	Charu Garg
+	Riju Mondal
+	B. Praneeth
+	Anirudh Varada
+	Rural Development Wing
+Name
+	Kshitij Singh
+	Kumar Yash Raj
+	Aditya Raj
+	Ayushkar Nath
+	Chetna Wing
+Name
+	Romir Zadoo
+	Shaurya Singh
+	Arya Patil
+	Shreya Yadav
+	Himanshi
+	Priyanshu Purohit
+	Dikshit Verma
+	Vijay Manoj
+	Prayatna Wing
+Name
+	Neha Sree
+	Piyush Kumar
+	Sravan Kumar
+	Sai Gayathri
+	Ayantika Halder
+	Jawahar Reddy
+	
+
+App Dev Team
+The NSS-IITP Official App — one of the year's most transformative achievements — was designed, built, and maintained entirely by two dedicated members of our own team:
+Name
+	Roll No.
+	Role
+	Eshan Bhaskar
+	2301CS16
+	Lead Developer
+	Ankesh Kumar
+	2301CS06
+	Lead Developer
+	Their work has fundamentally changed how NSS IIT Patna operates — from QR-based attendance to automated scheduling to real-time volunteer dashboards. The App Dev Team's contribution this year goes far beyond writing code: they built the digital backbone of 384 volunteers.
+
+
+02  About Us
+
+
+Introduction to NSS IIT Patna (2025-2026)
+The National Service Scheme (NSS) is one of India's largest and most impactful youth development programmes, launched in 1969 under the Ministry of Education with the vision of fostering social responsibility, community engagement, and nation-building among students. Guided by its enduring motto, "Not Me, But You," NSS encourages young individuals to look beyond personal achievements and contribute meaningfully to the welfare of society.
+At IIT Patna, NSS serves as a platform that enables students to engage directly with social challenges while developing leadership, empathy, teamwork, and a sense of civic responsibility. While NSS is not a credit-bearing course, volunteers are required to complete a prescribed number of service hours across both semesters through active participation in various outreach programmes, awareness campaigns, educational initiatives, and community development activities.
+The academic year 2025–26 marked another significant chapter in the journey of NSS IIT Patna. Through the collective efforts of its six wings and dedicated volunteers, the unit expanded its reach across schools, villages, and communities in and around the institute. From educational interventions and technical awareness programmes to environmental campaigns, health initiatives, and national-level representations, NSS IIT Patna continued to uphold its commitment to meaningful service and social impact. This magazine presents a comprehensive account of these efforts, achievements, and experiences, reflecting the spirit of service that defines NSS and its volunteers.
+
+
+Our Six Wings
+The diverse activities of NSS IIT Patna are carried forward through six specialised wings, each dedicated to a unique dimension of social service and community engagement. Together, these wings form the backbone of the organisation, working collaboratively to address challenges in education, health, environmental sustainability, social awareness, creativity, and rural development. Through their collective efforts, NSS IIT Patna transforms the spirit of service into meaningful and lasting impact.
+Teaching & Technical Wing
+Motto: "Bridging Knowledge with Service"
+The educational backbone of NSS IIT Patna, the Teaching & Technical Wing is dedicated to promoting learning and knowledge-sharing through regular teaching activities in nearby schools and educational institutions. The wing also conducts tutorial sessions, science exhibitions, technical workshops, and skill-development initiatives aimed at making quality education and technology accessible to a wider community.
+Prayatna Wing
+Motto: "Compassion in Action"
+The Prayatna Wing focuses on health, welfare, and humanitarian service. Through blood donation drives, donation campaigns, health-awareness initiatives, and community support programmes, the wing strives to address immediate social needs and foster a culture of empathy and service among volunteers.
+Chetna Wing
+Motto: "Awareness. Empowerment. Change."
+Dedicated to promoting social awareness and inclusivity, the Chetna Wing works extensively on issues related to women's safety, gender equality, women empowerment, health awareness, and social well-being. Through interactive sessions, awareness campaigns, discussions, and outreach activities, the wing seeks to inspire informed and responsible citizenship.
+Design & Curation Wing
+Motto: "Create. Communicate. Impact."
+The Design & Curation Wing serves as the creative and communication arm of NSS IIT Patna. It is responsible for event documentation, content creation, publicity, digital outreach, and preserving the visual and narrative record of the unit's activities, ensuring that the impact of NSS reaches a broader audience.
+Environmental Wing
+Motto: "Green Today, Better Tomorrow"
+Committed to environmental stewardship and sustainable development, the Environmental Wing organizes tree plantation drives, cleanliness campaigns, waste-management initiatives, and awareness programmes that encourage environmentally responsible practices within the institute and surrounding communities.
+Rural Development Wing
+Motto: "Empowering Villages, Building India"
+The Rural Development Wing works towards community engagement and grassroots development through village outreach programmes, cleanliness drives, awareness campaigns, and street plays (Nukkad Nataks). The wing actively collaborates with local communities to promote civic responsibility, social awareness, and sustainable development, while also leading national initiatives such as Swachhata Hi Seva.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The NSS Family
+At the heart of NSS IIT Patna is a dedicated community of 384 volunteers, united by a shared commitment to service, leadership, and social responsibility. Throughout the academic year 2025–26, these volunteers devoted countless hours towards educational outreach, health and welfare initiatives, environmental campaigns, awareness programmes, and community development activities, creating a meaningful impact both within and beyond the institute campus.
+Their collective efforts transformed ideas into action, enabling NSS IIT Patna to reach hundreds of students, support local communities, organize large-scale service initiatives, and represent the institute on prestigious national platforms. Together, they embody the spirit of NSS and its enduring motto — "Not Me, But You."
+Wing-wise Volunteer Distribution |
+
+
+
+
+Wing
+	Volunteers 
+	Teaching and Technical Wing
+	80
+	Chetna Wing
+	70
+	Environmental Wing
+	65
+	Prayatna Wing
+	65
+	Rural Development Wing
+	64
+	Design & Curation Wing
+	40
+	Total
+	384
+
+
+	The diversity and dedication of this volunteer force form the foundation of NSS IIT Patna's success, enabling the organization to undertake impactful initiatives across multiple domains while fostering a culture of empathy, responsibility, and service among students. 
+NSS as a Course
+At IIT Patna, the National Service Scheme is integrated into the institute's academic framework, ensuring that community service becomes an essential part of a student's holistic development. Every NSS volunteer is required to complete a minimum of 120 hours of service over the course of an academic year, with at least 60 hours in each semester. Fulfilling this requirement is mandatory for the successful completion of the programme.
+This structured approach encourages sustained engagement with society rather than isolated acts of service, enabling volunteers to develop leadership, teamwork, empathy, and a deeper sense of civic responsibility through consistent participation in outreach and community-development activities.
+To streamline this process, NSS IIT Patna utilizes a dedicated digital volunteer-hour tracking system through the NSS App. The platform allows volunteers to monitor their service hours in real time while enabling coordinators and wing secretaries to efficiently manage participation records, ensuring transparency, accountability, and active involvement throughout the academic year.
+
+
+
+
+03  Wing-Wise Detailed Reports
+
+
+Teaching & Technical Wing
+Motto: Bridging Knowledge with Service
+The Teaching & Technical Wing (TTW) of NSS IIT Patna continued its mission of making education accessible, engaging, and impactful throughout the academic year 2025–26. Guided by the belief that education is one of the most powerful instruments of social transformation, the wing worked tirelessly to bridge learning gaps, promote technological awareness, and create meaningful educational opportunities for students both within and beyond the institute campus.
+Through regular school teaching programmes, technical workshops, awareness sessions, educational competitions, and community outreach initiatives, TTW remained committed to empowering young learners while simultaneously cultivating a spirit of service and social responsibility among NSS volunteers.
+The activities undertaken during the year can be broadly categorized into two major domains: Outside-Campus Educational Initiatives and On-Campus Educational Programmes.
+Outside-Campus Educational Initiatives
+Regular School Teaching Programme
+The school teaching programme remained the flagship activity of the Teaching & Technical Wing. Throughout the academic year, dedicated NSS volunteers conducted regular classes for students from Classes VI to XII in government schools located in the nearby villages of Raghopur and Amhara.
+Working closely with school authorities and teachers, volunteers taught a wide range of subjects including Mathematics, Science, English, and Social Studies. These classes were designed not only to supplement classroom learning but also to strengthen conceptual understanding, encourage curiosity, and boost students' confidence in their academic abilities.
+Despite the demanding academic schedules of IIT Patna, volunteers consistently devoted their time and effort every week towards teaching and mentoring students. Their dedication transformed these sessions into much more than academic classes—they became platforms for inspiration, guidance, and meaningful human connection.
+Expansion to Dilawarpur School
+One of the most significant achievements of the 2025–26 session was the expansion of the teaching programme to Dilawarpur School, which was formally added to the wing's outreach activities during Semester II.
+The addition of a new school marked a major milestone for the wing. Establishing the programme required coordination with school authorities, formation of a dedicated volunteer team, and the development of a sustainable teaching schedule while simultaneously maintaining activities in Raghopur and Amhara.
+The successful integration of Dilawarpur School into the teaching programme reflected the organizational strength and commitment of the volunteers and significantly expanded the educational footprint of NSS IIT Patna.
+Children's Day Celebration
+Children's Day was celebrated with great enthusiasm across the partner schools. The wing organized drawing competitions and interactive activities aimed at encouraging creativity and self-expression among students.
+Necessary materials were provided to all participants, while volunteers actively guided and motivated students throughout the event. The vibrant participation and imaginative artwork showcased the enthusiasm and talent of the children. Prizes were awarded to top performers, making the celebration both enjoyable and memorable for the students.
+Makar Sankranti Celebration
+As part of the Makar Sankranti celebrations, the Teaching & Technical Wing organized a kite-flying event for school students. The activity combined creativity, teamwork, and enjoyment, allowing students to design, build, and fly their own kites with the assistance of NSS volunteers.
+Beyond being a festive celebration, the event served as a platform for interaction and engagement, creating joyful memories while strengthening the bond between volunteers and students.
+________________
+
+
+On-Campus Educational Programmes
+Tutorial Block Teaching Programme
+The Tutorial Block Teaching Programme continued to be one of the most impactful educational initiatives conducted within the IIT Patna campus.
+Organized primarily on weekends, the programme welcomed students from nearby communities to the campus, providing them with access to a structured learning environment and exposure to higher educational settings. Educational sessions were conducted for students from Classes VI to XII, covering both academic and practical topics relevant to their personal and professional development.
+The programme extended beyond conventional classroom instruction. Sessions included career guidance, road safety awareness, first aid training, scholarship and education loan awareness, digital literacy, and introductions to modern learning tools such as PowerPoint, Canva, and ChatGPT.
+To ensure continuity in learning, volunteers provided lecture materials, assignments, quizzes, and doubt-solving support. Students were encouraged to actively participate, ask questions, and engage with the topics being discussed, thereby creating a highly interactive learning environment.
+Synergy Script Initiative
+To strengthen volunteer participation and encourage innovative teaching practices, the Teaching & Technical Wing introduced the Synergy Script Initiative.
+Under this programme, volunteers were encouraged to prepare and deliver at least one educational session individually or as part of a group. This approach enabled volunteers to actively contribute to the teaching process while developing communication, presentation, and leadership skills.
+Sessions were primarily conducted in Hindi to ensure accessibility for Bihar Board students and covered a diverse range of topics including Basic Excel, Social Media Awareness, Government Functioning at the Village Level, Education Loans and Scholarships, Traffic Rules and Road Safety, Canva, PowerPoint, and ChatGPT.
+The initiative successfully transformed volunteers from passive contributors into active educators, fostering both personal growth and meaningful learning experiences for students.
+Foundation Academy and Kendriya Vidyalaya Engagement
+The Teaching & Technical Wing also collaborated extensively with educational institutions located within the IIT Patna campus, including Foundation Academy and Kendriya Vidyalaya.
+These collaborations enabled school students to interact closely with NSS volunteers and gain exposure to innovative educational activities that complemented their regular academic curriculum.
+Science Exhibition at Foundation Academy
+One of the major highlights of the year was the Science Exhibition organized in collaboration with Foundation Academy.
+NSS volunteers worked closely with students over multiple days, mentoring them in project development and helping them translate ideas into working scientific models. Students were encouraged to explore real-world problems and present innovative solutions through their projects.
+The exhibition culminated in project presentations before a panel of judges. The presence of faculty members from IIT Patna added significant value to the event and served as a source of inspiration for participating students.
+AI, Robotics and Microcontrollers Awareness Session
+In March 2026, the wing organized a special session on Artificial Intelligence, Robotics, and Microcontrollers for students of Foundation Academy.
+The session introduced students to the fundamentals of robotics, embedded systems, and emerging technologies through engaging presentations and live demonstrations. Topics such as autonomous vehicles, industrial automation, sensors, microcontrollers, and robot navigation were discussed in an accessible and interactive manner.
+A live demonstration of robotic systems and practical projects helped students connect theoretical concepts with real-world applications, fostering curiosity and enthusiasm towards science, engineering, and innovation.
+________________
+
+
+Major Events
+Hack for Humanity
+The Teaching & Technical Wing organized Hack for Humanity, an offline ideation hackathon aimed at encouraging students to develop innovative solutions to pressing social challenges.
+Participants worked in teams to analyze real-world problems and propose practical, impactful solutions. Through research, brainstorming, and structured presentations, students explored issues affecting society and demonstrated how technology and innovation can be leveraged for social good.
+The event successfully promoted creativity, teamwork, critical thinking, and problem-solving while reinforcing the idea that technology should serve humanity.
+7 Steps to IIMs
+To support the career aspirations of students and volunteers, the wing facilitated participation in the 7 Steps to IIMs session.
+The programme provided valuable insights into management education, profile building, CAT preparation strategies, and the admission process for the Indian Institutes of Management. Participants gained clarity regarding the roadmap towards management careers and received guidance from experienced speakers on preparing for future opportunities.
+________________
+
+
+Throughout the academic year 2025–26, the Teaching & Technical Wing continued to uphold its commitment to educational service, innovation, and community engagement. Whether through regular teaching in village schools, mentoring students on campus, introducing young learners to emerging technologies, or organizing impactful events, the wing consistently demonstrated the transformative power of knowledge shared in the spirit of service. Its efforts stand as a testament to the enduring belief that education, when combined with compassion and commitment, can create lasting change in society.
+
+
+
+
+* Prayatna Wing
+* Motto: Compassion in Action
+* The Prayatna Wing serves as the welfare and humanitarian arm of NSS IIT Patna, dedicated to promoting health, empathy, and community support through meaningful service initiatives. Throughout the academic year 2025–26, the wing undertook several large-scale campaigns focused on blood donation, resource mobilization, and welfare activities, impacting hundreds of individuals both within and beyond the institute community.
+* Blood Donation Camp
+* One of the flagship initiatives of the wing was the Blood Donation Camp organized in collaboration with Prathama Blood Centre. Conducted under professional medical supervision and following all necessary safety protocols, the camp witnessed an overwhelming response from the IIT Patna community.
+* More than 300 donors, including students, faculty members, and staff, came forward to contribute towards this life-saving cause. Beyond the collection of blood units, the event also played an important role in spreading awareness about voluntary blood donation and encouraging a culture of social responsibility within the campus.
+* Donation Collection Drives
+* The Prayatna Wing conducted multiple donation drives during the year, mobilizing the generosity of the IIT Patna community to support those in need.
+* Diwali Donation Drive
+* As part of the Diwali celebrations, NSS volunteers carried out an extensive donation campaign across the institute. Volunteers visited student hostels, faculty residences, and various campus facilities to collect contributions in the form of clothes, funds, and other essential items.
+* The drive witnessed enthusiastic participation from the entire campus community. As a gesture of gratitude towards the security personnel and campus workers who contribute tirelessly to the smooth functioning of the institute, sweets and essential items collected through the campaign were distributed among them during the festive season.
+* Anwesha Donation Drive
+* In collaboration with Anwesha, NSS IIT Patna organized a donation drive aimed at supporting underprivileged families in nearby villages. Volunteers collected and distributed essential food items, clothing, and daily-use materials to more than 100 households.
+* The initiative served as an important outreach effort, strengthening the connection between the institute and surrounding communities while providing meaningful assistance to families in need.
+* Seva Sankalp Donation Drive
+* During Seva Sankalp, volunteers once again came together to conduct a donation campaign dedicated to campus workers. Essential items were collected and distributed as a token of appreciation for the invaluable contribution of the workers who help maintain the institute's infrastructure and daily operations.
+* Through these initiatives, the Prayatna Wing continued to embody the spirit of compassion and service, demonstrating how collective action and community participation can create a meaningful impact in the lives of others.
+* 
+
+Chetna Wing
+Motto: Awareness. Empowerment. Change.
+The Chetna Wing serves as the social awareness and empowerment arm of NSS IIT Patna, working to foster informed, inclusive, and responsible communities. Through awareness campaigns, educational sessions, and discussions on critical social issues, the wing seeks to promote understanding, empathy, and positive social change. During the academic year 2025–26, the wing organized a series of impactful initiatives focusing on health awareness, gender sensitization, personal safety, and women empowerment.
+Awareness Session on Rabies
+To address the importance of preventive healthcare and public awareness, the Chetna Wing organized a session on rabies awareness. Participants were introduced to the causes, symptoms, prevention measures, and emergency response procedures associated with rabies infections. Special emphasis was placed on the importance of timely medical intervention following animal bites and the role of awareness in preventing avoidable fatalities. The session equipped participants with practical knowledge that can prove valuable in both urban and rural settings.
+Awareness Session on Menstrual Hygiene
+Recognizing the need to break societal taboos surrounding menstrual health, the wing conducted an awareness session on menstrual hygiene. The programme focused on promoting healthy practices, addressing common misconceptions, and encouraging open conversations around menstrual well-being.
+Through informative discussions, participants learned about menstrual health management, hygiene practices, and the importance of creating supportive and informed communities. The session contributed towards fostering awareness, confidence, and dignity among young women while encouraging greater sensitivity and understanding among all participants.
+Consent Matters
+One of the most significant awareness initiatives of the year was "Consent Matters," a session dedicated to promoting respect, safety, and healthy interpersonal relationships.
+Through interactive discussions and real-life examples, participants explored the concept of consent, its importance in everyday interactions, and the role it plays in building safe and respectful communities. The session encouraged thoughtful dialogue and reflection, helping participants develop a deeper understanding of personal boundaries, mutual respect, and individual rights.
+Sneh AI – Women Empowerment Conclave
+The flagship event of the wing, Sneh AI, was organized as a large-scale women empowerment programme at the Senate Hall of IIT Patna. The event brought together distinguished speakers, educators, and change-makers to engage in meaningful discussions on women's leadership, equality, safety, and empowerment.
+Through inspiring talks, interactive sessions, and cultural performances, Sneh AI celebrated the achievements of women while highlighting the importance of creating equitable opportunities and inclusive spaces. The event witnessed enthusiastic participation from students and emerged as one of the most impactful programmes organized by the wing during the academic year.
+Through these initiatives, the Chetna Wing continued to advance its mission of creating awareness, encouraging dialogue, and empowering individuals to contribute towards a more informed, inclusive, and socially responsible society.
+
+
+
+
+Design & Curation Wing
+The Design and Curation Wing (DnC) is the creative backbone of NSS IIT Patna. While other wings execute events on the ground, DnC ensures that the impact of those events is beautifully documented, compellingly communicated, and widely shared — through digital public relations, event photography, social media content, official reporting, and open-for-all events that engage the broader campus community.
+This year, DnC was responsible for managing NSS IIT Patna's entire digital presence — producing content for Instagram, designing event posters and reports, and ensuring that every initiative the unit ran was captured and shared with the care it deserved. The wing's work is what gives this magazine its visual and editorial backbone.
+National Unity Day Quiz — Youth Day Event
+To commemorate National Unity Day (Rashtriya Ekta Diwas), NSS IIT Patna organised an engaging and meaningful event consisting of a National Unity Day Quiz and an awareness initiative through video creation. Volunteers actively participated by creating informative videos to spread awareness about the significance of national unity and inspire collective responsibility among the community.
+The quiz session served as a platform to deepen participants' understanding of the life, leadership, and contributions of Sardar Vallabhbhai Patel, whose vision played a crucial role in strengthening the unity and integrity of the nation. Through this event, volunteers not only enhanced their knowledge but also developed a stronger sense of patriotism, social awareness, and appreciation for the values of unity and national integration.
+
+
+Environmental Wing
+Motto: Green Today, Better Tomorrow
+The Environmental Wing of NSS IIT Patna works towards promoting sustainability and environmental responsibility through meaningful action and community participation. During the academic year 2025–26, the wing undertook plantation initiatives aimed at increasing green cover and encouraging volunteers to contribute actively towards environmental conservation.
+Winter Plantation Drive – From Home
+As a unique initiative during the winter break, volunteers were encouraged to plant saplings in their homes and local communities. The drive transformed environmental service into a personal responsibility, with volunteers carrying the message of sustainability beyond the campus and contributing to a greener future in their own neighbourhoods.
+Tree Plantation Drive
+The Tree Plantation Drive, conducted in collaboration with the Being Helper Foundation, involved the plantation of saplings in government schools and community spaces around IIT Patna. The initiative extended beyond plantation, with volunteers coordinating with school authorities to ensure the long-term care and maintenance of the saplings. Later expanded as a part of Seva Sankalp, the drive emerged as one of the wing's most impactful environmental initiatives of the year.
+
+
+Rural Development Wing
+Motto: Empowering Villages, Building India
+The Rural Development Wing serves as the primary link between NSS IIT Patna and the surrounding communities, working towards cleanliness, civic responsibility, community engagement, and rural upliftment. Throughout the academic year 2025–26, the wing led several impactful initiatives aimed at fostering social awareness and promoting sustainable community development.
+Campus Cleanliness Drives
+As part of its commitment to promoting cleanliness and responsible citizenship, the Rural Development Wing organized four cleanliness drives across the IIT Patna campus. Volunteers actively participated in cleaning public spaces, removing waste from neglected areas, and spreading awareness about maintaining a clean and healthy environment.
+Beyond the immediate impact of waste collection, these drives encouraged students to view cleanliness as a shared responsibility and reinforced the importance of active civic participation within the campus community.
+Swachhata Hi Seva Campaign
+The Rural Development Wing played a leading role in coordinating NSS IIT Patna's participation in the nationwide Swachata Hi Seva (SHS) campaign, conducted from 17 September to 2 October.
+Under the wing's coordination, volunteers participated in village cleanliness drives, community outreach activities, the 'Ek Din, Ek Ghanta, Ek Saath' Shramdaan initiative, and the Safai Mitra Suraksha Shivir, which recognized and honoured sanitation workers for their invaluable contribution to society. The campaign witnessed enthusiastic participation and reflected NSS IIT Patna's commitment to the national movement for cleanliness and public service.
+
+
+
+
+
+
+
+
+Nukkad Natak – Pattiyon Ke Paar
+One of the highlights of the year was the presentation of the street play "Pattiyon Ke Paar" during Seva Sankalp 2026 in a nearby village. Performed by the NSS Nukkad Team, the play focused on the theme of Women Empowerment and addressed critical social issues such as domestic violence, dowry, gender discrimination, and crimes against women.
+Through powerful storytelling, music, and impactful performances, the play encouraged the audience to reflect on long-standing societal challenges while also spreading awareness about women's rights, legal protections, and available support mechanisms. The performance received an encouraging response from the local community and demonstrated how street theatre can serve as an effective medium for social awareness and change.
+Through these initiatives, the Rural Development Wing continued to strengthen the connection between IIT Patna and the surrounding communities, translating the spirit of service into meaningful action and lasting social impact.
+
+
+“It's not just theatre. It's an effort with a purpose.”
+— NSS IIT Patna Nukkad Team
+	
+
+04  Mega Events
+
+
+Swachhata Hi Seva (SHS) 2025
+Aligned with the national vision of a cleaner and healthier India, NSS IIT Patna successfully conducted a comprehensive Swachhata Hi Seva (SHS) 2025 campaign from 17 September to 2 October 2025. Coordinated primarily by the Rural Development Wing and supported by volunteers across all wings, the campaign brought together the entire NSS volunteer base in a collective effort towards cleanliness, environmental responsibility, and community engagement.
+Community & Campus Action
+As part of the campaign, volunteers actively participated in cleanliness drives both on campus and in neighbouring villages. Teams cleaned public spaces, removed accumulated waste, cleared neglected areas, and interacted with local residents to promote awareness regarding hygiene, sanitation, and responsible waste disposal practices.
+On campus, NSS IIT Patna enthusiastically participated in the nationwide "Ek Din, Ek Ghanta, Ek Saath" Shramdaan, where hundreds of students came together for a synchronized cleanliness drive. The initiative transformed community service into a shared experience, reinforcing the idea that maintaining a clean environment is a collective responsibility.
+Safai Mitra Suraksha Shivir
+One of the most meaningful components of the campaign was the Safai Mitra Suraksha Shivir, organized to recognize and appreciate the invaluable contribution of sanitation workers. Essential sanitary and utility kits were distributed to campus sanitation staff as a gesture of gratitude towards the individuals whose efforts ensure a clean and healthy environment every day.
+The event highlighted the importance of dignity of labour and acknowledged the often-unseen contributions of sanitation workers to the functioning of the institute.
+Advocacy & Green Utsav
+The campaign was further strengthened through awareness and advocacy initiatives including poster-making and story-writing competitions, which encouraged students to creatively promote the message of cleanliness and environmental responsibility.
+The fortnight-long programme concluded with a plantation drive, adding a sustainable environmental dimension to the campaign and reinforcing the message that a clean India must also be a green India.
+________________
+
+
+Sneh AI – Women Empowerment Mega Session
+Sneh AI emerged as one of the largest and most impactful events organized by NSS IIT Patna during the academic year. Conducted at the Senate Hall and spearheaded by the Chetna Wing, the event brought together students, speakers, social activists, and members of the campus community for meaningful discussions on women empowerment, gender equality, leadership, and social awareness.
+The programme featured inspiring talks by accomplished women leaders and change-makers, interactive sessions on rights and self-awareness, and discussions addressing the challenges faced by women in contemporary society. The event witnessed an enthusiastic turnout and created a powerful atmosphere of dialogue, reflection, and solidarity.
+More than a single-day programme, Sneh AI served as a platform for encouraging sustained conversations on empowerment and inclusivity, reaffirming NSS IIT Patna's commitment towards building a safer and more equitable society.
+________________
+
+
+Anwesha Donation Drive – Community Outreach in Nearby Villages
+The Anwesha Donation Drive, organized by the Prayatna Wing in collaboration with Anwesha, was one of the most direct and impactful community outreach initiatives undertaken during the year.
+Through extensive collection efforts across the campus, volunteers gathered food items, clothing, and daily-use essentials before undertaking a large-scale distribution drive in a nearby village. The initiative successfully reached more than 100 households, ensuring that support was delivered directly to families in need.
+The success of the drive was made possible through the coordinated efforts of volunteers who managed collection, sorting, packaging, transportation, and distribution. Beyond material assistance, the drive fostered meaningful interactions between volunteers and community members, strengthening the bond between IIT Patna and the surrounding villages.
+The collaboration also demonstrated the impact that can be achieved when student volunteers and social organizations work together towards a common cause.
+________________
+
+
+MY Bharat Initiatives
+NSS IIT Patna actively participated in multiple programmes conducted under the MY Bharat (Mera Yuva Bharat) initiative of the Government of India, which aims to empower youth through leadership development, volunteering, skill enhancement, and nation-building activities.
+A significant milestone during the year was the successful registration of 384 NSS volunteers on the MY Bharat portal, ensuring broad participation from the volunteer community in national-level initiatives and opportunities.
+Volunteers actively engaged in programmes such as the Viksit Bharat Young Leaders Dialogue (VBYLD), Budget Quest, and other youth-centric competitions and awareness activities focused on governance, public policy, leadership, and civic participation.
+The participation yielded remarkable results, with several NSS volunteers successfully progressing through multiple rounds of selection and qualifying for the National Rounds of prestigious MY Bharat initiatives. These achievements brought recognition to both NSS IIT Patna and the institute while showcasing the leadership potential, dedication, and excellence of its volunteers.
+Through its strong participation in MY Bharat programmes, NSS IIT Patna reaffirmed its commitment to developing socially responsible youth leaders capable of contributing meaningfully to the vision of a developed and empowered India.
+
+
+
+
+05  Seva Sankalp — The Closing Mega Event
+
+
+The academic year 2025–26 culminated in Seva Sankalp 2026, the flagship event of NSS IIT Patna and the largest celebration of social service undertaken by the unit. Conducted from 15 March to 20 April 2026, the month-long festival brought together volunteers, partner organizations, schools, and local communities in a collective effort to create meaningful social impact.
+More than a single event, Seva Sankalp represents the very spirit of NSS IIT Patna — a period when every wing, every volunteer, and every initiative comes together under one shared mission of service. Through educational outreach, donation drives, awareness campaigns, cleanliness initiatives, plantation drives, health programmes, and community engagement activities, the festival touched hundreds of lives both within and beyond the campus.
+A defining feature of Seva Sankalp 2026 was its collaboration with several reputed social organizations, including Being Helper Foundation, DKMS Foundation, and Babban Kumar Seva Samiti, whose partnership helped amplify the scale and reach of the initiatives undertaken. These collaborations enabled volunteers to engage with larger social causes while creating a deeper and more sustainable impact within the community.
+
+
+Mission Civic Sense – In Collaboration with Being Helper Foundation
+Seva Sankalp 2026 commenced with Mission Civic Sense, an interactive awareness session conducted in collaboration with the Being Helper Foundation. The session was addressed by the Foundation's Co-Founder, Mr. Shubham Kumar, along with his team, and introduced volunteers to the vision and objectives of the Mission Civic Sense campaign.
+The session emphasized the importance of responsible citizenship, cleanliness, public hygiene, waste management, and respect for shared spaces. Through engaging discussions and real-life examples, participants were encouraged to recognize how small individual actions can collectively contribute towards building cleaner, safer, and more responsible communities. The session served as both an introduction to the campaign and a call to action, inspiring volunteers to actively participate in community-driven initiatives throughout Seva Sankalp.
+Cleanliness Drive – Gate No. 1
+Inspired by the ideas discussed during Mission Civic Sense, volunteers immediately translated awareness into action through a cleanliness drive at Gate No. 1 of IIT Patna, one of the most prominent and frequently used entry points of the campus.
+The drive resulted in the collection and proper disposal of over 20 kilograms of waste, significantly improving the cleanliness of the area while reinforcing the message that civic responsibility begins with individual action. The initiative served as a practical demonstration of the values promoted through the Mission Civic Sense campaign.
+Tree Plantation Drive with Being Helper Foundation
+As part of the continued collaboration with the Being Helper Foundation, NSS IIT Patna organized a large-scale tree plantation drive across government schools and community spaces in the vicinity of the institute.
+The initiative went beyond the plantation of saplings by focusing on their long-term survival and maintenance. Volunteers coordinated closely with school administrations and local stakeholders to establish care mechanisms and ensure regular monitoring of the planted saplings. Through this sustained effort, the drive contributed not only to increasing green cover but also to fostering environmental responsibility within the community.
+
+
+
+
+DKMS Session — WBC Markers Collection
+Among all the initiatives conducted during Seva Sankalp 2026, the DKMS Stem Cell Donor Registration Drive stood out as one of the most impactful and potentially life-saving events organized by NSS IIT Patna. Conducted in collaboration with DKMS, a global organization dedicated to the fight against blood cancer and blood disorders, the drive aimed to expand the national database of potential stem cell donors.
+Through a simple and completely painless cheek-swab procedure, volunteers collected White Blood Cell (WBC) markers from more than 400 students across the IIT Patna community. While the process took only a few minutes, its significance extends far beyond the event itself. The collected markers are used to identify potential matches for blood cancer patients who require stem cell transplants, often their only chance of survival.
+Every registration added to the donor database represents hope for a patient searching for a life-saving match somewhere in the world. What makes this initiative remarkable is that a simple saliva sample collected today may one day help save the life of a blood cancer patient through a stem cell donation.
+The overwhelming participation of students reflected the spirit of compassion and social responsibility that defines NSS IIT Patna. Conducted under professional medical supervision and seamless coordination, the drive not only strengthened the national donor registry but also demonstrated how small individual actions can create an extraordinary impact on human lives.
+
+
+“400 cheek swabs. 400 chances to save a life. That is what service at scale looks like.”
+— DKMS Session, Seva Sankalp 2026
+	
+
+Partnership with Babban Kumar Seva Samiti — Glucon-D Distribution
+In collaboration with Babban Kumar Seva Samiti, NSS IIT Patna conducted a Glucose Distribution Drive aimed at promoting health and well-being during the peak summer season. As part of this initiative, 1,000 packets of Glucon-D were provided for distribution among school students and community members.
+The drive was conducted at Raghopur School, where NSS volunteers not only distributed glucose packets to students but also organized an awareness session on the importance of staying hydrated during extreme summer conditions. Students were educated about the effects of dehydration, heat exhaustion, and simple measures that can help maintain good health during hot weather.
+The initiative was further extended to the security personnel and support staff of IIT Patna, recognizing their continuous service and helping them remain hydrated while working in challenging summer conditions. By combining awareness with direct support, the drive made a meaningful contribution to the health and well-being of both school children and campus workers.
+
+
+Talent Hunt Examination — 2nd Edition
+One of the most significant educational initiatives undertaken during the academic year was the 2nd Edition of the Talent Hunt Examination, conceived, planned, and executed entirely by the Teaching & Technical Wing (TTW) of NSS IIT Patna. Designed for students of Classes VI to X, the examination aimed to identify academically talented students from nearby government schools while exposing them to the standards of competitive and scholarship examinations.
+The initiative involved months of rigorous planning and execution. NSS volunteers independently designed comprehensive Hindi-medium question papers that assessed not only academic knowledge but also logical reasoning, analytical thinking, and problem-solving abilities. From examination planning and invigilation to answer-sheet evaluation and result compilation, every stage of the process was managed entirely by student volunteers.
+Key Highlights:
+* 600+ students participated across six government schools: Raghopur, Amhara, Urehan, Kanya Madhya Vidyalaya, Thakur Prasad School (TPS), and Dilawarpur School.
+* Question papers were designed in-house by NSS volunteers, inspired by competitive examination patterns and focused on conceptual understanding and critical thinking.
+* Complete examination execution, evaluation, and result preparation were carried out by the Teaching & Technical Wing of NSS IIT Patna.
+Beyond being an examination, the Talent Hunt represented a commitment to educational empowerment. School-wise toppers and rank holders will be felicitated for their achievements, and selected meritorious students will be guided and mentored by NSS volunteers regarding future academic opportunities, scholarship programmes, and higher education pathways. Through this initiative, NSS IIT Patna seeks not only to recognize talent but also to nurture it, ensuring that deserving students receive the encouragement and guidance needed to pursue their aspirations.
+
+
+Community Health Check-up Campaign – In Collaboration with Bihta Primary Health Centre (PHC)
+One of the most impactful welfare initiatives undertaken during Seva Sankalp 2026 was the Community Health Check-up Campaign, organized in collaboration with the Bihta Primary Health Centre (PHC). The campaign was aimed at providing accessible healthcare services to local residents and the support staff of IIT Patna, many of whom do not have regular access to preventive medical check-ups.
+Conducted under the supervision of qualified healthcare professionals, the camp offered a range of basic medical services including blood pressure monitoring, blood sugar testing, general health examinations, and medical consultations. In addition to health assessments, participants received guidance on preventive healthcare and healthy lifestyle practices.
+Key Highlights:
+* 300+ beneficiaries received free health check-ups during the campaign.
+* Comprehensive screenings included blood pressure checks, blood sugar tests, and general medical examinations.
+* Free medicines were distributed to beneficiaries based on medical recommendations.
+* Special focus was placed on the well-being of the institute's security personnel, housekeeping staff, and other campus support workers.
+Beyond the numbers, the campaign reflected NSS IIT Patna's commitment to community welfare by bringing essential healthcare services directly to those who needed them most. Through the combined efforts of NSS volunteers and the medical team from Bihta PHC, the initiative successfully promoted health awareness, preventive care, and community well-being.
+
+
+
+
+The Seva Sankalp cum NSS Closing Ceremony
+The academic year 2025–26 and the month-long Seva Sankalp 2026 festival culminated in the Seva Sankalp cum NSS Closing Ceremony, a fitting conclusion to a year defined by service, dedication, and community impact. Bringing together volunteers, sub-coordinators, secretaries, advisory members, and faculty mentors, the ceremony provided an opportunity to reflect upon the collective achievements of NSS IIT Patna and celebrate the spirit of volunteerism that had driven every initiative throughout the year.
+The event was graced by Dr. Somanath Pradhan, Professor-in-Charge of NSS IIT Patna, along with the NSS Programme Officers Dr. Arijit Roy, Dr. Mahavir Singh, and Dr. Bussa Vinod Kumar, whose guidance and support played an instrumental role in the successful execution of the year's activities.
+The ceremony featured a comprehensive review of the initiatives undertaken across all six wings, highlighting the impact created through educational outreach, health campaigns, environmental programmes, donation drives, awareness sessions, and the numerous activities conducted under Seva Sankalp 2026. It served as a moment to appreciate the countless hours contributed by volunteers towards building stronger communities and creating meaningful social change.
+A special highlight of the ceremony was the felicitation of outstanding volunteers whose exceptional commitment and service distinguished them throughout the year. NSS certificates were also distributed in recognition of the dedication, hard work, and active participation of volunteers across various initiatives.
+More than a formal conclusion, the Closing Ceremony represented the culmination of a year-long journey of learning, leadership, and service. It celebrated not only the achievements of NSS IIT Patna but also reaffirmed the values that define the organisation — compassion, responsibility, and the unwavering commitment to serve society. As one academic year came to an end, the ceremony left volunteers inspired to carry forward the spirit of "Not Me, But You" into the years ahead.
+
+
+
+
+06  Tech Initiatives
+
+
+NSS-IITP Official App: Transforming NSS Operations
+The National Service Scheme, IIT Patna, took a significant step towards digital transformation with the development and deployment of the NSS-IITP Official App. Designed to streamline organisational activities and reduce administrative workload, the application has successfully replaced several manual processes with an efficient and automated platform. The initiative reflects NSS IIT Patna's commitment to leveraging technology for better coordination, transparency, and volunteer engagement.
+The Big Change: Before vs. After
+The transformation the app brought is best understood by comparing how things used to work against how they work now.
+Feature
+	Before (Manual)
+	After (NSS App)
+	Attendance
+	Paper registers and long queues
+	Instant QR code scanning
+	Data Entry
+	Hours of manual typing into Excel sheets
+	Zero manual entry — fully automatic
+	Accuracy
+	Frequent mistakes — wrong roll numbers, proxy entries
+	100% accurate — no fake attendance
+	Volunteer Hours
+	Volunteers had no idea of their total hours
+	Live dashboard showing exact hours
+	Event Info
+	Lost in messy WhatsApp groups
+	Clearly organised inside the App
+	Workload
+	Very high for the core team
+	Very low — the app does the heavy lifting
+	
+
+QR-Based Attendance System
+One of the most impactful features of the app is its QR-based attendance system, which enables volunteers to mark attendance instantly. By eliminating traditional paper registers and manual record-keeping, the system ensures faster attendance tracking while preventing proxy attendance through digital verification. A scan takes about two seconds, meaning even large crowds at mega events move through registration without queues or bottlenecks. The introduction of real-time attendance monitoring has significantly improved accuracy and accountability during NSS events and activities.
+Integrated Calendar & Dashboard
+The application serves as a centralised hub for NSS activities through its integrated calendar and dashboard modules. Volunteers can access event schedules, announcements, attendance records, and service-hour statistics from a single platform. Smart reminders and notifications help members stay informed about upcoming events, promoting better planning and active participation across all NSS wings.
+The personalized dashboard greets each volunteer with their live hour count and a feed of the latest NSS activity — making the app feel like a digital home for the entire NSS community, rather than just an administrative tool.
+Schedule Making Module
+A major innovation of the platform is its Schedule Making Module, developed to simplify volunteer allocation for teaching activities. The system analyses volunteer timetables, considers subject preferences, and automatically generates suitable schedules while minimising conflicts. Administrators can efficiently allocate volunteers, view detailed allocation reports, and make manual adjustments whenever required. This automation has greatly reduced the time and effort involved in managing large-scale teaching programmes — directly benefiting the Tutorial Block and school teaching operations of the Teaching & Technical Wing.
+* Smart Rostering: Secretaries create weekly or event-based schedules and assign volunteers to specific slots directly within the app.
+* Availability-Aware: Volunteers mark their free time blocks, and the Schedule Maker highlights conflicts automatically.
+* Fair Rotation: The tool distributes slots evenly across the volunteer pool, preventing burnout.
+* One-Tap Swaps: Volunteers can request slot swaps within the app, routed to available peers — cutting last-minute scrambling.
+Volunteer Communication & Awareness System
+To further strengthen communication and coordination, the app includes a Volunteer Communication and Awareness System. Features such as in-app messaging, event alerts, instant notifications, and slot replacement support allow volunteers to coordinate effectively and respond promptly to organisational requirements. These tools have enhanced transparency, responsiveness, and collaboration among NSS members.
+Summary of Success
+The successful implementation of the NSS-IITP Official App has resulted in substantial improvements in operational efficiency:
+* Saved hundreds of hours of administrative work for the core team and wing secretaries across the year.
+* Made attendance and volunteer-hour data 100% secure, accurate, and tamper-proof.
+* Improved volunteer engagement — giving all 384 volunteers a clearer, more transparent, and more rewarding experience of their own contribution.
+* Created a scalable digital ecosystem for NSS activities that will serve the unit for years to come.
+By integrating technology with social service, NSS IIT Patna continues to set an example of innovation-driven community leadership.
+
+
+New Website Launch
+Complementing the success of the NSS App, this year also saw the launch of the revamped NSS IIT Patna website — a complete overhaul of the unit's digital presence. Designed and developed by the App Dev Team in coordination with the Design and Curation Wing, the new website serves as the public face of NSS IIT Patna.
+The website showcases the unit's six wings, ongoing and past initiatives, photo galleries from major events, volunteer testimonials, and resources for prospective volunteers and partner organisations. With a clean, modern design and mobile-responsive layout, the new website significantly improves accessibility and presents NSS IIT Patna's work to a much wider audience — including alumni, partner NGOs, and the broader public. Together, the NSS App and the new website represent a significant leap forward in how NSS IIT Patna operates, communicates, and showcases its impact.
+
+
+07  National Recognition & Achievements 
+
+
+Beyond regional impact, the dedication of NSS IIT Patna's volunteers resonated on a national stage in 2025-26. Two landmark achievements brought the name of IIT Patna and NSS to the forefront of national youth leadership — earning recognition from the highest offices in the country.
+
+
+Viksit Bharat Young Leaders Dialogue (VBYLD)
+We are immensely proud that NSS volunteers Tanishk Raj (2401EC11)  and Sneha Raj (2501ME51) qualified as grand finalists for the Viksit Bharat Young Leaders Dialogue (VBYLD) — one of India's most prestigious platforms for youth leadership and national vision.
+Representing Team Bihar at the prestigious Bharat Mandapam in New Delhi, Tanishk and Sneha had the profound honour of directly presenting their innovative ideas for 'Viksit Bharat 2047' to the Honourable Prime Minister of India. Standing before the Prime Minister and presenting a vision for India's future is an achievement that very few young people ever experience — and the fact that it was an NSS IIT Patna volunteer who earned that platform speaks to the calibre of leadership this unit is developing.
+
+
+Budget Quest — Interacting with the PM on the 2026 Budget
+In another remarkable achievement, Srishti Khargonkar (2503ME13) and Anubhav Kumar (2501AI05) qualified for the grand finale round of Budget Quest — a national competition that challenges young people to engage critically with India's Union Budget.
+The two volunteers interacted directly online with Prime Minister Narendra Modi on the 2026 Union Budget — sharing their analysis, perspectives, and recommendations at the highest level of national governance. Budget Quest was organised under the MY Bharat Scheme, and the qualification of two NSS IIT Patna members for the grand finale underscores the unit's role not just as a service organisation, but as a platform for developing civic-minded, nationally-aware young leaders.
+
+
+These achievements are not isolated victories. They are the natural outcome of a year spent thinking, serving, and engaging with the world beyond the campus walls. Every school session taught, every donation drive run, every awareness session organised — each of these built the perspective, the empathy, and the confidence that helps a young person stand on a national stage and say something worth hearing.
+NSS IIT Patna congratulates Tanishk Raj, Sneha Raj, Srishti Khargonkar, and Anubhav Kumar — and in them, celebrates every volunteer who served with sincerity this year.
+
+
+08  Board of Director Meet — Annual Report 2025-26
+
+
+The academic year concluded with the Board of Directors Meet for the Annual Report 2025–26, a formal review and presentation of the activities, achievements, and impact created by NSS IIT Patna throughout the year. The meeting served as an important platform to document the unit's progress, assess its initiatives, and chart the path forward for the upcoming academic session.
+The meeting was led by Dr. Somanath Pradhan, Professor-in-Charge, NSS IIT Patna, along with General Secretary Dinkar Anand, and was attended by Prof. T. N. Singh (Director, IIT Patna), Mr. A. K. Thakur (Registrar, IIT Patna), Prof. Jimson Mathew (Dean of Student Affairs), NSS Programme Officers Dr. Arijit Roy, Dr. Mahavir Singh, and Dr. Bussa Vinod Kumar, along with other faculty members and NSS office bearers.
+The Annual Report presented a comprehensive overview of the year's activities across all six wings, highlighting major initiatives, volunteer participation, institutional collaborations, technological innovations, and community impact. The report showcased several key achievements, including the successful engagement of 384 NSS volunteers, registration of 400+ DKMS stem-cell donors, participation of 500+ students in the Talent Hunt Examination, 300+ blood donors during the Blood Donation Camp, and outreach to 100+ households through the Anwesha Donation Drive.
+Special emphasis was placed on the successful implementation of the NSS IITP Official App, national-level achievements under the MY Bharat Initiative, and collaborations with organizations including Being Helper Foundation, DKMS, Prathama Blood Centre, Anwesha, Babban Kumar Seva Samiti, and the Bihta Primary Health Centre (PHC).
+More than a review meeting, the Board of Directors Meet represented the culmination of a year of dedicated service, recognizing the collective efforts of volunteers, coordinators, and faculty mentors while laying a strong foundation for the continued growth and impact of NSS IIT Patna in the years ahead.
+
+
+Connect With Us
+
+
+Follow NSS IIT Patna on our official platforms to stay updated on events, initiatives, and opportunities:
+
+
+🌐  Official Website
+nss.iitp.ac.in
+	📸  Instagram
+@nss.iitp
+instagram.com/nss.iitp
+	💼  LinkedIn
+NSS IIT Patna
+linkedin.com/company/nssiitp
+	📘  Facebook
+NSS IIT Patna
+facebook.com/nss.iitp
+	
+
+Thank You
+To every volunteer, partner, and supporter who made 2025-26 possible.
+
+
+NSS IIT Patna — Samvedna 2025-26
+NSS IIT Patna  ·  2025-26  ·  "Not Me, But You"
+NSS IIT Patna  ·  Samvedna 2025-26  ·  Page

@@ -1,21 +1,33 @@
 'use client'
 
 import Image from "next/image";
-import { useState } from "react";
-import { MdZoomOutMap, MdClose } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { MdZoomOutMap, MdClose, MdPlayArrow } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { resolveImageUrl } from "@/utils/imageUrl";
+import { RotateCcw, RotateCw } from "lucide-react";
 
-export function ImageCard({ src, title, index }) {
+export function ImageCard({ src, type = 'image', title, index }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [rotateAngle, setRotateAngle] = useState(0);
+
+    // useEffect(()=>setRotateAngle(0), [isOpen]);
+
+    const aspectClass = type === 'video' ? 'aspect-video' : (
+        index % 4 === 0 ? 'aspect-[4/3]' :
+            index % 4 === 1 ? 'aspect-video' :
+                index % 4 === 2 ? 'aspect-[3/4]' :
+                    'aspect-square'
+    );
 
     return (
         <>
             {/* Gallery Card */}
             {!isOpen && <motion.div layoutId={"imageCard-" + index}
                 onClick={() => setIsOpen(true)}
-                className="group relative rounded-3xl w-full max-w-sm aspect-video border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-zoom-in"
+                className={`group relative rounded-3xl w-full ${aspectClass} border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-zoom-in`}
             >
-                <button 
+                <button
                     onClick={(e) => {
                         e.stopPropagation();
                         setIsOpen(true);
@@ -24,13 +36,32 @@ export function ImageCard({ src, title, index }) {
                 >
                     <MdZoomOutMap />
                 </button>
-                <Image 
-                    src={src} 
-                    alt={title || "Event photo"}
-                    width={400} 
-                    height={225} 
-                    className="rounded-[inherit] w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                />
+                {type === 'video' ? (
+                    <div className="relative w-full h-full bg-slate-950 flex items-center justify-center">
+                        <video
+                            src={src}
+                            className="w-full h-full object-cover opacity-80"
+                            muted
+                            playsInline
+                        />
+                        {/* Play button overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <div className="p-4 bg-[#0070f3] text-white rounded-full text-3xl shadow-lg transition-transform duration-300 group-hover:scale-110">
+                                <MdPlayArrow />
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <Image
+                        src={src}
+                        alt={title || "Event photo"}
+                        width={400}
+                        height={225}
+                        className="rounded-[inherit] w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ transform: `rotate(${rotateAngle}deg)` }}
+                    />
+                )}
+
             </motion.div>}
 
             {/* Lightbox Modal */}
@@ -38,11 +69,11 @@ export function ImageCard({ src, title, index }) {
                 {isOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-xs">
                         {/* Backdrop Click to close */}
-                        <div 
-                            className="absolute inset-0 cursor-zoom-out" 
-                            onClick={() => setIsOpen(false)} 
+                        <div
+                            className="absolute inset-0 cursor-zoom-out"
+                            onClick={() => setIsOpen(false)}
                         />
-                        
+
                         {/* Close Button */}
                         <button
                             onClick={() => setIsOpen(false)}
@@ -51,20 +82,34 @@ export function ImageCard({ src, title, index }) {
                             <MdClose />
                         </button>
 
-                        {/* Image Container */}
+                        {/* Media Container */}
                         <motion.div layoutId={"imageCard-" + index}
-                            // initial={{ scale: 0.9, opacity: 0 }}
-                            // animate={{ scale: 1, opacity: 1 }}
-                            // exit={{ scale: 0.9, opacity: 0 }}
-                            // transition={{ type: "spring", damping: 25, stiffness: 220 }}
                             className="relative max-w-5xl max-h-[85vh] w-full h-full flex items-center justify-center pointer-events-none"
                         >
-                            <img 
-                                src={src} 
-                                alt={title || "Zoomed event photo"}
-                                className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl pointer-events-auto border border-white/10"
-                            />
+                            {type === 'video' ? (
+                                <video
+                                    src={src}
+                                    controls
+                                    autoPlay
+                                    className="max-w-full max-h-full rounded-2xl shadow-2xl pointer-events-auto border border-white/10"
+                                />
+                            ) : (
+                                <>
+                                    <img
+                                        src={src}
+                                        alt={title || "Zoomed event photo"}
+                                        className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl pointer-events-auto border border-white/10 transition-transform duration-500"
+                                        style={{ transform: `rotate(${rotateAngle}deg)` }}
+                                    />
+                                </>
+                            )}
                         </motion.div>
+                        {type != 'video' && <button
+                            onClick={(e) => { e.stopPropagation(); setRotateAngle((rotateAngle + 90)) }}
+                            className="absolute bottom-6 right-6 z-10 p-3 bg-white/10 hover:bg-white/20 text-white rounded-2xl text-sm  backdrop-blur-md transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-md pointer-events-auto"
+                        >
+                            <RotateCw />
+                        </button>}
                     </div>
                 )}
             </AnimatePresence>

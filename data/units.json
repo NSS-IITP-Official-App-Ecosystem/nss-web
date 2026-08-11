@@ -1,35 +1,34 @@
 {
-    
-    "items" : [
-        {
-            "title" : "Unit 1",
-            "subTitle" : "one phrase motive",
-            "details" : "",
-            "thumbnail" : "/units/chetna_final.jpg",
-            "colorCode" : "",
-            "action" : {
-                "text" : "Know More",
-                "url" : "/units/unit-1"
+    "items": [
+          {
+            "title": "Unit 1",
+            "subTitle": "Environment & Sustainability | प्रकृति से प्रगति",
+            "details": "",
+            "thumbnail": "/units/unit-1.png",
+            "action": {
+                "text": "Know More",
+                "url": "/units/unit-1"
             }
         },
         {
-            "title" : "Unit 2",
-            "subTitle" : "one phrase motive",
-            "details" : "",
-            "thumbnail" : "/units/chetna_final.jpg",
-            "action" : {
-                "text" : "Know More",
-                "url" : "/units/unit-2"
+            "title": "Unit 2",
+            "subTitle": "Education & Awareness | ज्ञान से परिवर्तन",
+            "details": "",
+            "thumbnail": "/units/unit-2.png",
+            "colorCode": "",
+            "action": {
+                "text": "Know More",
+                "url": "/units/unit-2"
             }
         },
         {
-            "title" : "Unit 3",
-            "subTitle" : "one phrase motive",
-            "details" : "",
-            "thumbnail" : "/units/chetna_final.jpg",
-            "action" : {
-                "text" : "Know More",
-                "url" : "/units/unit-3"
+            "title": "Unit 3",
+            "subTitle": "Community & Social Welfare | सेवा ही शक्ति",
+            "details": "",
+            "thumbnail": "/units/unit-3.png",
+            "action": {
+                "text": "Know More",
+                "url": "/units/unit-3"
             }
         }
     ]

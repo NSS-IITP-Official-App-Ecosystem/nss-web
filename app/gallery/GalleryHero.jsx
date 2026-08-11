@@ -160,7 +160,7 @@ export default function GalleryHero() {
                         >
                             <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-slate-100">
                                 <Image
-                                    src="/units/chetna_final.jpg"
+                                    src="/home_slider/1.png"
                                     alt="Chetna Health Camp"
                                     fill
                                     className="object-cover"

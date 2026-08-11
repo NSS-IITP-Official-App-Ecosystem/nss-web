@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { FaHandshake, FaLeaf, FaGraduationCap, FaHeartbeat } from 'react-icons/fa';
 import CollaborateForm from './CollaborateForm';
 
-export default function CollaborateClient({ collaborators = [] }) {
+export default function CollaborateClient({ collaborators = [], gensecProfiles = [] }) {
     const pillars = [
         {
             title: "Active Volunteer Network",
@@ -53,6 +53,40 @@ export default function CollaborateClient({ collaborators = [] }) {
                             <p className="text-slate-600 text-base leading-relaxed font-light">
                                 The National Service Scheme cell at IIT Patna is a vibrant hub of student volunteers, advisors, and mentors dedicated to civic duties. We build meaningful synergies with corporate sponsors, non-governmental organizations (NGOs), and municipal institutions to implement change.
                             </p>
+
+                            {gensecProfiles && gensecProfiles.length > 0 && (
+                                <div className="mt-8 pt-6 border-t border-slate-200/60">
+                                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 font-mono mb-3">
+                                        NSS Coordinator Contacts
+                                    </h4>
+                                    <div className="flex flex-col gap-3">
+                                        {gensecProfiles.map((profile, i) => (
+                                            <div key={i} className="flex items-center gap-4 bg-white p-4 border border-slate-200/50 rounded-2xl shadow-xs">
+                                                <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-100 flex-shrink-0 flex items-center justify-center text-slate-400">
+                                                    {profile.image_url ? (
+                                                        <img src={profile.image_url} alt={profile.name} className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <span className="text-lg font-bold">{profile.name ? profile.name.charAt(0) : "N"}</span>
+                                                    )}
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <h5 className="font-bold text-slate-800 text-sm truncate">{profile.name}</h5>
+                                                    <p className="text-xs text-amber-500 font-medium">{profile.role || "General Secretary, NSS IIT Patna"}</p>
+                                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-[11px] text-slate-500 font-light">
+                                                        {profile.email && <span>{profile.email}</span>}
+                                                        {profile.phone_number && (
+                                                            <>
+                                                                <span className="hidden sm:inline text-slate-300">•</span>
+                                                                <span>{profile.phone_number}</span>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Interactive Pillar Cards Grid */}

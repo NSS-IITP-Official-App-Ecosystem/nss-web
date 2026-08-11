@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
 import { getWingBadgeStyle } from "./wing-utils";
+import { resolveImageUrl } from "@/utils/imageUrl";
 
 export function EventCard({ data }) {
     return (
@@ -14,8 +15,8 @@ export function EventCard({ data }) {
             {/* Image container */}
             <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
                 <Image 
-                    src={data.images && data.images[0] ? data.images[0] : '/home_slider/nss_home.jpg'} 
-                    alt={data.title}
+                    src={resolveImageUrl(data.images && data.images[0], '/home_slider/nss_home.jpg')} 
+                    alt={data.title || "Event photo"}
                     width={400} 
                     height={225} 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -49,9 +50,9 @@ export function EventCard({ data }) {
                 </div>
 
                 {/* Date stamp */}
-                <div className="flex items-center gap-2 text-slate-400 text-xs font-mono font-semibold pt-3 border-t border-slate-100">
+                <div className="flex items-center gap-2 text-slate-400 text-xs font-mono font-semibold pt-3 border-t border-slate-100 mt-auto">
                     <FaCalendarAlt className="text-slate-400 text-sm" />
-                    <span>{new Date(data.date).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                    <span>{data.date ? new Date(data.date).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : "To be decided"}</span>
                 </div>
             </div>
         </Link>
