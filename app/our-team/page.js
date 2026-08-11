@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { resolveImageUrl } from '@/utils/imageUrl';
 import {
@@ -243,6 +244,11 @@ export default function OurTeam() {
             <p className="intro-text mt-4 text-slate-500 max-w-3xl">
               The driving force behind NSS IIT Patna. Our general secretary, core cell secretaries, and developers work passionately together to orchestrate outreach campaigns, educational services, and rural development efforts.
             </p>
+            <div className="mt-4">
+              <Link href="/advisory-team" className="text-primary hover:underline font-medium" style={{ color: "var(--primary)" }}>
+                View Advisory Committee &rarr;
+              </Link>
+            </div>
           </motion.section>
 
           <div className="year-selector-container">
@@ -330,9 +336,9 @@ export default function OurTeam() {
             >
               <div className="tree-node node-highlight" onClick={() => activeLeadershipTree[1] && setSelectedMember(activeLeadershipTree[1])}>
                 <div className="node-avatar-wrapper">
-                  <img src={activeLeadershipTree[1]?.image || "/placeholder.svg"} alt={activeLeadershipTree[1]?.name || "PIC/Program Coordinator"} className="node-avatar" />
+                  <img src={activeLeadershipTree[1]?.image || "/placeholder.svg"} alt={activeLeadershipTree[1]?.name || "PIC/Programme Coordinator"} className="node-avatar" />
                 </div>
-                <span className="node-role-tag">PIC / Program Coordinator</span>
+                <span className="node-role-tag">PIC / Programme Coordinator</span>
                 <h4 className="node-admin-name">{activeLeadershipTree[1]?.name || "To Be Decided"}</h4>
               </div>
             </motion.div>

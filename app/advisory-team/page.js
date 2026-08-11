@@ -75,7 +75,7 @@ export default function AdvisoryTeam() {
     const adeanUg = activeMembers.find(m => m.role.toLowerCase().includes('dean') && m.role.toLowerCase().includes('ug'));
     const registrar = activeMembers.find(m => m.role.toLowerCase().includes('registrar'));
     const adeanSa = activeMembers.find(m => m.role.toLowerCase().includes('dean') && m.role.toLowerCase().includes('sa'));
-    const pic = activeMembers.find(m => m.role.toLowerCase().includes('pic') || m.role.toLowerCase().includes('professor in charge') || m.role.toLowerCase().includes('program coordinator'));
+    const pic = activeMembers.find(m => m.role.toLowerCase().includes('pic') || m.role.toLowerCase().includes('professor in charge') || m.role.toLowerCase().includes('program coordinator') || m.role.toLowerCase().includes('programme coordinator'));
     const pos = activeMembers.filter(m => m.role.toLowerCase().includes('po') || m.role.toLowerCase().includes('program officer') || m.role.toLowerCase().includes('programme officer'));
     // Filter General Secretaries and explicitly deduplicate by name to prevent DB duplicate row issues
     const rawGensecs = activeMembers.filter(m => 
@@ -265,7 +265,7 @@ function TeamCard({ member, index, onQuickView }) {
       </div>
       <div className="card-info">
         <h3 className="member-name">{member.name}</h3>
-        <p className="member-role">{member.role?.replace(/Program Officer/gi, 'Programme Officer').replace(/(?:Academic|A\.?)\s*Dean\s*UG/gi, 'Associate Dean Academics, UG')}</p>
+        <p className="member-role">{member.role?.replace(/Program Officer/gi, 'Programme Officer').replace(/Program Coordinator/gi, 'Programme Coordinator').replace(/(?:Academic|A\.?)\s*Dean\s*UG/gi, 'Associate Dean Academics, UG')}</p>
 
       </div>
     </motion.div>
