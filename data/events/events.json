@@ -110,5 +110,219 @@
     "wings": [
       "Prayatna Wing"
     ]
+  },
+  {
+    "id": 101,
+    "title": "Health Check-up Campaign for Safai Mitras",
+    "venue": "Gymkhana",
+    "details": "Part of the Swachhata Hi Seva (Day 4) campaign. A basic health screening and awareness drive focused on personal health, hygiene, and essential health guidance for campus safai mitras and support workers.",
+    "images": [
+      "events/2026-2027/Prerna/Health Check-up Campaign for Safai Mitras/"
+    ],
+    "resources": [],
+    "date": "2026-10-01T10:00:00+05:30",
+    "created_at": "2026-10-01T10:00:00Z",
+    "updated_at": "2026-10-01T10:00:00Z",
+    "wings": [
+      "Prerna Wing",
+      "Environment Wing"
+    ]
+  },
+  {
+    "id": 102,
+    "title": "Swachhata Hi Seva Cleanliness Drive 02",
+    "venue": "Gate 2, IIT Patna",
+    "details": "The second day of the two-day campus-wide cleanliness campaign (स्वच्छता अभियान) aimed at promoting environmental responsibility.",
+    "images": [
+      "events/2026-2027/Environmental/Swachhata Hi Seva Cleanliness Drive 02/"
+    ],
+    "resources": [],
+    "date": "2026-10-02T08:00:00+05:30",
+    "created_at": "2026-10-02T08:00:00Z",
+    "updated_at": "2026-10-02T08:00:00Z",
+    "wings": [
+      "Environment Wing"
+    ]
+  },
+  {
+    "id": 103,
+    "title": "Swachhata Hi Seva Cleanliness Drive 01",
+    "venue": "Gate 1, IIT Patna",
+    "details": "The initial leg of the campus cleanliness drive organized by volunteers to keep the surroundings clean.",
+    "images": [
+      "events/2026-2027/Environmental/Swachhata Hi Seva Cleanliness Drive 01/"
+    ],
+    "resources": [],
+    "date": "2026-09-30T10:00:00+05:30",
+    "created_at": "2026-09-30T10:00:00Z",
+    "updated_at": "2026-09-30T10:00:00Z",
+    "wings": [
+      "Environment Wing"
+    ]
+  },
+  {
+    "id": 104,
+    "title": "Swachhata Hi Seva: School Activities & Sessions",
+    "venue": "Amhara and Raghopur Schools",
+    "details": "As part of the first two days of the campaign, volunteers visited schools in Amhara and Raghopur. They conducted Swachhata awareness sessions, demonstrated proper hand-cleaning, and organized hands-on activities focusing on wet and dry waste segregation.",
+    "images": [
+      "events/2026-2027/Teaching/Swachhata Hi Seva - School Activities & Sessions/"
+    ],
+    "resources": [],
+    "date": "2026-09-28T10:00:00+05:30",
+    "created_at": "2026-09-28T10:00:00Z",
+    "updated_at": "2026-09-28T10:00:00Z",
+    "wings": [
+      "Teaching and Technical Wing",
+      "Environment Wing"
+    ]
+  },
+  {
+    "id": 105,
+    "title": "Swachhta Hi Seva Pledge Ceremony",
+    "venue": "Admin Block, IIT Patna",
+    "details": "A formal ceremony for the campus community to take a pledge reaffirming their commitment to cleanliness and a greener environment.",
+    "images": [
+      "events/2026-2027/Environmental/Swachhta Hi Seva Pledge Ceremony/"
+    ],
+    "resources": [],
+    "date": "2026-09-17T15:00:00+05:30",
+    "created_at": "2026-09-17T15:00:00Z",
+    "updated_at": "2026-09-17T15:00:00Z",
+    "wings": [
+      "Environment Wing"
+    ]
+  },
+  {
+    "id": 106,
+    "title": "Mental Health Awareness Session",
+    "venue": "CLH LT003",
+    "details": "An interactive session led by IIT Patna Counselor, Mr. Aditya Sahu. It focused on emotional well-being, breaking the stigma around seeking help, and building a supportive community.",
+    "images": [
+      "events/2026-2027/Prerna/Mental Health Awareness Session/"
+    ],
+    "resources": [],
+    "date": "2026-09-13T17:30:00+05:30",
+    "created_at": "2026-09-13T17:30:00Z",
+    "updated_at": "2026-09-13T17:30:00Z",
+    "wings": [
+      "Prerna Wing"
+    ]
+  },
+  {
+    "id": 107,
+    "title": "Scholarship Awareness Session",
+    "venue": "CLH, IIT Patna",
+    "details": "A dedicated seminar for the new batch to help them navigate eligibility criteria, documentation, and application processes for various government, private, and institute-based scholarships.",
+    "images": [
+      "events/2026-2027/Teaching/Scholarship Awareness Session/"
+    ],
+    "resources": [],
+    "date": "2026-09-10T16:00:00+05:30",
+    "created_at": "2026-09-10T16:00:00Z",
+    "updated_at": "2026-09-10T16:00:00Z",
+    "wings": [
+      "Teaching and Technical Wing",
+      "Prerna Wing"
+    ]
+  },
+  {
+    "id": 108,
+    "title": "Comprehensive Rural Survey",
+    "venue": "Nearby Village, Bihta",
+    "details": "Volunteers conducted a door-to-door survey in a nearby village to assess the residents' access to basic facilities and better understand their everyday challenges.",
+    "images": [
+      "events/2026-2027/Rural/Comprehensive Rural Survey/"
+    ],
+    "resources": [],
+    "date": "2026-09-05T09:00:00+05:30",
+    "created_at": "2026-09-05T09:00:00Z",
+    "updated_at": "2026-09-05T09:00:00Z",
+    "wings": [
+      "Rural Development"
+    ]
+  },
+  {
+    "id": 109,
+    "title": "Blood & Platelet Donation Camp",
+    "venue": "Gymkhana",
+    "details": "Organized in collaboration with Netaji Subhas Chandra Bose Medical College (NSMCH) and TAL Blood Aid, this camp mobilized students to donate blood, with chief guest Mr. Veeshwajeet Kashid supporting the initiative.",
+    "images": [
+      "events/2026-2027/Prerna/Blood & Platelet Donation Camp/"
+    ],
+    "resources": [],
+    "date": "2026-08-29T10:00:00+05:30",
+    "created_at": "2026-08-29T10:00:00Z",
+    "updated_at": "2026-08-29T10:00:00Z",
+    "wings": [
+      "Prerna Wing",
+      "DNC Wing"
+    ]
+  },
+  {
+    "id": 110,
+    "title": "Blood & Platelet Donation Awareness Session",
+    "venue": "CLH",
+    "details": "A prelude to the donation camp, featuring a talk by Mr. Veeshwajeet Kashid that highlighted the life-saving impact of voluntary blood and platelet donations.",
+    "images": [
+      "events/2026-2027/Prerna/Blood & Platelet Donation Awareness Session/"
+    ],
+    "resources": [],
+    "date": "2026-08-26T16:00:00+05:30",
+    "created_at": "2026-08-26T16:00:00Z",
+    "updated_at": "2026-08-26T16:00:00Z",
+    "wings": [
+      "Prerna Wing",
+      "DNC Wing"
+    ]
+  },
+  {
+    "id": 111,
+    "title": "Independence Day Tiranga Rally",
+    "venue": "Admin Block (Starting Point)",
+    "details": "Over 300 students participated in an early morning campus rally under the \"Har Ghar Tiranga\" campaign to celebrate freedom, unity, and the spirit of service.",
+    "images": [
+      "events/2026-2027/Prerna/Independence Day Tiranga Rally/"
+    ],
+    "resources": [],
+    "date": "2026-08-15T06:00:00+05:30",
+    "created_at": "2026-08-15T06:00:00Z",
+    "updated_at": "2026-08-15T06:00:00Z",
+    "wings": [
+      "Prerna Wing"
+    ]
+  },
+  {
+    "id": 112,
+    "title": "Project Suraksha: Mosquito Prevention Drive",
+    "venue": "IIT Patna Campus & Hostels",
+    "details": "Volunteers distributed mosquito repellents, creams, and coils across the campus community while raising awareness about preventing mosquito-borne illnesses.",
+    "images": [
+      "events/2026-2027/Prerna/Project Suraksha - Mosquito Prevention Drive/"
+    ],
+    "resources": [],
+    "date": "2026-08-20T10:00:00+05:30",
+    "created_at": "2026-08-20T10:00:00Z",
+    "updated_at": "2026-08-20T10:00:00Z",
+    "wings": [
+      "Prerna Wing",
+      "Environment Wing"
+    ]
+  },
+  {
+    "id": 113,
+    "title": "Spiritual Session: Taming the Turbulent Mind",
+    "venue": "IIT Patna Campus",
+    "details": "An interactive session held in collaboration with the Bhakti Vedanta Club (BVC). Dr. Ranjan Kumar Behera discussed mindfulness, spirituality, and mind control drawing from the Bhagavad Gita.",
+    "images": [
+      "events/2026-2027/Prerna/Spiritual Session - Taming the Turbulent Mind/"
+    ],
+    "resources": [],
+    "date": "2026-08-22T17:00:00+05:30",
+    "created_at": "2026-08-22T17:00:00Z",
+    "updated_at": "2026-08-22T17:00:00Z",
+    "wings": [
+      "Prerna Wing"
+    ]
   }
 ]

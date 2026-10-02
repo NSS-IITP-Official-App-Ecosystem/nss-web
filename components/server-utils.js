@@ -40,17 +40,27 @@ export const resolveMediaUrls = async (mediaUrls) => {
     for (const url of mediaUrls) {
         if (!url) continue;
         const cleanPath = url.startsWith('/') ? url.slice(1) : url;
-        const localPath = p.join(process.cwd(), 'public', cleanPath);
+        let localPath = p.join(process.cwd(), 'public', cleanPath);
+        // if (!fs.existsSync(localPath)) {
+        //     if (cleanPath.includes('Environmental')) {
+        //         const alt = p.join(process.cwd(), 'public', cleanPath.replace('Environmental', 'Enviornmental'));
+        //         if (fs.existsSync(alt)) localPath = alt;
+        //     } else if (cleanPath.includes('Enviornmental')) {
+        //         const alt = p.join(process.cwd(), 'public', cleanPath.replace('Enviornmental', 'Environmental'));
+        //         if (fs.existsSync(alt)) localPath = alt;
+        //     }
+        // }
         try {
             const stats = fs.statSync(localPath);
             if (stats.isDirectory()) {
                 const files = fs.readdirSync(localPath);
+                const relFolder = p.relative(p.join(process.cwd(), 'public'), localPath).replace(/\\/g, '/');
+                const folderSlash = relFolder.endsWith('/') ? relFolder : relFolder + '/';
                 for (const f of files) {
                     const ext = p.extname(f).toLowerCase();
                     const isImage = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg', '.heic', '.bmp'].includes(ext);
                     const isVideo = ['.mp4', '.mov', '.avi', '.mkv', '.webm', '.wmv'].includes(ext);
                     if (isImage || isVideo) {
-                        const folderSlash = url.endsWith('/') ? url : url + '/';
                         const fileUrl = folderSlash.startsWith('/') ? `${folderSlash}${f}` : `/${folderSlash}${f}`;
                         resolved.push({
                             url: fileUrl,
