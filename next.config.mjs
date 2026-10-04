@@ -10,7 +10,12 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-  }
+  },
+  outputFileTracingExcludes: {
+    '*': [
+      './public/**/*',
+    ],
+  },
 };
 
 export default nextConfig;
