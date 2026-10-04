@@ -60,21 +60,28 @@ export default function EventsClient({ initialEvents, megaEvents = [] }) {
   // Card Carousel Mechanics
   const handlePrevSlide = (e, eventId, totalSlides) => {
     e.stopPropagation();
-    const currentIndex = carouselIndices[eventId] || 0;
-    const nextIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
-    setCarouselIndices({ ...carouselIndices, [eventId]: nextIndex });
+    e.preventDefault();
+    setCarouselIndices((prev) => {
+      const currentIndex = prev[eventId] || 0;
+      const nextIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
+      return { ...prev, [eventId]: nextIndex };
+    });
   };
 
   const handleNextSlide = (e, eventId, totalSlides) => {
     e.stopPropagation();
-    const currentIndex = carouselIndices[eventId] || 0;
-    const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
-    setCarouselIndices({ ...carouselIndices, [eventId]: nextIndex });
+    e.preventDefault();
+    setCarouselIndices((prev) => {
+      const currentIndex = prev[eventId] || 0;
+      const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
+      return { ...prev, [eventId]: nextIndex };
+    });
   };
 
   const handleSetSlide = (e, eventId, slideIndex) => {
     e.stopPropagation();
-    setCarouselIndices({ ...carouselIndices, [eventId]: slideIndex });
+    e.preventDefault();
+    setCarouselIndices((prev) => ({ ...prev, [eventId]: slideIndex }));
   };
 
   // Open Details Modal
@@ -229,71 +236,72 @@ export default function EventsClient({ initialEvents, megaEvents = [] }) {
                     }}
                     className="group flex flex-col bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer"
                   >
-                    {/* Image Carousel Container */}
-
-                    <div
-                      className="flex h-full transition-transform duration-500 ease-out relative h-64 md:h-56 lg:h-64 overflow-hidden block group/img cursor-pointer"
-                      style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-                    >
-                      {event.images.map((img, idx) => (
-                        <div key={idx} className="w-full h-full flex-shrink-0 relative select-none">
-                          <img
-                            src={img}
-                            alt={`${event.title} - Slide ${idx + 1}`}
-                            onError={(e) => { e.target.src = '/placeholder.svg'; }}
-                            className="w-full h-full object-cover group-hover/img:scale-[1.03] transition-transform duration-700"
-                            loading="lazy"
-                          />
-                          {/* <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"></div> */}
-                        </div>
-                      ))}
+                    {/* Image Carousel Viewport */}
+                    <div className="relative w-full h-64 md:h-56 lg:h-64 overflow-hidden bg-slate-900 group/img">
+                      {/* Sliding Track */}
+                      <div
+                        className="flex h-full w-full transition-transform duration-500 ease-out"
+                        style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                      >
+                        {event.images.map((img, idx) => (
+                          <div key={idx} className="w-full h-full flex-shrink-0 relative select-none">
+                            <img
+                              src={img}
+                              alt={`${event.title} - Slide ${idx + 1}`}
+                              onError={(e) => { e.target.src = '/placeholder.svg'; }}
+                              className="w-full h-full object-cover group-hover/img:scale-[1.03] transition-transform duration-700"
+                              loading="lazy"
+                            />
+                          </div>
+                        ))}
+                      </div>
 
                       {/* Badge over image */}
-                      <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
-                        {/* {isUpcoming ? (
-                          <span className="pulse-border-class inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950 shadow-sm border border-amber-400/30">
-                            <span className="w-1.5 h-1.5 rounded-full bg-slate-950 mr-1.5 animate-pulse"></span>
-                            Upcoming
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200">
-                            Completed
-                          </span>
-                        )} */}
+                      <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2 pointer-events-none">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-950/80 backdrop-blur-md text-white shadow-sm border border-white/10">
                           {event.tag}
                         </span>
                       </div>
-                    </div>
 
-                    {/* Controls */}
-                    {event.images.length > 1 && (
-                      <>
-                        <button
-                          onClick={(e) => handlePrevSlide(e, event.id, event.images.length)}
-                          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-slate-900/80 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 cursor-pointer"
-                        >
-                          <ChevronLeft size={16} strokeWidth={3} />
-                        </button>
-                        <button
-                          onClick={(e) => handleNextSlide(e, event.id, event.images.length)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-slate-900/80 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 cursor-pointer"
-                        >
-                          <ChevronRight size={16} strokeWidth={3} />
-                        </button>
-                      </>
-                    )}
-                    {/* Dots indicators */}
-                    {event.images.length > 1 && <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/30 backdrop-blur-md">
-                      {event.images.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => handleSetSlide(e, event.id, idx)}
-                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === activeSlide ? "bg-amber-500 w-3" : "bg-white/60"
-                            }`}
-                        ></button>
-                      ))}
-                    </div>}
+                      {/* Controls (Arrows) directly over image */}
+                      {event.images.length > 1 && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={(e) => handlePrevSlide(e, event.id, event.images.length)}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/70 hover:bg-slate-900/90 text-white flex items-center justify-center transition-all opacity-0 group-hover/img:opacity-100 focus:opacity-100 z-20 cursor-pointer shadow-md"
+                            aria-label="Previous image"
+                          >
+                            <ChevronLeft size={16} strokeWidth={3} />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => handleNextSlide(e, event.id, event.images.length)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/70 hover:bg-slate-900/90 text-white flex items-center justify-center transition-all opacity-0 group-hover/img:opacity-100 focus:opacity-100 z-20 cursor-pointer shadow-md"
+                            aria-label="Next image"
+                          >
+                            <ChevronRight size={16} strokeWidth={3} />
+                          </button>
+                        </>
+                      )}
+
+                      {/* Dots indicators directly over image */}
+                      {event.images.length > 1 && (
+                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/40 backdrop-blur-md">
+                          {event.images.map((_, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={(e) => handleSetSlide(e, event.id, idx)}
+                              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                                idx === activeSlide ? "bg-amber-500 w-3.5" : "bg-white/60 hover:bg-white"
+                              }`}
+                              aria-label={`Go to slide ${idx + 1}`}
+                            ></button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
 
                     {/* Card content body */}
                     <div className="flex-grow flex flex-col p-6">
@@ -428,18 +436,23 @@ export default function EventsClient({ initialEvents, megaEvents = [] }) {
               </button>
 
               {/* Modal Image Carousel Slideshow */}
-              <div className="relative h-64 md:h-80 bg-slate-900">
+              <div className="relative h-64 md:h-80 bg-slate-900 overflow-hidden group/modalimg">
                 <div
-                  className="flex h-full transition-transform duration-500 ease-out"
+                  className="flex h-full w-full transition-transform duration-500 ease-out"
                   style={{ transform: `translateX(-${modalSlideIndex * 100}%)` }}
                 >
                   {selectedEvent.images.map((img, idx) => (
                     <Link
                       key={idx}
                       href={`/gallery/event/${selectedEvent.id}`}
-                      className="w-full h-full flex-shrink-0 relative block cursor-pointer group/modalimg"
+                      className="w-full h-full flex-shrink-0 relative block cursor-pointer"
                     >
-                      <img src={img} alt="" onError={(e) => { e.target.src = '/home_slider/nss_home.jpg'; }} className="w-full h-full object-cover group-hover/modalimg:scale-[1.01] transition-transform duration-500" />
+                      <img
+                        src={img}
+                        alt={`${selectedEvent.title} - Slide ${idx + 1}`}
+                        onError={(e) => { e.target.src = '/home_slider/nss_home.jpg'; }}
+                        className="w-full h-full object-cover group-hover/modalimg:scale-[1.01] transition-transform duration-500"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
                     </Link>
                   ))}
@@ -449,15 +462,25 @@ export default function EventsClient({ initialEvents, megaEvents = [] }) {
                 {selectedEvent.images.length > 1 && (
                   <>
                     <button
-                      onClick={() => setModalSlideIndex(prev => prev === 0 ? selectedEvent.images.length - 1 : prev - 1)}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 text-white flex items-center justify-center hover:bg-slate-950/80 transition-all z-10 cursor-pointer"
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setModalSlideIndex(prev => prev === 0 ? selectedEvent.images.length - 1 : prev - 1);
+                      }}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/70 hover:bg-slate-950/90 text-white flex items-center justify-center transition-all z-20 cursor-pointer shadow-md"
                       aria-label="Previous slide"
                     >
                       <ChevronLeft size={18} />
                     </button>
                     <button
-                      onClick={() => setModalSlideIndex(prev => prev === selectedEvent.images.length - 1 ? 0 : prev + 1)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 text-white flex items-center justify-center hover:bg-slate-950/80 transition-all z-10 cursor-pointer"
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setModalSlideIndex(prev => prev === selectedEvent.images.length - 1 ? 0 : prev + 1);
+                      }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/70 hover:bg-slate-950/90 text-white flex items-center justify-center transition-all z-20 cursor-pointer shadow-md"
                       aria-label="Next slide"
                     >
                       <ChevronRight size={18} />
@@ -466,13 +489,20 @@ export default function EventsClient({ initialEvents, megaEvents = [] }) {
                 )}
 
                 {/* Slideshow Dot Indicators */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/30 backdrop-blur-xs">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/40 backdrop-blur-xs">
                   {selectedEvent.images.map((_, idx) => (
                     <button
                       key={idx}
-                      onClick={() => setModalSlideIndex(idx)}
-                      className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === modalSlideIndex ? "bg-amber-500 w-3.5" : "bg-white/60"
-                        }`}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setModalSlideIndex(idx);
+                      }}
+                      className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        idx === modalSlideIndex ? "bg-amber-500 w-3.5" : "bg-white/60 hover:bg-white"
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
                     ></button>
                   ))}
                 </div>
