@@ -24,7 +24,7 @@ function getManifestEntries(cleanPath) {
     }
 
     // Common typo aliases (e.g. Environmental vs Enviornmental)
-    const altKey = normKey.includes('environmental') 
+    const altKey = normKey.includes('environmental')
         ? normKey.replace('environmental', 'enviornmental')
         : normKey.includes('enviornmental')
             ? normKey.replace('enviornmental', 'environmental')
