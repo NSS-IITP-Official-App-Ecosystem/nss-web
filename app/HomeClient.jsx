@@ -20,9 +20,20 @@ import {
     FaGraduationCap,
     FaArrowLeft,
     FaDownload,
-    FaBookOpen
+    FaBookOpen,
+    FaPlay,
+    FaPause,
+    FaVolumeUp,
+    FaVolumeMute,
+    FaMusic,
+    FaRedo
 } from 'react-icons/fa';
 import * as Icons from 'react-icons/pi';
+import {
+    PiHandsClappingFill,
+    PiMusicNotesFill,
+    PiSparkleFill
+} from 'react-icons/pi';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import EmblaCarousel from '@/components/EmblaCarousel';
 import Testimonial, { TestimonialItem } from '@/components/testimonial';
@@ -51,6 +62,83 @@ export default function HomeClient({
     const [activeSlide, setActiveSlide] = useState(0);
     const [slideForwarded, setSlideForwarded] = useState(true);
     const [isDownloading, setIsDownloading] = useState(false);
+
+    // Audio player state for NSS Theme Song
+    const audioRef = useRef(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState(0.85);
+    const [isMuted, setIsMuted] = useState(false);
+
+    const togglePlayAudio = () => {
+        if (!audioRef.current) return;
+        if (isPlaying) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play().catch(err => {
+                console.error("Audio playback error:", err);
+            });
+        }
+    };
+
+    const handleAudioTimeUpdate = () => {
+        if (audioRef.current) {
+            setCurrentTime(audioRef.current.currentTime);
+        }
+    };
+
+    const handleAudioLoadedMetadata = () => {
+        if (audioRef.current) {
+            setDuration(audioRef.current.duration);
+        }
+    };
+
+    const handleAudioEnded = () => {
+        setIsPlaying(false);
+        setCurrentTime(0);
+    };
+
+    const handleAudioSeek = (e) => {
+        const time = parseFloat(e.target.value);
+        setCurrentTime(time);
+        if (audioRef.current) {
+            audioRef.current.currentTime = time;
+        }
+    };
+
+    const handleAudioRestart = () => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+            setCurrentTime(0);
+            audioRef.current.play().catch(err => console.error(err));
+        }
+    };
+
+    const handleVolumeChange = (e) => {
+        const val = parseFloat(e.target.value);
+        setVolume(val);
+        if (audioRef.current) {
+            audioRef.current.volume = val;
+            setIsMuted(val === 0);
+        }
+    };
+
+    const toggleAudioMute = () => {
+        if (!audioRef.current) return;
+        const nextMuted = !isMuted;
+        setIsMuted(nextMuted);
+        audioRef.current.muted = nextMuted;
+    };
+
+    const formatAudioTime = (timeInSeconds) => {
+        if (isNaN(timeInSeconds) || timeInSeconds <= 0) return "0:00";
+        const minutes = Math.floor(timeInSeconds / 60);
+        const seconds = Math.floor(timeInSeconds % 60);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
+
+    const equalizerBars = [35, 75, 45, 95, 60, 100, 80, 50, 90, 65, 85, 40, 70, 55];
 
     // Auto-scroll slider interval (matches 6.5s progress line)
     useEffect(() => {
@@ -345,6 +433,18 @@ export default function HomeClient({
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Jump to Traditions Link */}
+                            <div className="pt-2 flex justify-center lg:justify-start">
+                                <a
+                                    href="#traditions"
+                                    className="inline-flex items-center gap-2 text-xs font-semibold text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100/80 border border-amber-200/80 px-4 py-2 rounded-xl transition-all group shadow-2xs"
+                                >
+                                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                                    <span>Experience NSS Anthem & The Iconic Clap</span>
+                                    <FaArrowRight className="text-[10px] group-hover:translate-x-1 transition-transform" />
+                                </a>
+                            </div>
                         </div>
 
                         {/* Video Right Column - Mock Tablet with Floating Elements */}
@@ -392,10 +492,418 @@ export default function HomeClient({
                 </div>
             </section>
 
+            {/* 2.2 TRADITIONS & SPIRIT: THE NSS ANTHEM & THE NSS CLAP (LIGHT THEMED) */}
+            <section id="traditions" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#FBFBFA] via-white to-[#F8F9FA] text-slate-800 border-b border-slate-200/80">
+                {/* Subtle ambient glows */}
+                <div className="absolute top-1/4 right-[5%] w-96 h-96 bg-amber-400/5 rounded-full blur-[140px] pointer-events-none" />
+                <div className="absolute bottom-1/4 left-[5%] w-96 h-96 bg-blue-500/5 rounded-full blur-[140px] pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.03),_transparent_70%)] pointer-events-none" />
+
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+                    {/* Section Header */}
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5 }}
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-200 bg-amber-50/80 text-amber-700 font-extrabold text-xs uppercase tracking-widest font-mono shadow-2xs mb-4"
+                        >
+                            <PiMusicNotesFill className="text-sm" />
+                            <span>Heritage & Culture</span>
+                            <span className="w-1 h-1 rounded-full bg-amber-400" />
+                            <PiHandsClappingFill className="text-sm" />
+                        </motion.div>
+
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight font-sans"
+                        >
+                            The Pulse of NSS: <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-orange-500 bg-clip-text text-transparent">Anthem & Clap</span>
+                        </motion.h2>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="text-slate-600 text-sm sm:text-base leading-relaxed font-light mt-3"
+                        >
+                            The melody that inspires selfless service and the synchronized cadence that unites millions of volunteers across India.
+                        </motion.p>
+                    </div>
+
+                    {/* Content Grid: Anthem (Left) & Clap (Right) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+
+                        {/* LEFT COLUMN: NSS THEME SONG / ANTHEM */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7 }}
+                            className="lg:col-span-7 rounded-[2.5rem] bg-white border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group hover:border-amber-300 transition-all duration-300"
+                        >
+                            {/* Decorative Accent Glow */}
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+
+                            <div>
+                                {/* Card Header */}
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+                                    <div className="space-y-1.5">
+                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-[11px] font-mono font-bold uppercase tracking-wider">
+                                            <PiSparkleFill className="text-xs" />
+                                            Official NSS Theme Song
+                                        </div>
+                                        <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight font-sans">
+                                            Uthen Samaj Ke Liye Uthen
+                                        </h3>
+                                        <p className="text-amber-600 font-semibold text-sm">
+                                            राष्ट्रीय सेवा योजना लक्ष्य गीत
+                                        </p>
+                                        <p className="text-slate-500 text-xs font-light max-w-md pt-1 leading-relaxed">
+                                            The official anthem of the National Service Scheme, composed to ignite the flame of social service and nation building among the youth.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                {/* Scrollable Complete Lyrics Box */}
+                                <div className="my-5 rounded-2xl bg-slate-50/90 border border-slate-200/80 overflow-hidden shadow-2xs">
+                                    {/* Lyrics Header */}
+                                    <div className="px-4 py-2.5 bg-slate-100/70 border-b border-slate-200/70 flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <FaQuoteLeft className="text-amber-500 text-xs" />
+                                            <span className="text-xs font-bold text-slate-800 font-sans">
+                                                Complete Anthem Lyrics (सम्पूर्ण लक्ष्य गीत)
+                                            </span>
+                                        </div>
+                                        <span className="text-[10px] font-mono text-slate-500 font-semibold uppercase tracking-wider bg-white px-2 py-0.5 rounded-md border border-slate-200/60">
+                                            Scroll to read ↓
+                                        </span>
+                                    </div>
+
+                                    {/* Scrollable Verses */}
+                                    <div className="p-4 max-h-74 overflow-y-auto space-y-3.5 text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">
+                                        {/* Stanza 1: Opening / Chorus */}
+                                        <div className="p-3 rounded-xl bg-amber-50/80 border border-amber-200/70">
+                                            <p className="font-semibold text-amber-950 leading-relaxed">
+                                                उठें समाज के लिए उठें उठें,<br />
+                                                जगें स्वराष्ट्र के लिए जगें जगें।<br />
+                                                स्वयं सजे वसुंधरा संवार दें,<br />
+                                                स्वयं सजे वसुंधरा संवार दें॥
+                                            </p>
+                                            <p className="text-[11px] text-amber-800/80 mt-1.5 italic font-light">
+                                                "Let us rise for society, let us rise and adorn Mother Earth."
+                                            </p>
+                                        </div>
+
+                                        {/* Stanza 2 */}
+                                        <div className="pl-3 border-l-2 border-slate-200">
+                                            <p className="text-slate-700 leading-relaxed">
+                                                हम उठें उठेगा जग हमारे संग साथियों,<br />
+                                                हम बढ़ें तो सब बढ़ेंगे अपने आप साथियों।<br />
+                                                ज़मीं पे आसमाँ को हम उतार दें,<br />
+                                                ज़मीं पे आसमाँ को हम उतार दें।<br />
+                                                स्वयं सजे वसुंधरा संवार दें,<br />
+                                                स्वयं सजे वसुंधरा संवार दें॥
+                                            </p>
+                                        </div>
+
+                                        {/* Stanza 3 */}
+                                        <div className="pl-3 border-l-2 border-slate-200">
+                                            <p className="text-slate-700 leading-relaxed">
+                                                उदासियों को दूर कर खुशी को बांटते चलें,<br />
+                                                गांव और शहर की दूरियों को पाटते चलें।<br />
+                                                ज्ञान को प्रचार दें, प्रसार दें,<br />
+                                                विज्ञान को प्रचार दें, प्रसार दें।<br />
+                                                स्वयं सजे वसुंधरा संवार दें,<br />
+                                                स्वयं सजे वसुंधरा संवार दें॥
+                                            </p>
+                                        </div>
+
+                                        {/* Stanza 4 */}
+                                        <div className="pl-3 border-l-2 border-slate-200">
+                                            <p className="text-slate-700 leading-relaxed">
+                                                समर्थ बाल, वृद्ध और नारियां रहें,<br />
+                                                सदा हरे-भरे वनों की शाल ओढ़ती रहे धरा।<br />
+                                                तरक्कियों की एक नई कतार दें,<br />
+                                                तरक्कियों की एक नई कतार दें।<br />
+                                                स्वयं सजे वसुंधरा संवार दें,<br />
+                                                स्वयं सजे वसुंधरा संवार दें॥
+                                            </p>
+                                        </div>
+
+                                        {/* Stanza 5 */}
+                                        <div className="pl-3 border-l-2 border-slate-200">
+                                            <p className="text-slate-700 leading-relaxed">
+                                                ये जाति-धर्म-बोलियां बनें न शूल राह की,<br />
+                                                बढ़ाएं बेल प्रेम की अखंडता की चाह की।<br />
+                                                सद्भावना से ये चमन निखार दें,<br />
+                                                सद्भावना से ये चमन निखार दें।<br />
+                                                स्वयं सजे वसुंधरा संवार दें,<br />
+                                                स्वयं सजे वसुंधरा संवार दें॥
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Audio Player Controls Box */}
+                            <div className="space-y-4 pt-2">
+                                {/* Equalizer & Status Indicator */}
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <span className={cn(
+                                            "w-2.5 h-2.5 rounded-full transition-colors",
+                                            isPlaying ? "bg-emerald-500 animate-pulse shadow-xs shadow-emerald-400" : "bg-slate-300"
+                                        )} />
+                                        <span className="text-xs font-mono font-semibold tracking-wider text-slate-500">
+                                            {isPlaying ? "NOW PLAYING" : "PAUSED"}
+                                        </span>
+                                    </div>
+
+                                    {/* Animated Equalizer Waves */}
+                                    <div className="flex items-end gap-1 sm:gap-1.5 h-7 px-2">
+                                        {equalizerBars.map((height, idx) => (
+                                            <motion.span
+                                                key={idx}
+                                                className="w-1 sm:w-1.5 rounded-full bg-gradient-to-t from-amber-500 via-amber-400 to-amber-300"
+                                                animate={isPlaying ? {
+                                                    height: [`${Math.max(15, height * 0.25)}%`, `${height}%`, `${Math.max(20, height * 0.45)}%`],
+                                                } : {
+                                                    height: "18%"
+                                                }}
+                                                transition={isPlaying ? {
+                                                    duration: 0.5 + (idx % 5) * 0.12,
+                                                    repeat: Infinity,
+                                                    repeatType: "reverse",
+                                                    ease: "easeInOut",
+                                                    delay: (idx * 0.06) % 0.35
+                                                } : { duration: 0.3 }}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Scrubber Progress Bar */}
+                                <div className="space-y-1.5">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max={duration && !isNaN(duration) && isFinite(duration) ? duration : 100}
+                                        step="0.1"
+                                        value={currentTime}
+                                        onChange={handleAudioSeek}
+                                        aria-label="Audio scrubber"
+                                        className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500 focus:outline-none transition-all"
+                                    />
+                                    <div className="flex justify-between text-[11px] font-mono text-slate-500">
+                                        <span>{formatAudioTime(currentTime)}</span>
+                                        <span>{duration && !isNaN(duration) && isFinite(duration) ? formatAudioTime(duration) : "--:--"}</span>
+                                    </div>
+                                </div>
+
+                                {/* Main Controls Row */}
+                                <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
+                                    <div className="flex items-center gap-3">
+                                        {/* Play / Pause Main Button */}
+                                        <motion.button
+                                            whileHover={{ scale: 1.06 }}
+                                            whileTap={{ scale: 0.94 }}
+                                            onClick={togglePlayAudio}
+                                            className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500 text-white flex items-center justify-center text-lg sm:text-xl shadow-lg shadow-amber-500/25 cursor-pointer transition-all border border-amber-300/60"
+                                            aria-label={isPlaying ? "Pause NSS Theme Song" : "Play NSS Theme Song"}
+                                        >
+                                            {isPlaying ? (
+                                                <FaPause className="text-white" />
+                                            ) : (
+                                                <FaPlay className="text-white ml-0.5" />
+                                            )}
+                                        </motion.button>
+
+                                        {/* Replay Button */}
+                                        <button
+                                            onClick={handleAudioRestart}
+                                            className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200/80 transition-colors cursor-pointer"
+                                            title="Restart audio"
+                                            aria-label="Restart audio from beginning"
+                                        >
+                                            <FaRedo className="text-xs" />
+                                        </button>
+
+                                        {/* Volume Controls */}
+                                        <div className="flex items-center gap-2 pl-1 sm:pl-2">
+                                            <button
+                                                onClick={toggleAudioMute}
+                                                className="text-slate-500 hover:text-slate-800 transition-colors cursor-pointer p-1.5 rounded-lg hover:bg-slate-100"
+                                                aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+                                            >
+                                                {isMuted || volume === 0 ? (
+                                                    <FaVolumeMute className="text-sm text-rose-500" />
+                                                ) : (
+                                                    <FaVolumeUp className="text-sm" />
+                                                )}
+                                            </button>
+                                            <input
+                                                type="range"
+                                                min="0"
+                                                max="1"
+                                                step="0.05"
+                                                value={isMuted ? 0 : volume}
+                                                onChange={handleVolumeChange}
+                                                aria-label="Volume slider"
+                                                className="w-16 sm:w-20 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Download Song Button */}
+                                    <a
+                                        href="/nss%20song.mpeg"
+                                        download="NSS_Theme_Song.mpeg"
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200/80 text-amber-800 text-xs font-semibold font-sans transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-2xs"
+                                    >
+                                        <FaDownload className="text-amber-600 text-xs" />
+                                        <span>Download Song</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Hidden HTML Audio Tag with source fallbacks */}
+                            <audio
+                                ref={audioRef}
+                                preload="metadata"
+                                onTimeUpdate={handleAudioTimeUpdate}
+                                onLoadedMetadata={handleAudioLoadedMetadata}
+                                onEnded={handleAudioEnded}
+                                onPlay={() => setIsPlaying(true)}
+                                onPause={() => setIsPlaying(false)}
+                            >
+                                <source src="/nss%20song.mpeg" type="audio/mpeg" />
+                                <source src="/nss song.mpeg" type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </motion.div>
+
+                        {/* RIGHT COLUMN: THE ICONIC NSS CLAP */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7 }}
+                            className="lg:col-span-5 rounded-[2.5rem] bg-white border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group hover:border-amber-300 transition-all duration-300"
+                        >
+                            {/* Decorative Accent Glow */}
+                            <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+
+                            <div>
+                                {/* Context Header */}
+                                <div className="space-y-1.5">
+                                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-[11px] font-mono font-bold uppercase tracking-wider">
+                                        <PiHandsClappingFill className="text-sm" />
+                                        Signature NSS Tradition
+                                    </div>
+                                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight font-sans">
+                                        The Iconic NSS Clap
+                                    </h3>
+                                    <p className="text-amber-600 font-semibold text-sm">
+                                        राष्ट्रीय सेवा योजना ताली
+                                    </p>
+                                    <p className="text-slate-600 text-xs sm:text-sm font-light leading-relaxed pt-1">
+                                        The signature synchronized rhythmic salute of the National Service Scheme — two rounds of three rapid claps followed by three slow, resonant claps to honor guests and celebrate unity.
+                                    </p>
+                                </div>
+
+                                {/* Rhythm Beat Guide with Guaranteed Non-Wrapping Numbers */}
+                                <div className="my-5 p-3.5 sm:p-4 rounded-2xl bg-slate-50/90 border border-slate-200/80 space-y-2.5 shadow-2xs">
+                                    <div className="flex flex-wrap items-center justify-between gap-1">
+                                        <span className="text-[10px] uppercase font-mono tracking-widest text-slate-500 font-bold whitespace-nowrap">
+                                            Signature Cadence:
+                                        </span>
+                                        <span className="text-[10px] font-mono text-amber-700 font-semibold bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md whitespace-nowrap">
+                                            3 Fast • 3 Fast • 3 Slow
+                                        </span>
+                                    </div>
+
+                                    {/* 3 Step Cards with whitespace-nowrap */}
+                                    <div className="grid grid-cols-3 gap-2 sm:gap-2.5 text-center font-mono w-full">
+                                        {/* Round 1 */}
+                                        <div className="bg-white border border-slate-200/80 shadow-2xs rounded-xl py-2 px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                                            <span className="text-[10px] text-slate-400 font-mono font-bold uppercase whitespace-nowrap">Round 1</span>
+                                            <span className="text-sm sm:text-base font-black text-slate-900 tracking-wider whitespace-nowrap my-1">
+                                                1-2-3
+                                            </span>
+                                            <span className="inline-block text-[9px] text-emerald-700 font-sans font-bold uppercase tracking-wider bg-emerald-50 border border-emerald-200/80 rounded-md px-1.5 py-0.5 whitespace-nowrap">
+                                                FAST
+                                            </span>
+                                        </div>
+
+                                        {/* Round 2 */}
+                                        <div className="bg-white border border-slate-200/80 shadow-2xs rounded-xl py-2 px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                                            <span className="text-[10px] text-slate-400 font-mono font-bold uppercase whitespace-nowrap">Round 2</span>
+                                            <span className="text-sm sm:text-base font-black text-slate-900 tracking-wider whitespace-nowrap my-1">
+                                                1-2-3
+                                            </span>
+                                            <span className="inline-block text-[9px] text-emerald-700 font-sans font-bold uppercase tracking-wider bg-emerald-50 border border-emerald-200/80 rounded-md px-1.5 py-0.5 whitespace-nowrap">
+                                                FAST
+                                            </span>
+                                        </div>
+
+                                        {/* Finale */}
+                                        <div className="bg-amber-50/70 border border-amber-200/80 shadow-2xs rounded-xl py-2 px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                                            <span className="text-[10px] text-amber-700 font-mono font-bold uppercase whitespace-nowrap">Finale</span>
+                                            <span className="text-sm sm:text-base font-black text-amber-800 tracking-wider whitespace-nowrap my-1">
+                                                1&nbsp;2&nbsp;3
+                                            </span>
+                                            <span className="inline-block text-[9px] text-amber-700 font-sans font-bold uppercase tracking-wider bg-amber-100/80 border border-amber-200 rounded-md px-1.5 py-0.5 whitespace-nowrap">
+                                                SLOW
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Mobile Mockup Housing YouTube Shorts Embed */}
+                            <div className="relative w-full max-w-[280px] sm:max-w-[310px] mx-auto mt-2">
+                                {/* Ambient Backlight Glow */}
+                                <div className="absolute -inset-2 bg-gradient-to-tr from-amber-500/15 via-blue-500/10 to-rose-500/15 rounded-[2.8rem] blur-xl pointer-events-none" />
+
+                                {/* Phone Bezel */}
+                                <div className="relative rounded-[2.5rem] bg-slate-950 border-4 border-slate-800 shadow-2xl p-2.5 overflow-hidden">
+                                    {/* Top Speaker / Camera Notch */}
+                                    <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-20 h-3 bg-slate-900 rounded-full z-20 flex items-center justify-center pointer-events-none">
+                                        <div className="w-2 h-2 rounded-full bg-slate-950 mr-2" />
+                                        <div className="w-1 h-1 rounded-full bg-blue-900/60" />
+                                    </div>
+
+                                    {/* YouTube Shorts Embed Container */}
+                                    <div className="relative w-full aspect-[9/16] rounded-[2rem] overflow-hidden bg-black">
+                                        <iframe
+                                            src="https://www.youtube.com/embed/yHUc0dKEVT4"
+                                            title="Nss clap||#nss #ytshorts #nssunitlakhipurcollege #shorts"
+                                            className="w-full h-full border-0 rounded-[2rem]"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            allowFullScreen
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                    </div>
+                </div >
+            </section >
+
             {/* 2.5. SAMVEDNA MAGAZINE SECTION WITH LIGHT THEMED INTERACTIVE FLIPBOOK */}
-            <section className="py-24 relative overflow-hidden bg-white border-b border-slate-200/60 text-slate-800">
+            < section className="py-24 relative overflow-hidden bg-white border-b border-slate-200/60 text-slate-800" >
                 {/* Glowing background accent circles (very soft light glow) */}
-                <div className="absolute top-1/4 left-[10%] w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+                < div className="absolute top-1/4 left-[10%] w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
 
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -460,16 +968,16 @@ export default function HomeClient({
 
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* instagram posts section */}
-            <section className="relative py-24 overflow-hidden">
+            < section className="relative py-24 overflow-hidden" >
 
                 {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/40 to-fuchsia-50/30 pointer-events-none" />
+                < div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/40 to-fuchsia-50/30 pointer-events-none" />
 
                 {/* Decorative blobs */}
-                <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-pink-300/20 blur-3xl pointer-events-none" />
+                < div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-pink-300/20 blur-3xl pointer-events-none" />
                 <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-fuchsia-300/20 blur-3xl pointer-events-none" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-rose-200/15 blur-3xl pointer-events-none" />
 
@@ -550,10 +1058,10 @@ export default function HomeClient({
                         </a>
                     </motion.div>
                 </div>
-            </section>
+            </section >
 
             {/* 3. "OUR UNITS" SECTION WITH 3D SPRING TILT & DYNAMIC SHADOWS */}
-            <section className="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in" id="units">
+            < section className="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in" id="units" >
                 <div className="text-center mb-16 max-w-xl mx-auto">
                     <span className="text-xs font-bold uppercase tracking-widest text-amber-500 font-mono">Core Structuring</span>
                     <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mt-2 font-sans tracking-tight">NSS Volunteers Units</h2>
@@ -617,10 +1125,10 @@ export default function HomeClient({
                         );
                     })}
                 </div>
-            </section>
+            </section >
 
             {/* 4. UPCOMING EVENTS SECTION WITH GRADIENT TRACK LINE & SLIDE ENTRIES */}
-            <section className="py-24 bg-gray-100/50 border-t border-b border-slate-200/60" id="upcoming-events">
+            < section className="py-24 bg-gray-100/50 border-t border-b border-slate-200/60" id="upcoming-events" >
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-20 max-w-xl mx-auto">
                         <span className="text-xs font-bold uppercase tracking-widest text-brand-blue font-mono">NSS Events</span>
@@ -682,10 +1190,10 @@ export default function HomeClient({
                         </Link>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* 4. RECENT EVENTS SECTION WITH GRADIENT TRACK LINE & SLIDE ENTRIES */}
-            <section className="py-24 bg-slate-100/50 border-t border-b border-slate-200/60" id="events">
+            < section className="py-24 bg-slate-100/50 border-t border-b border-slate-200/60" id="events" >
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-20 max-w-xl mx-auto">
                         <span className="text-xs font-bold uppercase tracking-widest text-amber-500 font-mono">NSS Chronicles</span>
@@ -744,10 +1252,10 @@ export default function HomeClient({
 
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* 5. TESTIMONIALS SECTION WITH CIRCULAR BORDER GLOW */}
-            <section className="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" id="testimonials">
+            < section className="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" id="testimonials" >
                 <div className="text-center mb-16 max-w-xl mx-auto">
                     <span className="text-xs font-bold uppercase tracking-widest text-amber-500 font-mono">Volunteer Echoes</span>
                     <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mt-2 font-sans tracking-tight">What Volunteers Say</h2>
@@ -775,12 +1283,12 @@ export default function HomeClient({
                         ))}
                     </Testimonial>
                 </div>
-            </section>
+            </section >
 
             {/* 6. DYNAMIC STATS CARD GRIDS */}
-            <section className="py-24 text-white bg-brand-blue md:w-[92%] mx-auto rounded-[3.2rem] shadow-2xl relative overflow-hidden px-6 sm:px-12" id="impact">
+            < section className="py-24 text-white bg-brand-blue md:w-[92%] mx-auto rounded-[3.2rem] shadow-2xl relative overflow-hidden px-6 sm:px-12" id="impact" >
                 {/* Glow layout */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,158,11,0.08),_transparent)] pointer-events-none" />
+                < div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,158,11,0.08),_transparent)] pointer-events-none" />
 
                 <div className="text-center mb-20 max-w-xl mx-auto relative z-10">
                     <span className="text-xs font-bold uppercase tracking-widest text-amber-400 font-mono">NSS Outcomes</span>
@@ -813,10 +1321,10 @@ export default function HomeClient({
                         </div>
                     ))}
                 </div>
-            </section>
+            </section >
 
             {/* 7. COLLABORATORS SECTION */}
-            <section className="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" id="collaborate">
+            < section className="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" id="collaborate" >
                 <div className="text-center mb-10 max-w-xl mx-auto">
                     <span className="text-xs font-bold uppercase tracking-widest text-amber-500 font-mono">Synergy Network</span>
                     <h2 className="text-3xl font-extrabold text-slate-800 mt-2 font-sans tracking-tight">Partners & Collaborations</h2>
@@ -840,14 +1348,15 @@ export default function HomeClient({
                         </button>
                     </Link>
                 </div>
-            </section>
+            </section >
 
             {/* 8. PREMIUM CTA ACTION CARDS */}
-            <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 border-t border-slate-200/60 pt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+            < section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 border-t border-slate-200/60 pt-20 grid grid-cols-1 md:grid-cols-3 gap-8" >
 
                 {/* CTA Card 1: Blood Request */}
-                <motion.div
-                    whileHover={{ y: -6, scale: 1.01 }}
+                < motion.div
+                    whileHover={{ y: -6, scale: 1.01 }
+                    }
                     className="bg-gradient-to-br from-rose-500 to-rose-600 rounded-[2.2rem] p-8 text-white shadow-lg flex flex-col justify-between"
                 >
                     <div>
@@ -866,10 +1375,10 @@ export default function HomeClient({
                             </button>
                         </Link>
                     </div>
-                </motion.div>
+                </motion.div >
 
                 {/* CTA Card 2: Collaborate */}
-                <motion.div
+                < motion.div
                     whileHover={{ y: -6, scale: 1.01 }}
                     className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-[2.2rem] p-8 text-white shadow-lg flex flex-col justify-between"
                 >
@@ -889,10 +1398,10 @@ export default function HomeClient({
                             </button>
                         </Link>
                     </div>
-                </motion.div>
+                </motion.div >
 
                 {/* CTA Card 3: Think-Thank */}
-                <motion.div
+                < motion.div
                     whileHover={{ y: -6, scale: 1.01 }}
                     className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-[2.2rem] p-8 text-white shadow-lg flex flex-col justify-between"
                 >
@@ -912,10 +1421,10 @@ export default function HomeClient({
                             </button>
                         </Link>
                     </div>
-                </motion.div>
+                </motion.div >
 
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }
 
